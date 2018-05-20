@@ -22,7 +22,7 @@ else
 	{     
             $id=$datosPlan[0]['NUMERO_IDENTIFICACION'];
             $usu=$datosPlan[0]['NOMBRE_USUARIO'];
-            $url='../agenda/WebContent/#/'.$_GET['r'].'?id='.$id.'&usu='.$usu;
+            $url='../agenda/agendaFront/#/'.$_GET['r'].'?id='.$id.'&usu='.$usu;
 //            var_dump( $scr);
 		if($datosPlan[0]['ID_ROLES'] == 288)
 			echo "<script>location.href='../caracterizacion/caracterizacion.php?tipoDoc=".$datosPlan[0]['COD_TIPOIDENTIFICACION']."&id=".$datosPlan[0]['NUMERO_IDENTIFICACION']."&carpeta=caracterizacion&pagina=caracterizacion.php'</script>";
@@ -37,8 +37,7 @@ else
                     <input type=hidden name="identificacion" value="<?php echo $id; ?>"/>
                         <h2 class="Estilo1"></h2>
 			<div class="embed-responsive embed-responsive-16by9">
-                            <!--<a href="javascript:window.open('<?php echo $url ?>','','toolbar=yes');void 0"></a>-->
-                            <iframe class="embed-responsive-item" allowfullscreen src='<?php echo $url ?>' ></iframe>
+                            <iframe class="embed-responsive-item" src='<?php echo $url ?>' ></iframe>
                         </div>
                 </div>			
 <?php
