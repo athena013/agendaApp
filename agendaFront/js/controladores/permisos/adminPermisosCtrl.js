@@ -182,6 +182,29 @@ angular.module('AgendaApp.AdminPermisos')
                                 
                             }
                         };
+                        
+                        $scope.cargarCriterio = function (){
+                            switch ($scope.datosUsuario.tipoCriterio){
+                                case "1":
+                                    $scope.tipo1=true;
+                                    $scope.tipo2=false;
+                                    $scope.tipo3=false;
+                                    $scope.datosUsuario.dsTipoCriterio="1. Mostrar por CIOM";
+                                    break;
+                                case "2":
+                                    $scope.tipo1=false;
+                                    $scope.tipo2=true;
+                                    $scope.tipo3=false;
+                                    $scope.datosUsuario.dsTipoCriterio="2. Mostrar por fecha de permiso";
+                                case "3":
+                                    $scope.tipo1=false;
+                                    $scope.tipo2=false;
+                                    $scope.tipo3=true;
+                                    $scope.datosUsuario.dsTipoCriterio="3. Mostrar por tipo de solicitud";
+                                break;
+                                
+                            }
+                        };
                        
                     }]);
 

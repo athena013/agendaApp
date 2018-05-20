@@ -129,6 +129,27 @@
                         
                    </div> 
                     
+                   <!--Ver y aprobar solicitudes de permiso Funcinoarias-->
+                   <div ng-show ="tipo2">
+                        
+                        <div class="form" ng-class="{ 'has-error' : form.tipoSolicitud.$invalid && !form.tipoSolicitud.$pristine}">
+                                <label class="control-label" >Criterio de busqueda</label> 
+                                <div>
+                                    <div class="input-group" >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                        <select name="tipoSolicitud" placeholder="seleccione opciones de administración" class="form-control" ng-model="datosUsuario.tipoCriterio" required="" ng-change="cargarCriterio()" >
+                                        <option value="">Seleccione</option>
+                                        <option ng-selected="{{tipoCriterio.id == datosUsuario.tipoCriterio}}" ng-repeat="tipoCriterio in tipoCriterioList" value="{{tipoCriterio.id}}">{{tipoCriterio.ds}}</option>
+                                    </select>
+                                    </div>
+                                    <span class="text-danger pull-right" ng-show="form.tipoSolicitud.$error.pattern" >C&#225;racter no permitido</span>
+                                    <span class="text-danger pull-right" ng-show="form.tipoSolicitud.$dirty && form.tipoSolicitud.$error.required">Campo requerido</span>
+                                </div>
+                        </div>      
+                        
+                        
+                   </div> 
+                    
                                       
                         
                         

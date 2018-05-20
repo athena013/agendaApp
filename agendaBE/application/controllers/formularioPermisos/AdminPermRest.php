@@ -9,7 +9,7 @@ class PermisosRest extends REST_Controller {
 	
 	function __construct() {
         parent::__construct();
-        $this->load->model("/PermisoFachada");
+        $this->load->model("/AdminPermFachada");
     }
     
     //obtiener los datos de usuario
