@@ -188,6 +188,22 @@ class PermisoTblModel extends CI_Model {
         }
     }
     
+    /*obtener solicitudes realizadas por el usuario*/
+    function getSolicitudesbyUsuario($numDoc) {
+        $this->db->select("P.*, TS.DESC_TIPO_SOLPER");
+        $this->db->from('TERR_FRM_PER P');
+        $this->db->join('TERR_TIPO_SOLPER TS ON P.ID_TIPO_SOLPERFK = TS.ID_TIPO_SOLPER');
+        $this->db->where("ID_USUARIOS",$numDoc);
+        $query = $this->db->get();
+         
+         
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return NULL;
+        }
+    }
+    
     /*obtener lista de dias*/
     function getDiasReposicion($id) {
         $this->db->select("*");
