@@ -113,7 +113,7 @@ class PermisoFachada extends CI_Model {
         try {
             $this->db->trans_off();
             
-            $respuesta = $this->PermisoTblModel->saveDiasRepocision($datos);
+            $respuesta = $this->PermisoTblModel->saveDiasReposicion($datos);
             
             if($respuesta){
                 $resTransaccion["estatus"] = "OK";
@@ -183,11 +183,12 @@ class PermisoFachada extends CI_Model {
                                     if(isset($arcSave["nomb_doc"]) && isset($arcSave["ruta_doc"])){
                                         // SE ACTUALIZA LA RUTA
                                         $this->PermisoTblModel->updateFormulario($arcSave,$idForm["ID_FRM_PER"]);
-                                        $resTransaccion["estatus"] = "OK";
-                                        $resTransaccion["mensaje"]="Solicitud guardada correctamente";
-                                        $resTransaccion["formulario"] = $idForm["ID_FRM_PER"];
                                     }
                                 }
+                                $resTransaccion["estatus"] = "OK";
+                                $resTransaccion["mensaje"]="Solicitud guardada correctamente";
+                                $resTransaccion["formulario"] = $idForm["ID_FRM_PER"];
+                                $resTransaccion["solicitud"] = $idSol["ID_SOL_PERM"];
                             }else{
                                 $resTransaccion["estatus"] = "KO";
                                 $resTransaccion["mensaje"]="No se guardo la solicitud";

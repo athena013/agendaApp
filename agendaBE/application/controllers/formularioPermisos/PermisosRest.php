@@ -58,13 +58,13 @@ class PermisosRest extends REST_Controller {
     }
     
      //obtener dias de reposicion por formulario de permiso educativo
-    public function buscarDiasFormulario_get($idForm) {
+    public function buscarDiasFormulario_get($idSol) {
         log_message('info', 'Ingreso - buscarDiasFormulario_get', false);
-        if (!$idForm) { 
+        if (!$idSol) { 
             $this->response(NULL, 210);
         }
        
-        $resultado = $this->PermisoFachada->getDiasReposicion($idForm);
+        $resultado = $this->PermisoFachada->getDiasReposicion($idSol);
         
         log_message('info', 'Salida find_cargo_get', false);
         if (!is_null($resultado)) {
@@ -108,7 +108,7 @@ class PermisosRest extends REST_Controller {
     	$resultado = $this->PermisoFachada->guardarFormulario($form,$file);
     	log_message('info', 'Salida Guarda Formulario - index_post', false);
     	if ($resultado["estatus"] == "OK") {
-    	    $this->response(array("response" => "Solicitud creada","formulario" => $resultado["formulario"]), 200);
+    	    $this->response(array("response" => "Solicitud creada","formulario" => $resultado["formulario"],"solicitud" => $resultado["solicitud"]), 200);
     	} else {
     	    $this->response(array("error" => $resultado["mensaje"]), 408);
     	}

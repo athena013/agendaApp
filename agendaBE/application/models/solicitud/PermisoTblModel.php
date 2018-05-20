@@ -382,7 +382,7 @@ class PermisoTblModel extends CI_Model {
     }
     
     
-     public function saveDiasRepocision($datos){
+     public function saveDiasReposicion($datos){
         $query = $this->db->set(
                         $this->_setPerRep($datos)
                 )
@@ -397,8 +397,8 @@ class PermisoTblModel extends CI_Model {
     
     public function _setPerRep($formulario){
         $datos = array();
-        if (isset($formulario["idForm"])) {
-            $datos['ID_SOL_PERMFK'] = $formulario["idForm"];
+        if (isset($formulario["idSol"])) {
+            $datos['ID_SOL_PERMFK'] = $formulario["idSol"];
         }
         if (isset($formulario["NOMBRE_DIA_REPO"])) {
             $datos['NOMBRE_DIA_REPO'] = $formulario["NOMBRE_DIA_REPO"];

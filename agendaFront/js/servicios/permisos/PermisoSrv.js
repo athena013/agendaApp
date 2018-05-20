@@ -27,7 +27,7 @@ angular.module('AgendaApp.PermisoSrv')
                                 isArray : false
                             },
                             cargarDias:{
-                                url : urlParametrosModule + 'formulario/buscarDias/idForm/:idForm',
+                                url : urlParametrosModule + 'formulario/buscarDias/idSol/:idSol',
                                 method : "GET",
                                 isArray : false
                             },

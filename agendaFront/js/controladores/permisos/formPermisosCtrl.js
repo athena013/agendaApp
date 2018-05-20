@@ -137,6 +137,7 @@ angular.module('AgendaApp.formularioPermisos')
                                 $scope.datosUsuario = serveData.data.datosUsuario;
                                 console.log("datos consulta server: " + $scope.datosUsuario.idUser);
                             }
+                            $scope.cargarCargo();
                         }else{
                             $scope.obtenerDatosUsuario();
                         }
@@ -328,7 +329,7 @@ angular.module('AgendaApp.formularioPermisos')
 //                                usuarioAgendaSrv.guardarFormulario({data: $scope.datosUsuario,file:formData}).$promise.then(function(data){
                                    usuarioAgendaSrv.guardarFormulario(formData).$promise.then(function(data){
                                     messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
-                                    $scope.formulario=data.formulario;
+                                    $scope.solicitud=data.solicitud;
                                     if (spinner) {
                                     spinner.stop();
                                     }
@@ -346,6 +347,9 @@ angular.module('AgendaApp.formularioPermisos')
                                     messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.response,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                 });
                             }
+                            if (spinner) {
+                                   spinner.stop();
+                                   }
                             
                         };
                         
@@ -416,7 +420,7 @@ angular.module('AgendaApp.formularioPermisos')
                         
                         $scope.adicionarReposicion = function () {
                             
-                            serveData.data.formulario = $scope.formulario;
+                            serveData.data.solicitud = $scope.solicitud;
                             $location.path('/adicionarDias');
                         };
                         

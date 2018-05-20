@@ -67,10 +67,9 @@ angular.module('AgendaApp.AdminPermisos')
                         console.log("voy a preguntar si existe serverdata" + serveData.data.datosUsuario);
                         if (serveData.data.datosUsuario) {
                             if (serveData.data.datosUsuario.idUser) {
-                                $scope.dia.idForm =serveData.data.formulario;
-                                console.log("formulario: " + $scope.dia.idForm);
+                                $scope.dia.idSol =serveData.data.solicitud;
+                                console.log("formulario: " + $scope.dia.idSol);
                                 $scope.datosUsuario = serveData.data.datosUsuario;
-                                console.log($scope.idForm);
                             }
                         }else{
                             $scope.obtenerDatosUsuario();
@@ -96,8 +95,7 @@ angular.module('AgendaApp.AdminPermisos')
                             
                             var target = document.getElementById('divLoadingGeneral');
                             var spinner = new Spinner().spin(target);
-                                console.log($scope.dia.idForm);
-//                            $scope.dia.idForm = 51;
+                                console.log($scope.dia.idSol);
                             usuarioAgendaSrv.guardarDias({datos: $scope.dia}).$promise.then(function(data){
                                 if(data.response){
                                     
@@ -122,8 +120,8 @@ angular.module('AgendaApp.AdminPermisos')
                         };
                         
                         $scope.cargarDias = function (){
-//                             $scope.dia.idForm = 51;
-                             usuarioAgendaSrv.cargarDias({idForm: $scope.dia.idForm}).$promise.then(function(data){
+                             usuarioAgendaSrv.cargarDias({idSol: $scope.dia.idSol}).$promise.then(function(data){
+                                 
                                  $scope.datosList=data.response;
                                  
                                  
@@ -132,8 +130,10 @@ angular.module('AgendaApp.AdminPermisos')
                             });
                             
                         };
+                        $scope.cargarDias();
                        
                        $scope.fin = function(){
+                            alert("solicitud Creada");
                             messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Solicitud creada",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                             $location.path('/');
                        };

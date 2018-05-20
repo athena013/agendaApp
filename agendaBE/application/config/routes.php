@@ -18,7 +18,7 @@ $route['funcionaria']['post'] = "formularioPermisos/PermisosRest/actualizarFunci
 
 $route['formulario/adjuntar']['post'] = "formularioPermisos/PermisosRest/adjuntar";
 $route['formulario/guardarDias']['post'] = "formularioPermisos/PermisosRest/guardar_dias";
-$route['formulario/buscarDias/idForm/(:any)']['get'] = "formularioPermisos/PermisosRest/buscarDiasFormulario/$1";
+$route['formulario/buscarDias/idSol/(:any)']['get'] = "formularioPermisos/PermisosRest/buscarDiasFormulario/$1";
 
 $route['formulario/validarFechas/(:any)/(:any)/(:any)']['get'] = "formularioPermisos/PermisosRest/pendiente";
 $route['uploadFilePermisos']['post'] = "formularioPermisos/PermisosRest/cargar";
