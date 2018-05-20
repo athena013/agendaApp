@@ -13,5 +13,9 @@ angular.module('AgendaApp').config(['$routeProvider', function ($routeProvider) 
                 controller: 'reposicionCtrl',
                 templateUrl: 'pages/formPermisos/diasReposicionPermisos.html'
             })
+            .when('/solicitudesXusuario', {
+                controller: 'solicitudesXusuarioCtrl',
+                templateUrl: 'pages/formPermisos/solicitudesDiligenciadas.html'
+            })
             .otherwise({redirectTo: '/'});
      }]);
