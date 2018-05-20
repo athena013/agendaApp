@@ -142,21 +142,21 @@ class PermisoTblModel extends CI_Model {
         if (isset($formulario["minFin"])) {
             $datos['MIN_FIN_PERM'] = $formulario["minFin"];
         }
-        if (isset($formulario["NUM_RESOLUCION"])) {
-            $datos['NUM_RESOLUCION'] = $formulario["NUM_RESOLUCION"];
+        if (isset($formulario["resolucion"])) {
+            $datos['NUM_RESOLUCION'] = $formulario["resolucion"];
         }
-        if (isset($formulario["FEC_RESOLUCION"])) {
-            $date= date("d/F/Y", strtotime($formulario["FEC_RESOLUCION"]));
+        if (isset($formulario["fResolucion"])) {
+            $date= date("d/F/Y", strtotime($formulario["fResolucion"]));
             $datos["FEC_RESOLUCION"]=$date;
         }
-        if (isset($formulario["DIAS_DISFRUTE"])) {
-            $datos['DIAS_DISFRUTE'] = $formulario["DIAS_DISFRUTE"];
+        if (isset($formulario["diasDisfrutar"])) {
+            $datos['DIAS_DISFRUTE'] = $formulario["diasDisfrutar"];
         }
-        if (isset($formulario["DIAS_PEND"])) {
-            $datos['DIAS_PEND'] = $formulario["DIAS_PEND"];
+        if (isset($formulario["diasPendientes"])) {
+            $datos['DIAS_PEND'] = $formulario["diasPendientes"];
         }
-        if (isset($formulario["OTRO_MOTIVO"])) {
-            $datos['OTRO_MOTIVO'] = $formulario["OTRO_MOTIVO"];
+        if (isset($formulario["otroMotPermiso"])) {
+            $datos['OTRO_MOTIVO'] = $formulario["otroMotPermiso"];
         }
         if(isset($formulario["tipoVacaciones"])){
             $datos['TIPO_VACACIONES'] = $formulario["tipoVacaciones"];
