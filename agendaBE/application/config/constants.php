@@ -95,4 +95,4 @@ define('SMTP','ssl://smtp.gmail.com');
 define('PUERTO_SMTP',465);
 define('REMITENTE','fundaamor2007@gmail.com');
 define('DESTINATARIO','athena013@gmail.com');
-define('RUTA_ARHCIVOS','E:\\sdmujer\\agenda\\files\\');
+define('RUTA_ARHCIVOS','C:\\xampp\\htdocs\\agenda\\soportesAdjuntoTerritorializacion\\');

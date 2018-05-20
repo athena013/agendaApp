@@ -96,8 +96,8 @@ angular.module('AgendaApp.AdminPermisos')
                             
                             var target = document.getElementById('divLoadingGeneral');
                             var spinner = new Spinner().spin(target);
-                            
-                            $scope.dia.idForm = 51;
+                                console.log($scope.dia.idForm);
+//                            $scope.dia.idForm = 51;
                             usuarioAgendaSrv.guardarDias({datos: $scope.dia}).$promise.then(function(data){
                                 if(data.response){
                                     
