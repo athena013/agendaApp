@@ -122,14 +122,23 @@
             </div>
 
             <div class="box-header with-border">
-                    <button type="submit" class="btn btn-primary pull-right">
-                            <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Guardar Día
-                    </button>
+                <button type="submit" class="btn btn-primary pull-right">
+                        <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Guardar Día
+                </button>
             </div>  
         </form>
+            
     </div>
+        <div class="row">
+            <div class="col-sm-12" align="center">
+                <button type="button" class="btn btn-success pull-right" ng-click="fin()">
+                        <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Finalizar
+                </button>
+            </div>
+        </div>
         
-         <div class="row">
+        <hr>
+        <div class="row">
             <div class="box-body table-responsive">
                     <table class="table table-striped table-bordered dataTable no-footer"
                             datatable="ng">
@@ -147,8 +156,30 @@
                                             <td>{{dias.NOMBRE_DIA_REPO}}</td>
                                             <td>{{dias.FEC_INI_REPO}}</td>
                                             <!--<td>{{dias.FEC_FIN_REPO}}</td>-->
-                                            <td>{{dias.HOR_INI_REPO}}:{{dias.MIN_INI_REPO}}</td>
-                                            <td>{{dias.HOR_FIN_REPO}}:{{dias.MIN_FIN_REPO}}</td>
+                                            <td>
+                                                <div ng-switch="dias.MIN_INI_REPO" style="text-align: center">
+                                                    <div ng-switch-when="0" >
+                                                        {{dias.HOR_INI_REPO}}:00
+                                                    </div>
+                                                    <div ng-switch-when="30">
+                                                        {{dias.HOR_INI_REPO}}:{{dias.MIN_INI_REPO}}
+                                                    </div>
+                                                    <div ng-switch-default>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div ng-switch="dias.MIN_FIN_REPO" style="text-align: center">
+                                                    <div ng-switch-when="0" >
+                                                        {{dias.HOR_FIN_REPO}}:00
+                                                    </div>
+                                                    <div ng-switch-when="30">
+                                                        {{dias.HOR_FIN_REPO}}:{{dias.MIN_FIN_REPO}}
+                                                    </div>
+                                                    <div ng-switch-default>
+                                                    </div>
+                                                </div>
+                                            </td>
 
                                     </tr>
                             </tbody>

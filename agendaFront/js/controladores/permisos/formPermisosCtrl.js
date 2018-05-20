@@ -329,15 +329,16 @@ angular.module('AgendaApp.formularioPermisos')
                                    usuarioAgendaSrv.guardarFormulario(formData).$promise.then(function(data){
                                     messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                     $scope.formulario=data.formulario;
-                                    if($scope.datosUsuario.motPermiso==3){
-                                        //guardar dias de reposicion
-                                        $scope.adicionarReposicion();
-                                    }
-                                    
                                     if (spinner) {
                                     spinner.stop();
                                     }
-                                   
+                                    if($scope.datosUsuario.motPermiso==3){
+                                        //guardar dias de reposicion
+                                        $scope.adicionarReposicion();
+                                    }else{
+                                        $route.reload();
+                                    }
+                                    
                                  }, function(reason){
                                      if (spinner) {
                                     spinner.stop();

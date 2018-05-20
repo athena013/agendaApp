@@ -119,8 +119,8 @@ class PermisoTblModel extends CI_Model {
         if (isset($formulario["DIAS_PERMISO"])) {
             $datos['DIAS_PERMISO'] = $formulario["DIAS_PERMISO"];
         }
-        if (isset($formulario["CANTIDAD"])) {
-            $datos['CANTIDAD'] = $formulario["CANTIDAD"];
+        if (isset($formulario["cantidad"])) {
+            $datos['CANTIDAD'] = $formulario["cantidad"];
         }
         if (isset($formulario["fInicio"])) {
             $date= date("d/F/Y", strtotime($formulario["fInicio"]));
