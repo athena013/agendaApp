@@ -117,7 +117,7 @@ angular.module('AgendaApp.formularioPermisos')
                                       $scope.datosUsuario.idUser=$scope.result.ID_USUARIOS;
                                       $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE +" "+ $scope.result.PRIMER_APELLIDO;
                                       $scope.datosUsuario.fecha_solicitud = fecha.getFullYear()+"/"+(fecha.getMonth()+1)+"/"+fecha.getDate();
-                                      messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                      messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                     }, function(reason){
                                             
                                     });
