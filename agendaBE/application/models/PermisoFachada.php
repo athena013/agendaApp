@@ -260,13 +260,13 @@ class PermisoFachada extends CI_Model {
             if($tipo="horas"){//valido la hora si es fecha disponible
                 $resultado["count"] = $this->PermisoTblModel->validarFechas($tipo,$fecha1,$fecha2,$hora1,$hora2,$idCiom);
                 if($resultadoHoras<=2){
-                    $resultado["mensaje"] = "Las horas solicitadas no estan disponiles";
+                    $resultado["error"] = "Las horas solicitadas no estan disponiles";
                 }else{
                      $resultado["mensaje"] = "Horas disponibles";
                 }
             }else if($count>2){
                     $resultado["count"] = $count;
-                    $resultado["mensaje"] = "Las fechas solicitadas no estan disponiles";
+                    $resultado["error"] = "Las fechas solicitadas no estan disponiles";
                 }else{
                     $resultado["count"] = $count;
                     $resultado["mensaje"] = "Fechas disponibles";

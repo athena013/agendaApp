@@ -20,6 +20,7 @@ $route['funcionaria']['post'] = "formularioPermisos/PermisosRest/actualizarFunci
 $route['formulario/adjuntar']['post'] = "formularioPermisos/PermisosRest/adjuntar";
 $route['formulario/guardarDias']['post'] = "formularioPermisos/PermisosRest/guardar_dias";
 $route['formulario/buscarDias/idSol/(:any)']['get'] = "formularioPermisos/PermisosRest/buscarDiasFormulario/$1";
+$route['formulario/validarFechas']['post'] = "formularioPermisos/PermisosRest/validarFechas";
 
 $route['formulario/validarFechas/(:any)/(:any)/(:any)']['get'] = "formularioPermisos/PermisosRest/pendiente";
 $route['uploadFilePermisos']['post'] = "formularioPermisos/PermisosRest/cargar";
@@ -27,6 +28,7 @@ $route['uploadFilePermisos']['post'] = "formularioPermisos/PermisosRest/cargar";
 //SOLICITUDES POR USUARIO CIOM
 $route['obtenerSolicitudes/idUsuario/(:num)']['get'] = "formularioPermisos/SolicitudesRest/index/$1";
 $route['obtenerDetalle/formulario/(:any)/tipoSol/(:any)']['get'] = "formularioPermisos/SolicitudesRest/obtenerSolicitudDetalle/$1/$2";
+$route['eliminar/formulario']['post'] = "formularioPermisos/SolicitudesRest/eliminarFormulario";
 
 //Rutas Empresa
 $route['empresa']['get'] = "solicitud/EmpresaRest/index";

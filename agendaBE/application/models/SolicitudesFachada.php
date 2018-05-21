@@ -62,16 +62,79 @@ class SolicitudesFachada extends CI_Model {
            
         } catch (Exception $e) {
             $error = $this->db->error();
-            log_message('error', 'error getSolicitudesbyUsuario' . $error[message], false);
+            log_message('error', 'error getDetalleFormulario' . $error[message], false);
+            throw new Exception($error[message]);
+        }
+        log_message('info', 'getDetalleFormulario list', false);
+        return $resultado;
+    }
+    
+    //eliminar solicitudes por tipo de usuario y tipo de solicitud
+    public function deleteFormulario($idForm,$idTipoForm,$idSol) {
+        log_message('info', 'deleteFormulario', false);
+        $resultado = NULL;
+        $mensaje = NULL;
+        try {
+            var_dump("llegafachada");
+            $this->db->trans_begin();
+            
+            if(intval($idTipoForm) == 1 || intval($idTipoForm) == 3 || intval($idTipoForm) == 5){
+            $resReposicion = $this->SolicitudesFachada->deleteReposicion($idSol);
+            var_dump($resReposicion);
+                if($resReposicion){
+                    $resSolicitud=$this->SolicitudesFachada->deleteSolicitudPermisos($idForm);
+                }else{
+                    $resSolicitud=$this->SolicitudesFachada->deleteSolicitudPermisos($idForm);
+                }
+            }else if(intval($idTipoForm) == 2){
+                //ssg
+                $resSolicitud=$this->PermisoTblModel->deleteSSG($idForm);
+            }else if(intval($idTipoForm) == 4){
+                //prima tecnica
+                echo "enta a prima";
+                $resSolicitud=$this->PermisoTblModel->deletePrimaTecnica($idForm);
+            }
+            
+            var_dump("solicitud");
+            var_dump($resSolicitud);
+    //        
+            if($resSolicitud){
+                 $resultado = $this->SolicitudesFachada->deleteFormulario($idForm);
+            }else{
+                 $resultado = $this->SolicitudesFachada->deleteFormulario($idForm);
+            }
+
+            $this->db->trans_complete();
+           
+        } catch (Exception $e) {
+            $error = $this->db->error();
+            log_message('error', 'error deleteFormulario' . $error[message], false);
+            $this->db->trans_rollback();
             throw new Exception($error[message]);
         }
         log_message('info', 'getSolicitudesbyUsuario list', false);
-        return $resultado;
+        return $mensaje;
     }
-
-
     
-    
+    //eliminar tabla reposicion
+    public function deleteReposicion($idSol) {
+        log_message('info', 'deleteReposicion', false);
+        $resultado = NULL;
+        $mensaje = NULL;
+        try {
+            $this->db->trans_start();
+            $resReposicion=$this->PermisoTblModel->deleteReposicion($idSol);
+            $this->db->trans_complete();
+           
+        } catch (Exception $e) {
+            $error = $this->db->error();
+            log_message('error', 'error deleteReposicion' . $error[message], false);
+            $this->db->trans_rollback();
+            throw new Exception($error[message]);
+        }
+        log_message('info', 'getSolicitudesbyUsuario list', false);
+        return $resReposicion;
+    }
    
 }
 

@@ -141,11 +141,17 @@ class PermisosRest extends REST_Controller {
     }
     
     
-    public function validarFechas_get($fechas,$tipo,$idUsu) {
+    public function validarFechas_post() {
     	log_message('info', 'Ingreso validarFechas_get - index_post', false);
+       
+        $fechas = $this->post("fechas");
+        $tipo = $this->post("tipo");
+        $idUsu = $this->post("isUsu");
+        
         if (!$fechas || $tipo || $idUsu) { 
             $this->response(array("error" => "parametros invalidos"), 210);
         }
+        
         $resultado = $this->PermisoFachada->validarFechas($fechas,$tipo,$idUsu);
     	log_message('info', 'Salida validarFechas_get - index_post', false);
     	if (!is_null($resultado)) {

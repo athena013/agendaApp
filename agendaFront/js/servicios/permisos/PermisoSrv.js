@@ -36,6 +36,11 @@ angular.module('AgendaApp.PermisoSrv')
                                 method : "POST",
                                 isArray : false
                             },
+                            validarFechas:{
+                                url : urlParametrosModule + 'formulario/validarFechass',
+                                method : "POST",
+                                isArray : false
+                            },
                             guardarFormulario:{
                                 url : urlParametrosModule + 'formulario/guardarFormulario',
                                 headers: {  "Content-type": undefined },
@@ -98,6 +103,11 @@ angular.module('AgendaApp.PermisoSrv')
                             obtenerDetalle : {
                                     url : urlParametrosModule + 'obtenerDetalle/formulario/:idForm/tipoSol/:idTipoForm',
                                     method : 'GET',
+                                    isArray : false
+                            },
+                            eliminar : {
+                                    url : urlParametrosModule + 'eliminar/formulario',
+                                    method : 'POST',
                                     isArray : false
                             }
                     });

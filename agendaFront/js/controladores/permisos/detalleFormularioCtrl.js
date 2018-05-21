@@ -24,15 +24,13 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.tipo4=false;
                         $scope.tipo5=false;
                         $scope.horas=false;
-                        $scope.adjunto=false;
+//                        $scope.adjunto=false;
                         
                         $scope.datosUsuario = {};
                         
                         
                         $scope.obtenerFormularioCompleto = function (){
 //                           $scope.data.objeto;
-                           
-                           
                            solicitudSrv.obtenerDetalle({idForm: $scope.data.objeto.ID_FRM_PER ,idTipoForm:$scope.data.objeto.ID_TIPO_SOLPERFK}).$promise.then(function(data){
                                 $scope.detalle = data.response;
                                 switch ($scope.detalle.ID_TIPO_SOLPERFK){
@@ -91,19 +89,46 @@ angular.module('AgendaApp.formularioPermisos')
                                         $scope.dsTipoSolicitud="5. Licencia no remunerada o licencia por luto";
                                         break;
                                 }
+                                
+                                console.log($scope.detalle.NOMB_DOC);
+                                
                                 if($scope.detalle.NOMB_DOC){
+                                    console.log("tiene adjunto");
                                     $scope.adjunto=true;
-                                    $scope.ruta= $scope.detalle.RUTA_DOC.toString()+$scope.detalle.NOMB_DO.toString();
+//                                    $scope.ruta= $scope.detalle.RUTA_DOC.toString()+$scope.detalle.NOMB_DO.toString();
+                                }else{
+                                    $scope.adjunto=false;
                                 }
                                 
                                 messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Detalle formulario",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                               
                            }, function(reason){
-                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No hay solicitudes Diligenciadas",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No se encuentra el formulario",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                               });
                             
                         };
                         $scope.obtenerFormularioCompleto();
+                            
+                        $scope.eliminar = function (objeto){
+                            console.log("entra a eliminar");
+                            console.log(objeto);
+                            var idSol;
+                            if(objeto.ID_TIPO_SOLPERFK == "2"){
+                                idSol = objeto.ID_SOL_TRASSEGSOC;
+                            }else if(objeto.ID_TIPO_SOLPERFK == "4"){
+                                idSol = objeto.ID_SOL_PRITEC;
+                            }else{
+                                idSol = objeto.ID_SOL_PERM;
+                            }
+                                    
+                            solicitudSrv.eliminar({idForm: objeto.ID_FRM_PER, idTipoForm: objeto.ID_TIPO_SOLPERFK, idSol: idSol}).$promise.then(function(data){
+                                 
+                                 
+                             }, function(reason){
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                            });
+                        };
+                            
 
                     }]);
 

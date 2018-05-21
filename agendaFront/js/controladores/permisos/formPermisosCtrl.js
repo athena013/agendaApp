@@ -167,7 +167,7 @@ angular.module('AgendaApp.formularioPermisos')
                                 fechaHabil.setDate(fechaHabil.getDate()+2);
                                 /*validar tres dias de anterioridad debo validar que tenga bandera activa para permiso normal*/
                                 
-                                if(fechaHabil<fechaSolPer || $scope.datosUsuario.BND=="1"){
+                                if(fechaHabil<fechaSolPer || $scope.datosUsuario.BND1 == "1"){
                                     if($scope.datosUsuario.tipoPermiso == "horas"){
                                         console.log("horas");
                                         $scope.horas = true;
@@ -198,13 +198,17 @@ angular.module('AgendaApp.formularioPermisos')
                                    * cuando me selecciones el tipo de permiso debo avisarle que no puede pedir permisos o por 
                                    * falta de anexar docuemntos BE*/
                                   var con = confirm("Debe solicitar un permiso con tres dias de anterioridad, por favor contactarse con la administradora");
-                                    $scope.datosUsuario.strfHasta = "";
-                                    $scope.datosUsuario.fInicio="";
-                                    $scope.datosUsuario.fHasta="";
+                                    
                                   if (con == true) {
-                                        alert("true");
+                                      $scope.datosUsuario.strfHasta = "";
+                                        $scope.datosUsuario.fInicio="";
+                                        $scope.datosUsuario.fHasta="";
+//                                        alert("true");
                                     } else {
-                                        alert("true");
+                                        $scope.datosUsuario.strfHasta = "";
+                                        $scope.datosUsuario.fInicio="";
+                                        $scope.datosUsuario.fHasta="";
+//                                        alert("true");
                                     }
                                 }
                             }
@@ -299,7 +303,7 @@ angular.module('AgendaApp.formularioPermisos')
                        
                         $scope.guardar = function (){
                             console.log($scope.datosUsuario);
-                             var target = document.getElementById('divLoadingGeneral');
+                            var target = document.getElementById('divLoadingGeneral');
                             var spinner = new Spinner().spin(target);
                             
                             var guardar = false;
@@ -325,7 +329,7 @@ angular.module('AgendaApp.formularioPermisos')
                                     guardar=validarArchivo(file);
                                 }
                             }                                                  
-                            if(guardar == true){
+                            if(guardar == true && $scope.validado){
                                   formData.append("data",JSON.stringify($scope.datosUsuario));
 //                                usuarioAgendaSrv.guardarFormulario({data: $scope.datosUsuario,file:formData}).$promise.then(function(data){
                                    usuarioAgendaSrv.guardarFormulario(formData).$promise.then(function(data){
@@ -347,10 +351,12 @@ angular.module('AgendaApp.formularioPermisos')
                                     }
                                     messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.response,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                 });
+                            }else{
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"Debe validar las fechas",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                             }
                             if (spinner) {
                                    spinner.stop();
-                                   }
+                            }
                             $route.reload();
                             
                         };
@@ -424,6 +430,36 @@ angular.module('AgendaApp.formularioPermisos')
                             
                             serveData.data.solicitud = $scope.solicitud;
                             $location.path('/adicionarDias');
+                        };
+                        
+                        $scope.validarFechas = function(){
+                            $scope.fecha={};
+                            $scope.fecha.fecha1= $scope.datosUsuario.fInicio;
+                            $scope.fecha.fecha2= $scope.datosUsuario.fHasta;
+                            if($scope.datosUsuario.tipoPermiso == "horas"){
+                                $scope.fecha.hora1= $scope.datosUsuario.horaIni;
+                                $scope.fecha.hora2= $scope.datosUsuario.horaFin;
+                            }
+                                
+                            if($scope.datosUsuario.BND1 == "1"){
+                                $scope.validado=true;//usuario autorizado no importa las restricciones
+                            }else{
+                                usuarioAgendaSrv.validarFechas({fechas:$scope.fecha,tipo:$scope.datosUsuario.tipoPermiso, idUsu: $scope.datosUsuario.numDoc}).$promise.then(function(data){
+                                    if(data.response){
+                                          messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                            $scope.btnEnviar=false;//habilito guardar
+                                            $scope.validado=true;//permito guardar
+                                     }
+                                     if(data.error){
+                                         messageCenterService.add(CONSTANTS.TYPE_DANGER,data.mensaje,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                            $scope.btnEnviar=true;//deshabilito guardar
+                                            $scope.validado=false;//no permito guardar
+                                     }
+                                 }, function(reason){
+                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                });
+                            }
+                            
                         };
                         
                     }])

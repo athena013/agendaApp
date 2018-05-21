@@ -96,6 +96,7 @@
 
                                 </div>
                             </div>
+                            
                             <br>
                             <div ng-show="detalle.ID_MOTIVOFK == '3'">
                                 <div class="col-xs-12 col-md-12" >
@@ -236,6 +237,16 @@
                                 </div>
                              </div>
                              
+                             <div class="row" ng-show="adjunto">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Documento Adjunto:  &nbsp; &nbsp; &nbsp; </label>
+                                    <a href="../soportesAdjuntoTerritorializacion/{{detalle.NOMB_DOC}}" download="{{detalle.NOMB_DOC}}">
+                                        Ver Archivo 
+                                    </a>
+
+                                </div>
+                            </div>
+                             
                          </div>
                         
                          <div ng-show="tipo4">
@@ -293,15 +304,31 @@
                                     <label>Tipo Licencia:  </label> {{detalle.DESC_MOTIVO}}
                                 </div>
                              </div>
+                             
+                             <div class="row" ng-show="adjunto">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Documento Adjunto:  &nbsp; &nbsp; &nbsp; </label>
+                                    <a href="../soportesAdjuntoTerritorializacion/{{detalle.NOMB_DOC}}" download="{{detalle.NOMB_DOC}}">
+                                        Ver Archivo 
+                                    </a>
+
+                                </div>
+                            </div>
                          </div>
                     </form>
                      
                  </div>
                  
                  <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="text-center">
-                            <button type="button" class="btn btn-danger" ng-click="cancel()">Regresar</button>
+                            <button type="button" class="btn btn-danger" ng-click="eliminar(detalle)">
+                                Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-info" ng-click="cancel()">Regresar</button>
                         </div>
                     </div>
                 </div>

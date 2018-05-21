@@ -312,7 +312,7 @@ class PermisoTblModel extends CI_Model {
         OR (FEC_FIN_PERM BETWEEN TO_DATE ('.$fec2.', 'yyyy/mm/dd') AND TO_DATE ('.$fec2.', 'yyyy/mm/dd')));";
         
         if($tipo="horas"){
-            $consulta = $consulta.' AND (PER.HOR_INI_PERM BETWEEN 2 AND 5) OR (HOR_INI_PERM BETWEEN 2 AND 4)';
+            $consulta = $consulta.' AND (PER.HOR_INI_PERM BETWEEN '.$hora1.' AND '.$hora2 .') OR (HOR_INI_PERM BETWEEN'.$hora1.'AND' .$hora2 .')';
         }
         
         $this->db->select($consulta);
@@ -338,8 +338,54 @@ class PermisoTblModel extends CI_Model {
         }
     }
 
-    public function delete($id) {
-        $query = $this->db->where("id_solicitud", $id)->delete("asopagos_legalsafe.solicitud");
+    public function deleteReposicion($idSol) {
+        $query = $this->db->where("ID_SOL_PERMFK", $idSol)
+                ->delete("TERR_PERM_REPO");
+        $this->_validateDB($query);
+        if ($this->db->affected_rows() == 1) {
+            return TRUE;
+        } else {
+            return NULL;
+        }
+    }
+    
+    public function deleteSolicitudPermisos($idForm) {
+        $query = $this->db->where("ID_FRM_PERFK", $idForm)
+                ->delete("TERR_SOL_PERMISO");
+        $this->_validateDB($query);
+        if ($this->db->affected_rows() == 1) {
+            return TRUE;
+        } else {
+            return NULL;
+        }
+    }
+    
+    public function deleteSSG($idForm) {
+        $query = $this->db->where("ID_FRM_PERFK", $idForm)
+                ->delete("TERR_SOL_TRASEGSOC");
+        $this->_validateDB($query);
+        if ($this->db->affected_rows() == 1) {
+            return TRUE;
+        } else {
+            return NULL;
+        }
+    }
+    
+    public function deletePrimaTecnica($idForm) {
+        $query = $this->db->where("ID_FRM_PERFK", $idForm)
+                ->delete("TERR_SOL_PRITEC");
+        $this->_validateDB($query);
+        if ($this->db->affected_rows() == 1) {
+            return TRUE;
+        } else {
+            return NULL;
+        }
+    }
+    
+    public function deleteFormulario($idForm) {
+        var_dump("lelga a formulario");
+        $query = $this->db->where("ID_FRM_PER", $idForm)
+                ->delete("TERR_FRM_PER");
         $this->_validateDB($query);
         if ($this->db->affected_rows() == 1) {
             return TRUE;

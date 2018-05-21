@@ -102,6 +102,7 @@ angular.module('AgendaApp.formularioPermisos')
                                         .then(function () {
                                         });
                         };
-
+                        
+                        
                     }]);
 
