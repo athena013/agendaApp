@@ -123,11 +123,12 @@ angular.module('AgendaApp.formularioPermisos')
                                     });
                             }else{
                                     messageCenterService.add(CONSTANTS.TYPE_DANGER,"Numero documento vacio",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
-                            }   
-                            $scope.cargarCargo();
+                            }  
                             if (spinner) {
                                     spinner.stop();
                                 }
+                            $scope.cargarCargo();
+                            
                         };
                              
                        /* coloca los datos de usuario en el serverData*/

@@ -176,6 +176,65 @@ class PermisoTblModel extends CI_Model {
         }
     }
     
+    /*obtener detalle formulario permisos*/
+    function getDetallePermiso($idForm) {
+        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO");
+        $this->db->from('TERR_SOL_PERMISO P');
+        $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = P.ID_FRM_PERFK');
+        $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
+        $this->db->join('SEGU_USUARIOS USU','USU.NUMERO_IDENTIFICACION = FUN.ID_USUARIOS');
+        $this->db->join('TERR_CIOM CIOM','CIOM.ID_CIOM = FUN.ID_CIOMFK');
+        $this->db->join('TERR_MOTIVO MOT','MOT.ID_MOTIVO = P.ID_MOTIVOFK');
+        $this->db->where("P.ID_FRM_PERFK",$idForm);
+         $query = $this->db->get();
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return NULL;
+        }
+    }
+    
+    /*obtener detalle DIAS REPOSICIOn permisos*/
+    function getDetalleDiasReposicion($idPermiso) {
+        $this->db->select("*");
+        $this->db->from('TERR_PERM_REPO R');
+        $this->db->where("ID_SOL_PERMFK",$idPermiso);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return NULL;
+        }
+    }
+    
+    /*obtener detalle formulario TRASLADO SEGURIDAD SOCIAL*/
+    function getDetalleSSG($idForm) {
+        $this->db->select("*");
+        $this->db->from('TERR_SOL_TRASEGSOC SS');
+        $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = SS.ID_FRM_PERFK');
+        $this->db->where("SS.ID_FRM_PERFK",$idForm);
+         $query = $this->db->get();
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return NULL;
+        }
+    }
+    
+    /*obtener detalle formulario permisos*/
+    function getDetallePrimaTecnica($idForm) {
+        $this->db->select("*");
+        $this->db->from('TERR_SOL_PRITEC PT');
+        $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = PT.ID_FRM_PERFK');
+        $this->db->where("PT.ID_FRM_PERFK",$idForm);
+         $query = $this->db->get();
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return NULL;
+        }
+    }
+    
     /*obtener id Solicitud Permisos generado TERR_SOL_PERMISO*/
     function getIdSolicitudPermisos() {
         $this->db->select_max("ID_SOL_PERM");
@@ -192,13 +251,11 @@ class PermisoTblModel extends CI_Model {
     function getSolicitudesbyUsuario($numDoc) {
         $this->db->select("P.*, TS.DESC_TIPO_SOLPER");
         $this->db->from('TERR_FRM_PER P');
-        $this->db->join('TERR_TIPO_SOLPER TS ON P.ID_TIPO_SOLPERFK = TS.ID_TIPO_SOLPER');
+        $this->db->join('TERR_TIPO_SOLPER TS','P.ID_TIPO_SOLPERFK = TS.ID_TIPO_SOLPER');
         $this->db->where("ID_USUARIOS",$numDoc);
         $query = $this->db->get();
-         
-         
-        if ($query->num_rows() == 1) {
-            return $query->row_array();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
         } else {
             return NULL;
         }
