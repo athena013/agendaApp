@@ -23,6 +23,9 @@ $route['formulario/buscarDias/idSol/(:any)']['get'] = "formularioPermisos/Permis
 $route['formulario/validarFechas/(:any)/(:any)/(:any)']['get'] = "formularioPermisos/PermisosRest/pendiente";
 $route['uploadFilePermisos']['post'] = "formularioPermisos/PermisosRest/cargar";
 
+//SOLICITUDES POR USUARIO CIOM
+$route['obtenerSolicitudes/idUsuario/(:num)']['get'] = "formularioPermisos/SolicitudesRest/index/$1";
+
 //Rutas Empresa
 $route['empresa']['get'] = "solicitud/EmpresaRest/index";
 $route['empresa/(:num)']['get'] = "solicitud/EmpresaRest/find/$1";

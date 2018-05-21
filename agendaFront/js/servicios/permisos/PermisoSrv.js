@@ -82,33 +82,24 @@ angular.module('AgendaApp.PermisoSrv')
                             }
                     });
 	} ])
+        .factory('solicitudSrv', [ '$resource', '$rootScope',
+                function($resource, $rootScope) {
+                    return $resource(urlParametrosModule
+                                    + 'obtenerSolicitudes/idUsuario/:numDoc', {
+                            numDoc: '@numDoc'
+                    }, {
+                            update : {
+                                    method : 'PUT'
+                            },
+                            query : {
+                                    method : 'GET',
+                                    isArray : false
+                            },
+                            obtenerDetalle : {
+                                    method : 'GET',
+                                    isArray : false
+                            }
+                    });
+	} ])
         
-        .factory('formUgppSrv',
-                [ '$resource',
-                    function ($resource) {
-                        var formUgppSrv = $resource(
-                                urlParametrosModule + 'solicitud/:path',
-                                {
-                                    path: '@path'
-                                },
-                                {
-                                    update: {
-                                        method: 'PUT'
-                                    },
-                                    query: {
-                                        method: 'GET',
-                                        isArray: false
-                                    }
-                                });
-                        return {
-                            validar: formUgppSrv.bind({path: 'validar'}).get,
-                            consultar: formUgppSrv.bind({path: 'consultar'}).get,
-                            subir: formUgppSrv.bind({path: 'subir'}).get,
-                            eliminar: formUgppSrv.bind({path: 'eliminar'}).get,
-                            verLog: formUgppSrv.bind({path: 'verLog'}).get,
-                            avance: formUgppSrv.bind({path: 'avance'}).get,
-                            query: formUgppSrv.query
-                        };
-                    }
-                ])
-        ;
+;

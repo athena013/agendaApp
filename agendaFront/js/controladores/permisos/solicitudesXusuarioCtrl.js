@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('SDMujerApp.formularioPermisos')
+angular.module('AgendaApp.formularioPermisos')
         .controller('solicitudesXusuarioCtrl',
                 ['$scope',
                     '$route',
                     'messageCenterService',
                     '$location',
-                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv',
+                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','solicitudSrv','$confirm',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,solicitudSrv,$confirm)
                     {
                         $scope.emailModel = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                         $scope.letrasModel = /^[_a-zA-Z0-9ñÑ_,.-\s]*$/;
@@ -17,7 +17,7 @@ angular.module('SDMujerApp.formularioPermisos')
                         $scope.numModel = /^[0-9]*$/;
                         $scope.telModel = /^[0-9]{7}$/;
                         $scope.celModel = /^[3]{1}[0-3]{1}[0-9]{8}$/;
-                       
+                        $scope.solicitudList = {};
                         
                         $scope.datosUsuario = {};
                                                     
@@ -29,23 +29,36 @@ angular.module('SDMujerApp.formularioPermisos')
                         };
                         $scope.obtenerIdUrl();                            
                                                     
+                        /*obtener datos de usuario para el formulario*/
                         $scope.obtenerDatosUsuario = function (){
-                            console.log("llega obtenerDatosUsuario segunda pag");
+                             var target = document.getElementById('divLoadingGeneral');
+                            var spinner = new Spinner().spin(target);
+                            
+                            console.log("llega obtenerDatosUsuario");
+                            var fecha= new Date();
                             $scope.result={};
+                            $scope.datosUsuario.numDoc ="10297434" ;
+                            $scope.datosUsuario.nomUsu ="cllanten" ;
                             if($scope.datosUsuario.numDoc != ""){
-                                    usuarioAgendaSrv.query({numDoc: $scope.datosUsuario.numDoc}).$promise.then(function(data){
-                                      console.log(data.response[0]);
-                                      $scope.result=data.response[0];
+                                    usuarioAgendaSrv.consultarDatos({numDoc: $scope.datosUsuario.numDoc,usuario: $scope.datosUsuario.nomUsu}).$promise.then(function(data){
+                                      console.log(data.response);
+                                      $scope.result=data.response;
                                       serveData.data.datosUsuario=$scope.result;
+                                      $scope.datosUsuario=data.response;
                                       $scope.datosUsuario.idUser=$scope.result.ID_USUARIOS;
                                       $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE +" "+ $scope.result.PRIMER_APELLIDO;
-                                       console.log($scope.result.ID_USUARIOS);
+                                      $scope.datosUsuario.fecha_solicitud = fecha.getFullYear()+"/"+(fecha.getMonth()+1)+"/"+fecha.getDate();
+                                      messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                     }, function(reason){
                                             
                                     });
                             }else{
-                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,"Debe seleccionar criterios de busqueda",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
-                            }   
+                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,"Numero documento vacio",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                            } 
+                            if (spinner) {
+                                spinner.stop();
+                            }
+                            
                         };
                              
                        /* coloca los datos de usuario en el serverData*/
@@ -73,6 +86,22 @@ angular.module('SDMujerApp.formularioPermisos')
                             return vars;
                         }
                         
+                        $scope.obtenerSolicitudes = function (){
+                            solicitudSrv.query({numDoc: $scope.datosUsuario.numDoc}).$promise.then(function(data){
+                                $scope.solicitudList = data.response;
+                                messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Solicitudes encontradas",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+                              }, function(reason){
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No hay solicitudes Diligenciadas",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                              });
+                        };
+                        $scope.obtenerSolicitudes();
+                        
+                        
+                        $scope.verDetalle = function (objeto){
+                            $confirm({objeto: objeto}, {templateUrl: 'pages/formPermisos/detalleFormulario.html'})
+                                        .then(function () {
+                                        });
+                        };
 
                     }]);
 

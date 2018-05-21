@@ -1,0 +1,35 @@
+<div ng-controller="detalleFormularioCtrl">
+    <div class="panel-heading">
+        <h2 class="titlePanel" >
+            <!--M&#243;dulo: {{data.registro._f}}-->
+        </h2>
+    </div>
+    
+    <div>
+        <mc-messages></mc-messages>
+    </div>
+    
+    <div class="panel-body">
+         <div class="row paddinModal">
+             <div class="col-xs-12 col-sm-12">      
+                 <div class="row">
+                     <form name="form" ng-submit="form.$valid && autorizar()" ng-show="!form.submitted">
+                         
+                         
+                     </form>
+                     
+                 </div>
+                 
+                 <div class="row">
+                    <div class="col-sm-12">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-danger" ng-click="cancel()">Regresar</button>
+                        </div>
+                    </div>
+                </div>
+                 
+                 
+             </div>
+         </div>
+    </div>
+</div>
