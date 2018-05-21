@@ -26,7 +26,7 @@ $route['uploadFilePermisos']['post'] = "formularioPermisos/PermisosRest/cargar";
 
 //SOLICITUDES POR USUARIO CIOM
 $route['obtenerSolicitudes/idUsuario/(:num)']['get'] = "formularioPermisos/SolicitudesRest/index/$1";
-$route['obtenerDetalle/formulario/(:any)/tipoSol/(:any)']['get'] = "formularioPermisos/SolicitudesRest/index/$1/$2";
+$route['obtenerDetalle/formulario/(:any)/tipoSol/(:any)']['get'] = "formularioPermisos/SolicitudesRest/obtenerSolicitudDetalle/$1/$2";
 
 //Rutas Empresa
 $route['empresa']['get'] = "solicitud/EmpresaRest/index";

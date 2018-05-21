@@ -351,6 +351,7 @@ angular.module('AgendaApp.formularioPermisos')
                             if (spinner) {
                                    spinner.stop();
                                    }
+                            $route.reload();
                             
                         };
                         

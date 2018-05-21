@@ -42,7 +42,7 @@ class SolicitudesRest extends REST_Controller {
             $this->response(array("response" => $resultado), 200);
         } else {
             log_message('info', $resultado);
-            $this->response(array("error" => "No se encontraron registros"), 401);
+            $this->response(array("error" => "No se encontraron registros"), 408);
         }
     }
     

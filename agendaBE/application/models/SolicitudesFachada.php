@@ -43,18 +43,18 @@ class SolicitudesFachada extends CI_Model {
             
             if(intval($idTipoForm) == 1 || intval($idTipoForm) == 3 || intval($idTipoForm) == 5){
                 //solicitud de permiso
-                
                 $resultado=$this->PermisoTblModel->getDetallePermiso($idForm);
+                
                 //si el permiso es por estudio
                 if($resultado["ID_MOTIVOFK"]=="3"){
-                    $resultado["reposicion"]=$this->PermisoTblModel->getDetallePermiso($resultado["ID_SOL_PER"]);
+                    $resultado["reposicion"]=$this->PermisoTblModel->getDetalleDiasReposicion($resultado["ID_SOL_PERM"]);
                 }
                 
-            }else if(intval($tipoForm) == 2){
+            }else if(intval($idTipoForm) == 2){
                 //traslado seguridad social    
                 $resultado=$this->PermisoTblModel->getDetalleSSG($idForm);
                 
-            }else if(intval($tipoForm) == 4){
+            }else if(intval($idTipoForm) == 4){
                 //prima tecnica
                 $resultado=$this->PermisoTblModel->getDetallePrimaTecnica($idForm);
             }
