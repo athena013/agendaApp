@@ -96,6 +96,7 @@ angular.module('AgendaApp.PermisoSrv')
                                     isArray : false
                             },
                             obtenerDetalle : {
+                                    url : urlParametrosModule + 'obtenerDetalle/formulario/:idForm/tipoSol/:idTipoForm:',
                                     method : 'GET',
                                     isArray : false
                             }
