@@ -29,14 +29,12 @@ angular.module('AgendaApp.AdminPermisos')
                                                
                         $scope.tipo1=false;
                         $scope.tipo2=false;
-                        $scope.tipoc1=false;
-                        $scope.tipoc2=false;
-                        $scope.tipoc3=false;
+                        $scope.criterio1=false;
+                        $scope.criterio2=false;
+                        $scope.criterio3=false;
                         $scope.tipoA=false;
                         $scope.tipoB=false;
-                        $scope.CIOM=false;
                         
-                        $scope.ciomList={};
                                               
                         $scope.tipoSolicitudList=[ {id : "1", ds : "1. Habilitar solicitud de permiso prioritario"}, 
                                                     {id : "2", ds : "2. Ver y/o aprobar solicitudes de permiso"} 
@@ -211,20 +209,20 @@ angular.module('AgendaApp.AdminPermisos')
                         $scope.cargarCriterio = function (){
                             switch ($scope.datosUsuario.tipoCriterio){
                                 case "1":
-                                    $scope.tipoc1=true;
-                                    $scope.tipoc2=false;
-                                    $scope.tipoc3=false;
+                                    $scope.criterio1=true;
+                                    $scope.criterio2=false;
+                                    $scope.criterio3=false;
                                     $scope.datosUsuario.dsTipoCriterio="2.1. Por CIOM";
                                     break;
                                 case "2":
-                                    $scope.tipoc1=false;
-                                    $scope.tipoc2=true;
-                                    $scope.tipoc3=false;
+                                    $scope.criterio1=false;
+                                    $scope.criterio2=true;
+                                    $scope.criterio3=false;
                                     $scope.datosUsuario.dsTipoCriterio="2.2. Por fecha de permiso";
                                 case "3":
-                                    $scope.tipoc1=false;
-                                    $scope.tipoc2=false;
-                                    $scope.tipoc3=true;
+                                    $scope.criterio1=false;
+                                    $scope.criterio2=false;
+                                    $scope.criterio3=true;
                                     $scope.datosUsuario.dsTipoCriterio="2.3. Por tipo de solicitud";
                                 break;
                                 

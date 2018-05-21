@@ -132,9 +132,7 @@
                    <!--Ver y aprobar solicitudes de permiso Funcinoarias-->
                    <div ng-show ="tipo2">
                         <div class="row" ng-class="{ 'has-error' : form.tipoCriterio.$invalid && !form.tipoCriterio.$pristine}"> 
-                            
                             <div class="col-sm-6" >
-                              
                                 <label class="control-label" >Criterio de busqueda de solicitudes</label> 
                                 <div>
                                     <div class="input-group" >
@@ -146,23 +144,25 @@
                                     </div>
                                     <span class="text-danger pull-right" ng-show="form.tipoCriterio.$error.pattern" >C&#225;racter no permitido</span>
                                     <span class="text-danger pull-right" ng-show="form.tipoCriterio.$dirty && form.tipoCriterio.$error.required">Campo requerido</span>
-                                                            
                                 </div>
                             </div>
-                           
                         </div>
-                                               
-                        
-                        
+                        <div class="row" ng-class="{ 'has-error' : form.tipoCriterio.$invalid && !form.tipoCriterio.$pristine}"> 
+                            <div class="col-sm-6" >
+                                <label class="control-label" >Estado de aprobación</label> 
+                                    <div class="input-group" >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                        <select name="estadoAprob" placeholder="seleccione opciones de administración" class="form-control" ng-model="datosUsuario.estadoAprob" required="" ng-change="cargarCriterio()" >
+                                        <option value="">Seleccione crieterio de busqueda</option>
+                                        <option ng-selected="{{estadoAprob.id == datosUsuario.estadoAprob}}" ng-repeat="estadoAprob in estadoAprobList" value="{{estadoAprob.id}}">{{estadoAprob.ds}}</option>
+                                        </select>
+                                    </div>
+                                    <span class="text-danger pull-right" ng-show="form.estadoAprob.$error.pattern" >C&#225;racter no permitido</span>
+                                    <span class="text-danger pull-right" ng-show="form.estadoAprob.$dirty && form.estadoAprob.$error.required">Campo requerido</span>
+                                
+                            </div>
+                        </div>
                     </div> 
-                    
-                            
-                            
-                        
-                    
-                                      
-                        
-                        
              </form>
         </div>
 <!--    </body>
