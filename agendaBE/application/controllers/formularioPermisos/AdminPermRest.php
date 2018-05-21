@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
     
 require APPPATH . "/libraries/REST_Controller.php";    
 
-class PermisosRest extends REST_Controller {
+class AdminPermRest extends REST_Controller {
 	
 	function __construct() {
         parent::__construct();
@@ -29,11 +29,11 @@ class PermisosRest extends REST_Controller {
     }
     
     //obtiener los cargos para las ciom
-    public function find_cargo_get() {
-        log_message('info', 'Ingreso - find_cargo_get', false);
+    public function find_ciom_get() {
+        log_message('info', 'Ingreso - find_ciom_get', false);
       
-        $resultado = $this->PermisoFachada->consultarCargoCiom();
-        log_message('info', 'Salida find_cargo_get', false);
+        $resultado = $this->PermisoFachada->consultarCiom();
+        log_message('info', 'Salida find_ciom_get', false);
         if (!is_null($resultado)) {
             $this->response(array("response" => $resultado), 200);
         } else {

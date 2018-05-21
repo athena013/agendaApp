@@ -8,10 +8,10 @@ angular.module('AgendaApp.AdminPermisos')
                     '$route',
                     'messageCenterService',
                     '$location',
-                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv',
+                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv','ciomSrv',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv, ciomSrv)
                     {
                         $scope.datosFunCiom = {};
                         $scope.datosFunCiom.numDoc = "";
@@ -29,11 +29,36 @@ angular.module('AgendaApp.AdminPermisos')
                                                
                         $scope.tipo1=false;
                         $scope.tipo2=false;
+                        $scope.tipoc1=false;
+                        $scope.tipoc2=false;
+                        $scope.tipoc3=false;
+                        $scope.tipoA=false;
+                        $scope.tipoB=false;
+                        $scope.CIOM=false;
                         
+                        $scope.ciomList={};
+                                              
                         $scope.tipoSolicitudList=[ {id : "1", ds : "1. Habilitar solicitud de permiso prioritario"}, 
                                                     {id : "2", ds : "2. Ver y/o aprobar solicitudes de permiso"} 
                                                  ];
-                                          
+                                                 
+                        $scope.tipoCriterioList=[ {id : "2.1", ds : "2.1. Por CIOM"}, 
+                                                    {id : "2.2", ds : "2.2. Por fecha de permiso"},
+                                                    {id : "2.3", ds : "2.3. Por tipo de solicitud"}
+                                                 ]; 
+                                                 
+                        $scope.estadoAprobList=[ {id : "A", ds : "A. Solicitudes aprobadas"}, 
+                                                    {id : "B", ds : "B. Solicitudes no aprobadas"} 
+                                                 ];     
+                                                 
+                        $scope.cargarCiom = function (){
+                            ciomSrv.query().$promise.then(function(data){
+                                      console.log(data.response);
+                                      $scope.ciomList=data.response;
+                                    }, function(reason){
+                                            
+                            });
+                        };
                                                     
                         $scope.obtenerIdUrl = function (){
                             $scope.datosUsuario.numDoc = getUrlVars()["id"];
@@ -186,21 +211,37 @@ angular.module('AgendaApp.AdminPermisos')
                         $scope.cargarCriterio = function (){
                             switch ($scope.datosUsuario.tipoCriterio){
                                 case "1":
-                                    $scope.tipo1=true;
-                                    $scope.tipo2=false;
-                                    $scope.tipo3=false;
-                                    $scope.datosUsuario.dsTipoCriterio="1. Mostrar por CIOM";
+                                    $scope.tipoc1=true;
+                                    $scope.tipoc2=false;
+                                    $scope.tipoc3=false;
+                                    $scope.datosUsuario.dsTipoCriterio="2.1. Por CIOM";
                                     break;
                                 case "2":
-                                    $scope.tipo1=false;
-                                    $scope.tipo2=true;
-                                    $scope.tipo3=false;
-                                    $scope.datosUsuario.dsTipoCriterio="2. Mostrar por fecha de permiso";
+                                    $scope.tipoc1=false;
+                                    $scope.tipoc2=true;
+                                    $scope.tipoc3=false;
+                                    $scope.datosUsuario.dsTipoCriterio="2.2. Por fecha de permiso";
                                 case "3":
-                                    $scope.tipo1=false;
-                                    $scope.tipo2=false;
-                                    $scope.tipo3=true;
-                                    $scope.datosUsuario.dsTipoCriterio="3. Mostrar por tipo de solicitud";
+                                    $scope.tipoc1=false;
+                                    $scope.tipoc2=false;
+                                    $scope.tipoc3=true;
+                                    $scope.datosUsuario.dsTipoCriterio="2.3. Por tipo de solicitud";
+                                break;
+                                
+                            }
+                        };
+                        
+                        $scope.cargarEstadoAprob = function (){
+                            switch ($scope.datosUsuario.estadoAprob){
+                                case "1":
+                                    $scope.tipoA=true;
+                                    $scope.tipoB=false;
+                                    $scope.datosUsuario.dsEstadoAprob="A. Solicitudes aprobadas";
+                                    break;
+                                case "2":
+                                    $scope.tipoA=false;
+                                    $scope.tipoB=true;
+                                    $scope.datosUsuario.dsEstadoAprob="B. Solicitudes no aprobadas";
                                 break;
                                 
                             }

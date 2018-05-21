@@ -24,5 +24,19 @@ angular.module('AgendaApp.AdminPermisos')
                             }
                     });
 	} ])
-        
+        .factory('ciomSrv', [ '$resource', '$rootScope',
+                function($resource, $rootScope) {
+                    return $resource(urlParametrosModule
+                                    + 'obtenerCioms/:idUsuario', {
+                            idUsuario: '@idUsuario'
+                    }, {
+                            update : {
+                                    method : 'PUT'
+                            },
+                            query : {
+                                    method : 'GET',
+                                    isArray : false
+                            }
+                    });
+	} ])
         ;

@@ -16,7 +16,7 @@
                     <!--</div>-->
                           
                     <div class="row">
-                        <div class="col-sm-9"> 
+                        <div class="col-sm-12"> 
                             <div class="form" ng-class="{ 'has-error' : form.tipoSolicitud.$invalid && !form.tipoSolicitud.$pristine}">
                                 <label class="control-label" >Opciones de administración</label> 
                                 <div>
@@ -131,24 +131,34 @@
                     
                    <!--Ver y aprobar solicitudes de permiso Funcinoarias-->
                    <div ng-show ="tipo2">
-                        
-                        <div class="form" ng-class="{ 'has-error' : form.tipoSolicitud.$invalid && !form.tipoSolicitud.$pristine}">
-                                <label class="control-label" >Criterio de busqueda</label> 
+                        <div class="row" ng-class="{ 'has-error' : form.tipoCriterio.$invalid && !form.tipoCriterio.$pristine}"> 
+                            
+                            <div class="col-sm-6" >
+                              
+                                <label class="control-label" >Criterio de busqueda de solicitudes</label> 
                                 <div>
                                     <div class="input-group" >
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                        <select name="tipoSolicitud" placeholder="seleccione opciones de administración" class="form-control" ng-model="datosUsuario.tipoCriterio" required="" ng-change="cargarCriterio()" >
-                                        <option value="">Seleccione</option>
+                                        <select name="tipoCriterio" placeholder="seleccione opciones de administración" class="form-control" ng-model="datosUsuario.tipoCriterio" required="" ng-change="cargarCriterio()" >
+                                        <option value="">Seleccione crieterio de busqueda</option>
                                         <option ng-selected="{{tipoCriterio.id == datosUsuario.tipoCriterio}}" ng-repeat="tipoCriterio in tipoCriterioList" value="{{tipoCriterio.id}}">{{tipoCriterio.ds}}</option>
-                                    </select>
+                                        </select>
                                     </div>
-                                    <span class="text-danger pull-right" ng-show="form.tipoSolicitud.$error.pattern" >C&#225;racter no permitido</span>
-                                    <span class="text-danger pull-right" ng-show="form.tipoSolicitud.$dirty && form.tipoSolicitud.$error.required">Campo requerido</span>
+                                    <span class="text-danger pull-right" ng-show="form.tipoCriterio.$error.pattern" >C&#225;racter no permitido</span>
+                                    <span class="text-danger pull-right" ng-show="form.tipoCriterio.$dirty && form.tipoCriterio.$error.required">Campo requerido</span>
+                                                            
                                 </div>
-                        </div>      
+                            </div>
+                           
+                        </div>
+                                               
                         
                         
-                   </div> 
+                    </div> 
+                    
+                            
+                            
+                        
                     
                                       
                         

@@ -75,6 +75,16 @@ class UsuarioModel extends CI_Model {
         }
     }
     
+    function getCiom() {
+        $this->db->select("ID_CARGO, CARGO, CARGO_ESPEC");
+        $query = $this->db->get("TERR_FUNC_CARGO");
+        $this->_validateDB($query);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return NULL;
+        }
+    }
     
      /*obtener id CIOM 
      */

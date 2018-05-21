@@ -36,13 +36,13 @@ class AdminPermFachada extends CI_Model {
     }
     
      //llamado al modelo para obtener cargos
-    public function consultarCargoCiom() {
-        log_message('info', 'consultarCargoCiom', false);
+    public function consultarCiom() {
+        log_message('info', 'consultarCiom', false);
         $resultado = NULL;
         $mensaje = NULL;
         try {
             $this->db->trans_off();
-            $resultado = $this->UsuarioModel->getCargoCiom();
+            $resultado = $this->UsuarioModel->getCiom();
            
         } catch (Exception $e) {
             $error = $this->db->error();
