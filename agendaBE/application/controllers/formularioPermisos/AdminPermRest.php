@@ -32,7 +32,7 @@ class AdminPermRest extends REST_Controller {
     public function find_ciom_get() {
         log_message('info', 'Ingreso - find_ciom_get', false);
       
-        $resultado = $this->PermisoFachada->consultarCiom();
+        $resultado = $this->AdminPermFachada->consultarCiom();
         log_message('info', 'Salida find_ciom_get', false);
         if (!is_null($resultado)) {
             $this->response(array("response" => $resultado), 200);
