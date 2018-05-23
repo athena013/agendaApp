@@ -35,7 +35,7 @@ class AdminPermFachada extends CI_Model {
         return $resultado;
     }
     
-     //llamado al modelo para obtener cargos
+     //llamado al modelo para obtener ciom
     public function consultarCiom() {
         log_message('info', 'consultarCiom', false);
         $resultado = NULL;

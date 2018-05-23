@@ -9,7 +9,7 @@ $route['translate_uri_dashes'] = FALSE;
 //Rutas Permisos
 //$route['buscarUsuario']['get'] = "formularioPermisos/PermisosRest/index"; 
 $route['obtenerCargos']['get'] = "formularioPermisos/PermisosRest/find_cargo";
-$route['obtenerCioms']['get'] = "formularioPermisos/AdminPermRest/find_ciom";
+$route['obtenerCiom']['get'] = "formularioPermisos/AdminPermRest/find_ciom";
 $route['obtenerMotivos']['get'] = "formularioPermisos/PermisosRest/find_motivo";
 $route['usuario/buscarUsuario/(:any)/nombre/(:any)']['get'] = "formularioPermisos/PermisosRest/index/$1/$2";
 $route['formulario/guardarFormulario']['post'] = "formularioPermisos/PermisosRest/index";

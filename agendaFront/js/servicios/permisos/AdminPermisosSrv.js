@@ -27,7 +27,7 @@ angular.module('AgendaApp.AdminPermisos')
         .factory('ciomSrv', [ '$resource', '$rootScope',
                 function($resource, $rootScope) {
                     return $resource(urlParametrosModule
-                                    + 'obtenerCioms/:idUsuario', {
+                                    + 'obtenerCiom/:idUsuario', {
                             idUsuario: '@idUsuario'
                     }, {
                             update : {

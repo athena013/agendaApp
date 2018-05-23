@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <hr>
-                        <label class="control-label" align="center"> {{datosUsuario.dsTipoSolicitud}} </label> 
+                        <!--<label class="control-label" align="center"> {{datosUsuario.dsTipoSolicitud}} </label> -->
                        
                     
                     <!--Habilitar solicitud de permiso prioritario-->
@@ -146,23 +146,78 @@
                                     <span class="text-danger pull-right" ng-show="form.tipoCriterio.$dirty && form.tipoCriterio.$error.required">Campo requerido</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" ng-class="{ 'has-error' : form.tipoCriterio.$invalid && !form.tipoCriterio.$pristine}"> 
-                            <div class="col-sm-6" >
-                                <label class="control-label" >Estado de aprobación</label> 
-                                    <div class="input-group" >
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                        <select name="estadoAprob" placeholder="seleccione opciones de administración" class="form-control" ng-model="datosUsuario.estadoAprob" required="" ng-change="cargarCriterio()" >
-                                        <option value="">Seleccione crieterio de busqueda</option>
-                                        <option ng-selected="{{estadoAprob.id == datosUsuario.estadoAprob}}" ng-repeat="estadoAprob in estadoAprobList" value="{{estadoAprob.id}}">{{estadoAprob.ds}}</option>
-                                        </select>
+                            <div class="col-sm-3" align="right">
+                                <br>
+                                <div class="form" >
+                                    <div align="right">
+                                        <div class="input-group" >
+                                            <button type="button" class="btn btn-info" ng-disabled="btnBuscarForm" ng-click="buscarFormularios">Buscar formularios<span class="glyphicon glyphicon-search"></span></button>
+                                        </div>
                                     </div>
-                                    <span class="text-danger pull-right" ng-show="form.estadoAprob.$error.pattern" >C&#225;racter no permitido</span>
-                                    <span class="text-danger pull-right" ng-show="form.estadoAprob.$dirty && form.estadoAprob.$error.required">Campo requerido</span>
-                                
+                                </div>
                             </div>
+                            
                         </div>
-                    </div> 
+                        <div class="row" > 
+                            <div ng-show ="criterio1" > 
+                                <div class="col-sm-3" >
+                                    <label class="control-label" >Seleccione CIOM</label> 
+                                        <div class="input-group" >
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                            <select name="ciom" placeholder="Seleccione casa de igualdad de oportunidades" class="form-control" ng-model="datosUsuario.ID_CIOM" required="" >
+                                            <option value="">Seleccione casa de igualdad de oportunidades</option>
+                                            <option ng-selected="{{datosUsuario.ID_CIOM==ciom.ID_CIOM}}" ng-repeat="ciom in ciomList" value="{{ciom.ID_CIOM}}">{{ciom.ID_CIOM}} {{ciom.NOM_CIOM}}</option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger pull-right" ng-show="form.ciom.$error.pattern" >C&#225;racter no permitido</span>
+                                        <span class="text-danger pull-right" ng-show="form.ciom.$dirty && form.ciom.$error.required">Campo requerido</span>
+                                </div>
+                            </div>
+                            <div ng-show ="criterio2" > 
+                                <div class="col-sm-3" >
+                                    <label class="control-label" >Tipo de solicitud de permiso</label> 
+                                        <div class="input-group" >
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                            <select name="tipoSol" placeholder="seleccione tipo de solicitud de permiso" class="form-control" ng-model="datosUsuario.tipoSol" required="" >
+                                            <option value="">Seleccione tipo de solicitud de permiso</option>
+                                            <option ng-selected="{{tipoSol.id == datosUsuario.tipoSol}}" ng-repeat="tipoSol in tipoSolList" value="{{tipoSol.id}}">{{tipoSol.ds}}</option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger pull-right" ng-show="form.tipoSol.$error.pattern" >C&#225;racter no permitido</span>
+                                        <span class="text-danger pull-right" ng-show="form.tipoSol.$dirty && form.tipoSol.$error.required">Campo requerido</span>
+                                </div>
+                            </div>
+                            <div ng-show ="criterio3" > 
+                                <div class="col-sm-3" >
+                                    <label class="control-label" >Seleccione fecha de permiso</label> 
+                                        <div class="input-group" >
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                            <select name="fecPerm" placeholder="Seleccione fecha de permiso" class="form-control" >
+                                            </select>
+                                        </div>
+                                        <span class="text-danger pull-right" ng-show="form.ciom.$error.pattern" >C&#225;racter no permitido</span>
+                                        <span class="text-danger pull-right" ng-show="form.ciom.$dirty && form.ciom.$error.required">Campo requerido</span>
+                                </div>
+                            </div>
+                            <div ng-show ="criterio4" > 
+                                <div class="col-sm-3" >
+                                    <label class="control-label" >Estado de aprobación</label> 
+                                        <div class="input-group" >
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                            <select name="estadoAprob" placeholder="seleccione opciones de administración" class="form-control" ng-model="datosUsuario.estadoAprob" required="" >
+                                            <option value="">Seleccione estabo de aprobación de permiso</option>
+                                            <option ng-selected="{{estadoAprob.id == datosUsuario.estadoAprob}}" ng-repeat="estadoAprob in estadoAprobList" value="{{estadoAprob.id}}">{{estadoAprob.ds}}</option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger pull-right" ng-show="form.estadoAprob.$error.pattern" >C&#225;racter no permitido</span>
+                                        <span class="text-danger pull-right" ng-show="form.estadoAprob.$dirty && form.estadoAprob.$error.required">Campo requerido</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
              </form>
         </div>
 <!--    </body>
