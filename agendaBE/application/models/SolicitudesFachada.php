@@ -70,41 +70,23 @@ class SolicitudesFachada extends CI_Model {
     }
     
     //eliminar solicitudes por tipo de usuario y tipo de solicitud
-    public function deleteFormulario($idForm,$idTipoForm,$idSol) {
+    public function deleteFormulario($idForm) {
         log_message('info', 'deleteFormulario', false);
         $resultado = NULL;
         $mensaje = NULL;
         try {
-            var_dump("llegafachada");
-            $this->db->trans_begin();
+            $this->db->trans_start();
             
-            if(intval($idTipoForm) == 1 || intval($idTipoForm) == 3 || intval($idTipoForm) == 5){
-            $resReposicion = $this->SolicitudesFachada->deleteReposicion($idSol);
-            var_dump($resReposicion);
-                if($resReposicion){
-                    $resSolicitud=$this->SolicitudesFachada->deleteSolicitudPermisos($idForm);
-                }else{
-                    $resSolicitud=$this->SolicitudesFachada->deleteSolicitudPermisos($idForm);
-                }
-            }else if(intval($idTipoForm) == 2){
-                //ssg
-                $resSolicitud=$this->PermisoTblModel->deleteSSG($idForm);
-            }else if(intval($idTipoForm) == 4){
-                //prima tecnica
-                echo "enta a prima";
-                $resSolicitud=$this->PermisoTblModel->deletePrimaTecnica($idForm);
-            }
-            
-            var_dump("solicitud");
-            var_dump($resSolicitud);
-    //        
-            if($resSolicitud){
-                 $resultado = $this->SolicitudesFachada->deleteFormulario($idForm);
-            }else{
-                 $resultado = $this->SolicitudesFachada->deleteFormulario($idForm);
-            }
-
+            $resultado = $this->PermisoTblModel->deleteFormulario($idForm);
+             
+                
             $this->db->trans_complete();
+            
+            if($resultado){
+                $mensaje="Solicitud eliminada correctamente";
+            }else{
+                $mensaje=null;
+            }
            
         } catch (Exception $e) {
             $error = $this->db->error();
@@ -113,7 +95,8 @@ class SolicitudesFachada extends CI_Model {
             throw new Exception($error[message]);
         }
         log_message('info', 'getSolicitudesbyUsuario list', false);
-        return $mensaje;
+        
+        return $resultado;
     }
     
     //eliminar tabla reposicion

@@ -149,7 +149,7 @@
                                     <div>
                                         <div class="input-group" >
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                            <input name="cantidad" placeholder="cantidad" class="form-control" ng-model="datosUsuario.cantidad" ng-ng-required="tipo1" type="number" maxlength="2" ng-pattern="numModel" ng-change="validarDiasHoras()">
+                                            <input name="cantidad" placeholder="cantidad" class="form-control" ng-model="datosUsuario.cantidad" ng-required="tipo1" type="number" maxlength="2" ng-pattern="numModel" ng-change="validarDiasHoras()">
                                         </div>
                                         <span class="text-danger pull-right" ng-show="form.cantidad.$error.pattern" >C&#225;racter no permitido</span>
                                         <span class="text-danger pull-right" ng-show="form.cantidad.$dirty && form.cantidad.$error.required">Campo requerido</span>
@@ -240,9 +240,9 @@
                         
                         <div class="row">
                             <div class="col-sm-12" align="right">
-                                <div class="input-group" >
-                                    <button type="button" class="btn btn-warning" ng-disabled="validado" ng-click="validarFechas()">ValidarFechas</button>
-                                </div>
+                                    <div class="input-group" >
+                                        <button type="button" class="btn btn-warning" ng-disabled="validado" ng-click="validarFechas()">ValidarFechas</button>
+                                    </div>
                             </div>
                         </div>
                         

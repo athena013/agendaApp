@@ -97,7 +97,7 @@ class PermisosRest extends REST_Controller {
     		$this->response(NULL, 401);
     	}
         // Cuando se hace le decode de json a objet este queda como un objeto de tipo stdClass (Standar Class)
-        // Para obtener una propiedad del sdclass se debe hacer con ->, si se quiere con [] se debe hacer un cass a array
+        // Para obtener una propiedad del sdclass se debe hacer con ->, si se quiere con [] se debe hacer un cas a array
         $form= (array)json_decode($this->post("data"));
         // Se hace el cass a array para que as propiedades se puedan obtener con [] y asi no cambiar mas parte del codigo
         //$form = (array)$data["data"];
@@ -144,12 +144,14 @@ class PermisosRest extends REST_Controller {
     public function validarFechas_post() {
     	log_message('info', 'Ingreso validarFechas_get - index_post', false);
        
-        $fechas = $this->post("fechas");
-        $tipo = $this->post("tipo");
-        $idUsu = $this->post("isUsu");
-        
-        if (!$fechas || $tipo || $idUsu) { 
-            $this->response(array("error" => "parametros invalidos"), 210);
+        $data = $this->post("data");
+            
+        $fechas = $data["fecha"];
+        $tipo = $data["tipoPermiso"];
+        $idUsu = $data["idUsu"];
+                
+        if (!$data) { 
+            $this->response(array("error" => "parametros invalidos"), 201);
         }
         
         $resultado = $this->PermisoFachada->validarFechas($fechas,$tipo,$idUsu);

@@ -112,21 +112,14 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.eliminar = function (objeto){
                             console.log("entra a eliminar");
                             console.log(objeto);
-                            var idSol;
-                            if(objeto.ID_TIPO_SOLPERFK == "2"){
-                                idSol = objeto.ID_SOL_TRASSEGSOC;
-                            }else if(objeto.ID_TIPO_SOLPERFK == "4"){
-                                idSol = objeto.ID_SOL_PRITEC;
-                            }else{
-                                idSol = objeto.ID_SOL_PERM;
-                            }
-                                    
-                            solicitudSrv.eliminar({idForm: objeto.ID_FRM_PER, idTipoForm: objeto.ID_TIPO_SOLPERFK, idSol: idSol}).$promise.then(function(data){
-                                 
-                                 
+                            $scope.data.idForm = objeto.ID_FRM_PER;
+                            solicitudSrv.eliminar({data: $scope.data}).$promise.then(function(data){
+                                $scope.cancel();
+                                messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                              }, function(reason){
                                 messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                             });
+                            $scope.reload();
                         };
                             
 

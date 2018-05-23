@@ -17,6 +17,7 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.letrasModel = /^[óáéíú_a-zA-Z0-9ñÑ_,.-\s]*$/;
                         $scope.direccionModel = /^[_a-zA-Z0-9ñÑ#_,.-\s]*$/;
                         $scope.numModel = /^[0-9]*$/;
+                        $scope.cantidadModel = /^[0-3]*$/;
                         $scope.telModel = /^[0-9]{7}$/;
                         $scope.celModel = /^[3]{1}[0-3]{1}[0-9]{8}$/;
                        
@@ -167,6 +168,7 @@ angular.module('AgendaApp.formularioPermisos')
                                 fechaHabil.setDate(fechaHabil.getDate()+2);
                                 /*validar tres dias de anterioridad debo validar que tenga bandera activa para permiso normal*/
                                 
+                                
                                 if(fechaHabil<fechaSolPer || $scope.datosUsuario.BND1 == "1"){
                                     if($scope.datosUsuario.tipoPermiso == "horas"){
                                         console.log("horas");
@@ -187,10 +189,18 @@ angular.module('AgendaApp.formularioPermisos')
                                         $scope.datosUsuario.fHasta=$scope.datosUsuario.fInicio;
                                         }else{
                                             $scope.horas = false;
-                                            var cant = $scope.datosUsuario.cantidad-1;
-                                            fechaSolPer.setDate(fechaSolPer.getDate()+cant);
-                                            $scope.datosUsuario.strfHasta = fechaSolPer.getFullYear()+"/"+(fechaSolPer.getMonth()+1)+"/"+fechaSolPer.getDate();
-                                            $scope.datosUsuario.fHasta=fechaSolPer;
+                                            if($scope.datosUsuario.cantidad<=3){
+                                                var cant = $scope.datosUsuario.cantidad-1;
+                                                fechaSolPer.setDate(fechaSolPer.getDate()+cant);
+                                                $scope.datosUsuario.strfHasta = fechaSolPer.getFullYear()+"/"+(fechaSolPer.getMonth()+1)+"/"+fechaSolPer.getDate();
+                                                $scope.datosUsuario.fHasta=fechaSolPer;
+                                            }else{
+                                                $scope.datosUsuario.cantidad="";
+                                                $scope.datosUsuario.strfHasta = "";
+                                                $scope.datosUsuario.fInicio="";
+                                                $scope.datosUsuario.fHasta="";
+                                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No es permitido solicitar mas de tres días",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                            }
                                         } 
                                     }
                                 }else{
@@ -329,7 +339,7 @@ angular.module('AgendaApp.formularioPermisos')
                                     guardar=validarArchivo(file);
                                 }
                             }                                                  
-                            if(guardar == true && $scope.validado){
+                            if(guardar == true){
                                   formData.append("data",JSON.stringify($scope.datosUsuario));
 //                                usuarioAgendaSrv.guardarFormulario({data: $scope.datosUsuario,file:formData}).$promise.then(function(data){
                                    usuarioAgendaSrv.guardarFormulario(formData).$promise.then(function(data){
@@ -342,6 +352,7 @@ angular.module('AgendaApp.formularioPermisos')
                                         //guardar dias de reposicion
                                         $scope.adicionarReposicion();
                                     }else{
+                                        
                                         $route.reload();
                                     }
                                     
@@ -349,16 +360,16 @@ angular.module('AgendaApp.formularioPermisos')
                                      if (spinner) {
                                     spinner.stop();
                                     }
+                                    
                                     messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.response,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                 });
                             }else{
                                 messageCenterService.add(CONSTANTS.TYPE_DANGER,"Debe validar las fechas",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                             }
                             if (spinner) {
-                                   spinner.stop();
+                                spinner.stop();
                             }
-                            $route.reload();
-                            
+                            $scope.datosUsuario.tipoSolicitud="";                         
                         };
                         
                         function validarArchivo(file) {                            
@@ -433,6 +444,7 @@ angular.module('AgendaApp.formularioPermisos')
                         };
                         
                         $scope.validarFechas = function(){
+                            $scope.data={};
                             $scope.fecha={};
                             $scope.fecha.fecha1= $scope.datosUsuario.fInicio;
                             $scope.fecha.fecha2= $scope.datosUsuario.fHasta;
@@ -440,11 +452,14 @@ angular.module('AgendaApp.formularioPermisos')
                                 $scope.fecha.hora1= $scope.datosUsuario.horaIni;
                                 $scope.fecha.hora2= $scope.datosUsuario.horaFin;
                             }
-                                
+                            $scope.data.fecha =$scope.fecha;
+                            $scope.data.tipoPermiso =$scope.datosUsuario.tipoPermiso;
+                            $scope.data.idUsu =$scope.datosUsuario.numDoc;
+                            
                             if($scope.datosUsuario.BND1 == "1"){
                                 $scope.validado=true;//usuario autorizado no importa las restricciones
                             }else{
-                                usuarioAgendaSrv.validarFechas({fechas:$scope.fecha,tipo:$scope.datosUsuario.tipoPermiso, idUsu: $scope.datosUsuario.numDoc}).$promise.then(function(data){
+                                usuarioAgendaSrv.validarFechas({data : $scope.data }).$promise.then(function(data){
                                     if(data.response){
                                           messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                             $scope.btnEnviar=false;//habilito guardar

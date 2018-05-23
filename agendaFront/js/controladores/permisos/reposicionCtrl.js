@@ -95,7 +95,7 @@ angular.module('AgendaApp.AdminPermisos')
                             
                             var target = document.getElementById('divLoadingGeneral');
                             var spinner = new Spinner().spin(target);
-                                console.log($scope.dia.idSol);
+                            console.log($scope.dia.idSol);
                             usuarioAgendaSrv.guardarDias({datos: $scope.dia}).$promise.then(function(data){
                                 if(data.response){
                                     
@@ -126,7 +126,7 @@ angular.module('AgendaApp.AdminPermisos')
                                  
                                  
                              }, function(reason){
-                                messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No se encontraron registros para el formulario",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                             });
                             
                         };

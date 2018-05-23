@@ -37,7 +37,7 @@ angular.module('AgendaApp.PermisoSrv')
                                 isArray : false
                             },
                             validarFechas:{
-                                url : urlParametrosModule + 'formulario/validarFechass',
+                                url : urlParametrosModule + 'formulario/validarFechas',
                                 method : "POST",
                                 isArray : false
                             },

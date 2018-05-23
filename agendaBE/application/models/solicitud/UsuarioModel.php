@@ -93,8 +93,8 @@ class UsuarioModel extends CI_Model {
         $this->db->where("ID_USUARIOS",$idUsu);
         $query = $this->db->get("TERR_CIOM_FUNCIONARIAS");
         $this->_validateDB($query);
-        if ($query->num_rows() > 0) {
-            return $query->result_array();
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
         } else {
             return NULL;
         }

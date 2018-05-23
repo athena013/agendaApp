@@ -249,22 +249,44 @@ class PermisoFachada extends CI_Model {
             $this->db->trans_off();
             
             $fecha1=$fechas["fecha1"];
-            $fecha2=$fechas["fecha2"];
-            $hora1=$fechas["hora1"];
-            $hora2=$fechas["hora2"];
+            $fecha2= date("Y/m/d", strtotime($fechas["fecha2"]));
             
-            $idCiom = $this->UsuarioModel->obtenerCiom($idUsu);
+           
+            if(isset($fechas["hora1"])){
+                $hora1=$fechas["hora1"];
+            }else{
+                $hora1=null;
+            }
+            if(isset($fechas["hora2"])){
+                $hora2=$fechas["hora2"];
+            }else{
+                $hora2=null;
+            }
+            
+            
+            
+            $ciom = $this->UsuarioModel->obtenerCiom($idUsu);
+            $idCiom = $ciom["ID_CIOMFK"];
+             
             
             $count = $this->PermisoTblModel->validarFechas($tipo,$fecha1,$fecha2,$hora1,$hora2,$idCiom);
             
-            if($tipo="horas"){//valido la hora si es fecha disponible
-                $resultado["count"] = $this->PermisoTblModel->validarFechas($tipo,$fecha1,$fecha2,$hora1,$hora2,$idCiom);
-                if($resultadoHoras<=2){
+            
+            $conteo=$count["CONTEO"];
+            
+            
+            if($tipo="horas"){//valido la hora si es fecha disponible}
+                
+                $countHoras = $this->PermisoTblModel->validarFechas($tipo,$fecha1,$fecha2,$hora1,$hora2,$idCiom);
+                
+                $conteoHoras=$countHoras["CONTEO"];
+                
+                if(intval($conteoHoras)>2){//<=?
                     $resultado["error"] = "Las horas solicitadas no estan disponiles";
                 }else{
                      $resultado["mensaje"] = "Horas disponibles";
                 }
-            }else if($count>2){
+            }else if(intval($conteo)>2){
                     $resultado["count"] = $count;
                     $resultado["error"] = "Las fechas solicitadas no estan disponiles";
                 }else{

@@ -303,20 +303,22 @@ class PermisoTblModel extends CI_Model {
     
     /*devuelve la cantidad de permisos autorizados dentro de un rango de fechas por ciom*/
     public function validarFechas($tipo,$fec1,$fec2,$hora1,$hora2,$idCiom){
-        $consulta = "SELECT count(ID_FRM_PER) from TERR_FRM_PER FMR
-    INNER JOIN TERR_SOL_PERMISO PER ON FMR.ID_FRM_PER = PER.ID_FRM_PERFK
-    INNER JOIN TERR_CIOM_FUNCIONARIAS FUN ON FMR.ID_USUARIOS = FUN.ID_USUARIOS
-    WHERE FMR.AUT0 = '1'
-    AND FUN.ID_CIOMFK ='.$idCiom.'
-    AND ((FEC_INI_PERM BETWEEN TO_DATE ('.$fec1.', 'yyyy/mm/dd') AND TO_DATE ('.$fec1.', 'yyyy/mm/dd'))
-        OR (FEC_FIN_PERM BETWEEN TO_DATE ('.$fec2.', 'yyyy/mm/dd') AND TO_DATE ('.$fec2.', 'yyyy/mm/dd')));";
-        
-        if($tipo="horas"){
-            $consulta = $consulta.' AND (PER.HOR_INI_PERM BETWEEN '.$hora1.' AND '.$hora2 .') OR (HOR_INI_PERM BETWEEN'.$hora1.'AND' .$hora2 .')';
-        }
-        
+        $consulta = " count(PER.ID_FRM_PERFK) as conteo from TERR_SOL_PERMISO PER
+    INNER JOIN TERR_FRM_PER FR ON FR.ID_FRM_PER = PER.ID_FRM_PERFK
+    INNER JOIN TERR_CIOM_FUNCIONARIAS FUN ON FR.ID_USUARIOS = FUN.ID_USUARIOS
+    WHERE FUN.ID_CIOMFK ='".$idCiom."'
+    AND FR.AUT0 IS NULL    
+    AND PER.FEC_INI_PERM BETWEEN TO_DATE ('".$fec1."', 'yyyy/mm/dd') AND TO_DATE ('".$fec2."', 'yyyy/mm/dd')
+    AND PER.FEC_FIN_PERM BETWEEN TO_DATE ('".$fec1."', 'yyyy/mm/dd') AND TO_DATE ('".$fec2."', 'yyyy/mm/dd')";
+             
+//        if($tipo == "horas"){
+//            $consulta = $consulta." AND (PER.HOR_INI_PERM BETWEEN ".$hora1." AND ".$hora2 .") OR (HOR_INI_PERM BETWEEN ".$hora1." AND " .$hora2 .")";
+//        }
+//        
         $this->db->select($consulta);
         $query = $this->db->get(); 
+        
+       
         if ($query->num_rows() == 1) {
             return $query->row_array();
         } else {
@@ -383,10 +385,11 @@ class PermisoTblModel extends CI_Model {
     }
     
     public function deleteFormulario($idForm) {
-        var_dump("lelga a formulario");
+        
         $query = $this->db->where("ID_FRM_PER", $idForm)
                 ->delete("TERR_FRM_PER");
         $this->_validateDB($query);
+        
         if ($this->db->affected_rows() == 1) {
             return TRUE;
         } else {
@@ -401,11 +404,13 @@ class PermisoTblModel extends CI_Model {
     }
     
     public function updateFormulario($formulario,$id){
-         $query = $this->db->set(
+        
+        $query = $this->db->set(
                         $this->_set_formulario($formulario))
                 ->where("FOR.ID_FRM_PER", $id)
                 ->update("TERR_FRM_PER FOR"); 
         $this->_validateDB($query);
+        
         if ($this->db->affected_rows() == 1) {
             return TRUE;
         } else {

@@ -47,26 +47,17 @@ class SolicitudesRest extends REST_Controller {
     }
     
     //elimina el formulario diligenciado
-    public function eliminarFormulario_post() {
+   public function eliminarFormulario_post() {
         log_message('info', 'Ingreso - eliminarFormulario_post', false);
+   
+        $data=$this->post("data");
+        $idForm=$data["idForm"];
         
-        $idForm=$this->post("idForm");
-        $idTipoForm=$this->post("idTipoForm");
-        $idSol=$this->post("idSol");
-        
-        var_dump($this->post("idForm"));
-        var_dump($this->post("idTipoForm"));
-        var_dump($this->post("idSol"));
-        var_dump("tiene post?");
-        
-        if (!$idForm || !$idTipoForm || !$idSol) { 
+        if (!$idForm) { 
             $this->response(NULL, 210);
         }
         
-        $resultado = $this->SolicitudesFachada->deleteFormulario($idForm,$idTipoForm,$idSol);
-        
-        var_dump("antes responder");
-//        var_dump($resultado);
+        $resultado = $this->SolicitudesFachada->deleteFormulario($idForm);
         
         log_message('info', 'Salida Solicitud - eliminarFormulario_post', false);
         if (!is_null($resultado)) {
