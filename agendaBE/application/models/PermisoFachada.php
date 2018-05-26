@@ -199,6 +199,7 @@ class PermisoFachada extends CI_Model {
                                 $resTransaccion["estatus"] = "OK";
                                 $resTransaccion["mensaje"]="Solicitud guardada correctamente";
                                 $resTransaccion["formulario"] = $idForm["ID_FRM_PER"];
+                                $resTransaccion["solicitud"] = "";
                             }else{
                                 $resTransaccion["estatus"] = "KO";
                                 $resTransaccion["mensaje"]="No se guardo la solicitud";
@@ -209,6 +210,7 @@ class PermisoFachada extends CI_Model {
                                 $resTransaccion["estatus"] = "OK";
                                 $resTransaccion["mensaje"]="Solicitud guardada correctamente";
                                 $resTransaccion["formulario"] = $idForm["ID_FRM_PER"];
+                                $resTransaccion["solicitud"] = "";
                             }else{
                                 $resTransaccion["estatus"] = "KO";
                                 $resTransaccion["mensaje"]="No se guardo la solicitud";

@@ -139,7 +139,7 @@ class SolicitudesFachada extends CI_Model {
                 //solicitud de permiso
             $data=$this->PermisoTblModel->getDetallePermiso($idForm);
             
-            if(intval($tipo) == 1){
+            if(intval($tipo) == 1){//permiso
                 //si el permiso es por estudio
                 if($data["HOR_INI_PERM"]){
                     $data["HORAS"]=$data["CANTIDAD"];
@@ -163,13 +163,13 @@ class SolicitudesFachada extends CI_Model {
                 $data["DIAS_DISFRUTE"]="";
                 $data["DIAS_PEND"]="";
                 
-                $data["INTERRUPCION"]="";
+                $data["REPROGRAMACION"]="";
                 $data["APLAZAMIENTO"]="";
                 $data["INTERRUPCION"]="";
                 
             }
             
-            if(intval($tipo) == 2){
+            if(intval($tipo) == 5){//licencia no remunerada o por luto
                 $data["L_INI"]=$data["FEC_INI_PERM"];
                 $data["L_FIN"]=$data["FEC_FIN_PERM"];
                 $data["L_MOTIVO"]=$data["DESC_MOTIVO"];
@@ -182,22 +182,30 @@ class SolicitudesFachada extends CI_Model {
                 $data["HORAS_VALOR"]="";
                 
                 $data["V_INI"]="";
-                $data["V_INI"]="";
+                $data["V_FIN"]="";
                 $data["DIAS_DISFRUTE"]="";
                 $data["DIAS_PEND"]="";
                 
-                $data["INTERRUPCION"]="";
+                $data["REPROGRAMACION"]="";
                 $data["APLAZAMIENTO"]="";
                 $data["INTERRUPCION"]="";
             }
             
-            if(intval($tipo) == 3){
+            if(intval($tipo) == 3){//vacaciones
                 if($data["TIPO_VACACIONES"]== "1"){
                     $data["REPROGRAMACION"]="X";
-                }else if($data["TIPO_VACACIONES"]== "1"){
+                }else{
+                    $data["REPROGRAMACION"]="";
+                }
+                if($data["TIPO_VACACIONES"]== "2"){
                     $data["APLAZAMIENTO"]="X";
                 }else{
+                    $data["APLAZAMIENTO"]="";
+                }
+                if($data["TIPO_VACACIONES"]== "3"){
                     $data["INTERRUPCION"]="X";
+                }else{
+                    $data["INTERRUPCION"]="";
                 }
                 $data["V_INI"]=$data["FEC_INI_PERM"];
                 $data["V_FIN"]=$data["FEC_FIN_PERM"];
@@ -229,7 +237,7 @@ class SolicitudesFachada extends CI_Model {
             $data["ESTUDIOS"]="";
             $data["EXPERIENCIA"]="";
             
-        }else if(intval($tipo) == 2){
+        }else if(intval($tipo) == 2){//seguridad Social
             //traslado seguridad social    
             $data=$this->PermisoTblModel->getDetalleSSG($idForm);
                 $data["HORAS"]="";
@@ -245,16 +253,6 @@ class SolicitudesFachada extends CI_Model {
                 $data["L_FIN"]="";
                 $data["L_MOTIVO"]="";
                 
-                $data["EPS_DESTINO"]="";
-                $data["FEC_AFL_EPS"]="";
-                $data["PEN_ORIGEN"]="";
-                $data["PEN_DESTINO"]="";
-                $data["FEC_AFL_PEN"]="";
-                $data["CES_ORIGEN"]="";
-                $data["CES_DESTINO"]="";
-                $data["FEC_AFL_CES"]="";
-                $data["EPS_ORIGEN"]="";
-                
                 $data["RECONOCIMIENTO"]="";
                 $data["REAJUSTE"]="";
                 $data["ESTUDIOS"]="";
@@ -267,11 +265,11 @@ class SolicitudesFachada extends CI_Model {
                 $data["FEC_RESOLUCION"]="";
                 $data["DIAS_DISFRUTE"]="";
                 $data["DIAS_PEND"]="";
-                $data["INTERRUPCION"]="";
+                $data["REPROGRAMACION"]="";
                 $data["APLAZAMIENTO"]="";
                 $data["INTERRUPCION"]="";
                 
-        }else if(intval($tipo) == 4){
+        }else if(intval($tipo) == 4){//prima tecnica
             //prima tecnica
             $data=$this->PermisoTblModel->getDetallePrimaTecnica($idForm);
             
@@ -312,9 +310,19 @@ class SolicitudesFachada extends CI_Model {
             $data["FEC_RESOLUCION"]="";
             $data["DIAS_DISFRUTE"]="";
             $data["DIAS_PEND"]="";
-            $data["INTERRUPCION"]="";
+            $data["REPROGRAMACION"]="";
             $data["APLAZAMIENTO"]="";
             $data["INTERRUPCION"]="";
+            
+            $data["EPS_DESTINO"]="";
+            $data["FEC_AFL_EPS"]="";
+            $data["PEN_ORIGEN"]="";
+            $data["PEN_DESTINO"]="";
+            $data["FEC_AFL_PEN"]="";
+            $data["CES_ORIGEN"]="";
+            $data["CES_DESTINO"]="";
+            $data["FEC_AFL_CES"]="";
+            $data["EPS_ORIGEN"]="";
                 
             $data["L_INI"]="";
             $data["L_FIN"]="";
