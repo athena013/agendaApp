@@ -270,6 +270,43 @@ class PermisoTblModel extends CI_Model {
         }
     }
     
+    /*sss*/
+    function getSolicitudesbyFilter($filtros) {
+        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO");
+        $this->db->from('TERR_SOL_PERMISO P');
+        $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = P.ID_FRM_PERFK');
+        $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
+        $this->db->join('SEGU_USUARIOS USU','USU.NUMERO_IDENTIFICACION = FUN.ID_USUARIOS');
+        $this->db->join('TERR_CIOM CIOM','CIOM.ID_CIOM = FUN.ID_CIOMFK');
+        $this->db->join('TERR_MOTIVO MOT','MOT.ID_MOTIVO = P.ID_MOTIVOFK','left');
+        $this->db->join('TERR_FUNC_CARGO CAR','CAR.ID_CARGO = FUN.ID_CARGOFK');
+        if ($filtros) {
+            $this->_filterSolicitudes($filtros);
+        }
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return NULL;
+        }
+    }
+    
+    private function _filterSolicitudes($filtros) {
+        if (isset($filtros->ID_CIOM) && !empty($filtros->ID_CIOM)) {
+            $this->db->where('FUN.ID_CIOMFK', $filtros->ID_CIOM);
+        }
+        if (isset($filtros->fInicio) && !empty($filtros->fInicio)) {
+            $date= date("d/F/Y", strtotime($filtros->fInicio));
+            $this->db->where('P.FEC_INI_PERM', $date);
+        }
+        if (isset($filtros->fFin) && !empty($filtros->fFin)) {
+            $date= date("d/F/Y", strtotime($filtros->fFin));
+            $this->db->where('P.FEC_FIN_PERM', $date);
+        }
+        if (isset($filtros->tipoSol) && !empty($filtros->tipoSol)) {
+            $this->db->where('P.ID_TIPO_SOLPERFK', $filtros->tipoSol);
+        }
+    }
     /*obtener lista de dias*/
     function getDiasReposicion($id) {
         $this->db->select("*");

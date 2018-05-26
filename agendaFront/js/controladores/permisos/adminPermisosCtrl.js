@@ -8,10 +8,10 @@ angular.module('AgendaApp.AdminPermisos')
                     '$route',
                     'messageCenterService',
                     '$location',
-                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv','ciomSrv',
+                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv','ciomSrv','solicitudPerSrv',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv, ciomSrv)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv, ciomSrv,solicitudPerSrv)
                     {
                         $scope.datosFunCiom = {};
                         $scope.datosFunCiom.numDoc = "";
@@ -65,7 +65,7 @@ angular.module('AgendaApp.AdminPermisos')
                             });
                             
                         };
-                                                    
+                                                                            
                         $scope.obtenerIdUrl = function (){
                             $scope.datosUsuario.numDoc = getUrlVars()["id"];
                             $scope.datosUsuario.nomUsu = getUrlVars()["usu"];
@@ -208,56 +208,25 @@ angular.module('AgendaApp.AdminPermisos')
                                 case "2":
                                     $scope.tipo1=false;
                                     $scope.tipo2=true;
+                                    $scope.cargarCiom();
                                     $scope.datosUsuario.dsTipoSolicitud="2. Ver y/o aprobar solicitudes de permiso";
                                   break;
                                 
                             }
                         };
                         
-                        $scope.cargarCriterio = function (){
-                            switch ($scope.datosUsuario.tipoCriterio){
-                                case "1":
-                                    $scope.criterio1=true;
-                                    $scope.criterio2=false;
-                                    $scope.criterio3=false;
-                                    $scope.criterio4=true;
-                                    $scope.cargarCiom();
-                                    $scope.datosUsuario.dsTipoCriterio="1. Por CIOM";
-                                break;
-                                case "2":
-                                    $scope.criterio1=false;
-                                    $scope.criterio2=true;
-                                    $scope.criterio3=false;
-                                    $scope.criterio4=true;
-                                    $scope.datosUsuario.dsTipoCriterio="2. Por tipo de solicitud";
-                                break;
-                                case "3":
-                                    $scope.criterio1=false;
-                                    $scope.criterio2=false;
-                                    $scope.criterio3=true;
-                                    $scope.criterio4=true;
-                                    $scope.datosUsuario.dsTipoCriterio="3. Por fecha de permiso";
-                                break;
-                            }
+                        $scope.obtenerSolPer = function (){
+                            //solicitudSrv.obtenerDetalle({idForm: $scope.data.objeto.ID_FRM_PER ,idTipoForm:$scope.data.objeto.ID_TIPO_SOLPERFK}).$promise.then(function(data){
+                            solicitudPerSrv.buscar({buscar: $scope.buscar}).$promise.then(function(data){
+                                $scope.solPerList = data.response;
+                                messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Solicitudes encontradas",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+                              }, function(reason){
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No hay solicitudes Diligenciadas",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                              });
                         };
+                        $scope.obtenerSolPer();
                         
-                        
-                        /*
-                        $scope.cargarEstadoAprob = function (){
-                            switch ($scope.datosUsuario.estadoAprob){
-                                case "1":
-                                    $scope.tipoA=true;
-                                    $scope.tipoB=false;
-                                    $scope.datosUsuario.dsEstadoAprob="A. Solicitudes aprobadas";
-                                    break;
-                                case "2":
-                                    $scope.tipoA=false;
-                                    $scope.tipoB=true;
-                                    $scope.datosUsuario.dsEstadoAprob="B. Solicitudes no aprobadas";
-                                break;
-                                
-                            }
-                        };*/
+                      
                        
                     }]);
 

@@ -39,4 +39,25 @@ angular.module('AgendaApp.AdminPermisos')
                             }
                     });
 	} ])
+        .factory('solicitudPerSrv', [ '$resource', '$rootScope',
+                function($resource, $rootScope) {
+                    return $resource(urlParametrosModule
+                                    + 'obtenerSolicitudes/idUsuario/:numDoc', {
+                            numDoc: '@numDoc'
+                    }, {
+                            update : {
+                                    method : 'PUT'
+                            },
+                            query : {
+                                    method : 'GET',
+                                    isArray : false
+                            },
+                            buscar : {
+                                    url : urlParametrosModule + 'obtenerSolbyFilter',
+                                    method : 'POST',
+                                    isArray : false
+                            }
+                          
+                    });
+	} ])
         ;
