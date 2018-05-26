@@ -302,6 +302,7 @@ class PermisoFachada extends CI_Model {
         log_message('info', 'validarFechas list', false);
         return $resultado;
     }
+    
 }
 
 ?>

@@ -15,5 +15,6 @@ angular.module('AgendaApp').constant('constantsFront', {
     TYPE_DANGER_TIME: "500000",
     ERROR_DESCONOCIDO: "Se presento un error, contacte al administrador",
     PROCESO_SATISFACTORIO: "Proceso satisfactorio",
-    REGISTROS_POR_PAGINA: "5"
+    REGISTROS_POR_PAGINA: "5",
+    RUTA_BACK_END: "http://localhost:88/agenda/agendaBE/"
 });

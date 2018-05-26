@@ -68,4 +68,36 @@ class SolicitudesRest extends REST_Controller {
         }
     }
     
+    //imprimir PDF
+    public function imprimir_post() {
+        log_message('info', 'Ingreso - actualizar funcionaria', false);
+        $funcionaria=$this->post("datos");
+//        if(!isset($funcionaria["ID_USUARIOS"]) ){
+//            $this->response("parametros invalidos", 401);
+//        }
+//        
+        $this->SolicitudesFachada->header_footer();
+        log_message('info', 'Ingreso - actualizar funcionaria', false);
+//        if (!is_null($resultado)) {
+//            $this->response(array("response" => "Funcionaria actualizada correctamente"), 200);
+//        } else {
+//            log_message('info', $resultado);
+//            $this->response(array("error" => "No se pudo actualizar funcionario(a)"), 411);
+//        }
+    }
+    //imprimir PDF
+    public function imprimir_get($idForm, $tipo) {
+        log_message('info', 'Ingreso - actualizar funcionaria', false);
+        
+        $this->SolicitudesFachada->header_footer_get($idForm,$tipo);
+        log_message('info', 'Ingreso - actualizar funcionaria', false);
+        
+//        if (!is_null($resultado)) {
+//            $this->response(array("response" => "Funcionaria actualizada correctamente"), 200);
+//        } else {
+//            log_message('info', $resultado);
+//            $this->response(array("error" => "No se pudo actualizar funcionario(a)"), 411);
+//        }
+    }
+    
 }

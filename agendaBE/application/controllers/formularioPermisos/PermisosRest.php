@@ -203,6 +203,7 @@ class PermisosRest extends REST_Controller {
         }
     }
     
+    
 //    public function findValor_get($cat) {
 ////        $cat = $this->input->get('categoria');
 //        log_message('info', 'Ingreso buscar operadores - find_get', false);

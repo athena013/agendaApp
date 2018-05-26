@@ -1,3 +1,4 @@
+
 'use strict';
 
 angular.module('AgendaApp.formularioPermisos')
@@ -6,10 +7,10 @@ angular.module('AgendaApp.formularioPermisos')
                     '$route',
                     'messageCenterService',
                     '$location',
-                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','solicitudSrv','$confirm',
+                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','solicitudSrv','$confirm','$window',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,solicitudSrv,$confirm)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,solicitudSrv,$confirm,$window)
                     {
                         $scope.emailModel = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                         $scope.letrasModel = /^[_a-zA-Z0-9ñÑ_,.-\s]*$/;
@@ -27,6 +28,7 @@ angular.module('AgendaApp.formularioPermisos')
 //                        $scope.adjunto=false;
                         
                         $scope.datosUsuario = {};
+                        $scope.daniel = {};
                         
                         
                         $scope.obtenerFormularioCompleto = function (){
@@ -122,6 +124,17 @@ angular.module('AgendaApp.formularioPermisos')
                             $scope.reload();
                         };
                             
+                         $scope.print = function (objeto){
+                             console.log("printtt");
+                              var url = CONSTANTS.RUTA_BACK_END + 'imprimir/formulario/'+ objeto.ID_FRM_PER+'/tipo/'+objeto.ID_TIPO_SOLPERFK;
+                              $window.open(url, '_blank');
+//                            $window.location = url;
+//                             solicitudSrv.imprimir().$promise.then(function(data){
+//                                messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+//                             }, function(reason){
+//                                messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+//                            });
+                         };
 
                     }]);
 

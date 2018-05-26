@@ -118,6 +118,212 @@ class SolicitudesFachada extends CI_Model {
         log_message('info', 'getSolicitudesbyUsuario list', false);
         return $resReposicion;
     }
+    
+     function header_footer(){
+        $this->load->library('mydompdf');
+              $data["numero"] = 250;
+              $html= $this->load->view('pdf/header_footer', $data, true);
+        $this->mydompdf->load_html($html);
+        $this->mydompdf->render();
+              $this->mydompdf->set_base_path('./assets/css/dompdf.css'); //agregar de nuevo el css
+        $this->mydompdf->stream("welcome.pdf", array("Attachment" => false));
+    }
+    
+     function header_footer_get($idForm, $tipo){
+         
+        $data=$this->PermisoTblModel->getDetallePermiso($idForm);
+        
+        if(intval($tipo) == 1 || intval($tipo) == 3 || intval($tipo) == 5){
+                //solicitud de permiso
+            $data=$this->PermisoTblModel->getDetallePermiso($idForm);
+            
+            if(intval($tipo) == 1){
+                //si el permiso es por estudio
+                if($data["HOR_INI_PERM"]){
+                    $data["HORAS"]=$data["CANTIDAD"];
+                    $data["HORAS_VALOR"]=$data["HOR_INI_PERM"].":".$data["MIN_INI_PERM"]." A ".$data["HOR_FIN_PERM"].":".$data["MIN_FIN_PERM"];
+                    $data["DIAS"]="";
+                }else{
+                    $data["DIAS"]=$data["CANTIDAD"];
+                    $data["HORAS"]="";
+                    $data["HORAS_VALOR"]="";
+                }
+                $data["INI"]=$data["FEC_INI_PERM"];
+                $data["FIN"]=$data["FEC_FIN_PERM"];
+                $data["MOTIVO"]=$data["DESC_MOTIVO"];
+                
+                $data["L_INI"]="";
+                $data["L_FIN"]="";
+                $data["L_MOTIVO"]="";
+                
+                $data["V_INI"]="";
+                $data["V_FIN"]="";
+                $data["INTERRUPCION"]="";
+                $data["APLAZAMIENTO"]="";
+                $data["INTERRUPCION"]="";
+                
+            }
+            
+            if(intval($tipo) == 2){
+                $data["L_INI"]=$data["FEC_INI_PERM"];
+                $data["L_FIN"]=$data["FEC_FIN_PERM"];
+                $data["L_MOTIVO"]=$data["DESC_MOTIVO"];
+                
+                $data["HORAS"]="";
+                $data["DIAS"]="";
+                $data["INI"]="";
+                $data["FIN"]="";
+                $data["MOTIVO"]="";
+                $data["HORAS_VALOR"]="";
+                
+                $data["V_INI"]="";
+                $data["V_INI"]="";
+                
+                $data["INTERRUPCION"]="";
+                $data["APLAZAMIENTO"]="";
+                $data["INTERRUPCION"]="";
+            }
+            
+            if(intval($tipo) == 3){
+                if($data["TIPO_VACACIONES"]== "1"){
+                    $data["REPROGRAMACION"]="X";
+                }else if($data["TIPO_VACACIONES"]== "1"){
+                    $data["APLAZAMIENTO"]="X";
+                }else{
+                    $data["INTERRUPCION"]="X";
+                }
+                $data["V_INI"]=$data["FEC_INI_PERM"];
+                $data["V_FIN"]=$data["FEC_FIN_PERM"];
+                
+                $data["HORAS"]="";
+                $data["DIAS"]="";
+                $data["INI"]="";
+                $data["FIN"]="";
+                $data["MOTIVO"]="";
+                $data["HORAS_VALOR"]="";
+                
+                $data["L_INI"]="";
+                $data["L_FIN"]="";
+                $data["L_MOTIVO"]="";
+            }
+            
+            $data["EPS_DESTINO"]="";
+            $data["FEC_AFL_EPS"]="";
+            $data["PEN_ORIGEN"]="";
+            $data["PEN_DESTINO"]="";
+            $data["FEC_AFL_PEN"]="";
+            $data["CES_ORIGEN"]="";
+            $data["CES_DESTINO"]="";
+            $data["FEC_AFL_CES"]="";
+            $data["EPS_ORIGEN"]="";
+
+            $data["RECONOCIMIENTO"]="";
+            $data["REAJUSTE"]="";
+            $data["ESTUDIOS"]="";
+            $data["EXPERIENCIA"]="";
+            
+        }else if(intval($tipo) == 2){
+            //traslado seguridad social    
+            $data=$this->PermisoTblModel->getDetalleSSG($idForm);
+                $data["HORAS"]="";
+                $data["DIAS"]="";
+                $data["INI"]="";
+                $data["FIN"]="";
+                $data["MOTIVO"]="";
+                $data["OTRO_MOTIVO"]="";
+                $data["DESC_MOTIVO"]="";
+                 $data["HORAS_VALOR"]="";
+                
+                $data["L_INI"]="";
+                $data["L_FIN"]="";
+                $data["L_MOTIVO"]="";
+                
+                $data["EPS_DESTINO"]="";
+                $data["FEC_AFL_EPS"]="";
+                $data["PEN_ORIGEN"]="";
+                $data["PEN_DESTINO"]="";
+                $data["FEC_AFL_PEN"]="";
+                $data["CES_ORIGEN"]="";
+                $data["CES_DESTINO"]="";
+                $data["FEC_AFL_CES"]="";
+                $data["EPS_ORIGEN"]="";
+                
+                $data["RECONOCIMIENTO"]="";
+                $data["REAJUSTE"]="";
+                $data["ESTUDIOS"]="";
+                $data["EXPERIENCIA"]="";
+                
+                $data["V_INI"]="";
+                $data["V_FIN"]="";
+                $data["TIPO_VACACIONES"]="";
+                $data["NUM_RESOLUCION"]="";
+                $data["FEC_RESOLUCION"]="";
+                $data["DIAS_DISFRUTE"]="";
+                $data["DIAS_PEND"]="";
+                $data["INTERRUPCION"]="";
+                $data["APLAZAMIENTO"]="";
+                $data["INTERRUPCION"]="";
+                
+        }else if(intval($tipo) == 4){
+            //prima tecnica
+            $data=$this->PermisoTblModel->getDetallePrimaTecnica($idForm);
+            
+            if($data["RECONOCIMIENTO"]== "1"){
+                $data["RECONOCIMIENTO"]="X";
+            }else{
+                $data["RECONOCIMIENTO"]="";
+            }
+            if($data["REAJUSTE"]== "1"){
+                $data["REAJUSTE"]="X";
+            }else{
+                $data["REAJUSTE"]="";
+            }
+            if($data["ESTUDIOS"]== "1"){
+                $data["ESTUDIOS"]="X";
+            }else{
+                $data["ESTUDIOS"]="";
+            }
+            if($data["EXPERIENCIA"]== "1"){
+                $data["EXPERIENCIA"]="X";
+            }else{
+                $data["EXPERIENCIA"]="";
+            }
+            
+            $data["HORAS"]="";
+            $data["DIAS"]="";
+            $data["INI"]="";
+            $data["FIN"]="";
+            $data["MOTIVO"]="";
+            $data["OTRO_MOTIVO"]="";
+            $data["DESC_MOTIVO"]="";
+            $data["HORAS_VALOR"]="";
+            
+            $data["V_INI"]="";
+            $data["V_FIN"]="";
+            $data["TIPO_VACACIONES"]="";
+            $data["NUM_RESOLUCION"]="";
+            $data["FEC_RESOLUCION"]="";
+            $data["DIAS_DISFRUTE"]="";
+            $data["DIAS_PEND"]="";
+            $data["INTERRUPCION"]="";
+            $data["APLAZAMIENTO"]="";
+            $data["INTERRUPCION"]="";
+                
+            $data["L_INI"]="";
+            $data["L_FIN"]="";
+            $data["L_MOTIVO"]="";
+        }
+        
+//        var_dump($data);
+//        
+        $this->load->library('mydompdf');
+         
+              $html= $this->load->view('pdf/header_footer', $data, true);
+        $this->mydompdf->load_html($html);
+        $this->mydompdf->render();
+              $this->mydompdf->set_base_path('./assets/css/dompdf.css'); //agregar de nuevo el css
+        $this->mydompdf->stream("welcome.pdf", array("Attachment" => false));
+    }
    
 }
 

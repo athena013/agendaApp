@@ -29,6 +29,8 @@ $route['uploadFilePermisos']['post'] = "formularioPermisos/PermisosRest/cargar";
 $route['obtenerSolicitudes/idUsuario/(:num)']['get'] = "formularioPermisos/SolicitudesRest/index/$1";
 $route['obtenerDetalle/formulario/(:any)/tipoSol/(:any)']['get'] = "formularioPermisos/SolicitudesRest/obtenerSolicitudDetalle/$1/$2";
 $route['eliminar/formulario']['post'] = "formularioPermisos/SolicitudesRest/eliminarFormulario";
+$route['imprimir/formulario']['post'] = "formularioPermisos/SolicitudesRest/imprimir";
+$route['imprimir/formulario/(:any)/tipo/(:any)']['get'] = "formularioPermisos/SolicitudesRest/imprimir/$1/$2";
 
 //Rutas Empresa
 $route['empresa']['get'] = "solicitud/EmpresaRest/index";

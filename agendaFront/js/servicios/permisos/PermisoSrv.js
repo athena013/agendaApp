@@ -109,6 +109,11 @@ angular.module('AgendaApp.PermisoSrv')
                                     url : urlParametrosModule + 'eliminar/formulario',
                                     method : 'POST',
                                     isArray : false
+                            },
+                            imprimir : {
+                                    url : urlParametrosModule + 'imprimir/formulario',
+                                    method : 'POST',
+                                    isArray : false
                             }
                     });
 	} ])
