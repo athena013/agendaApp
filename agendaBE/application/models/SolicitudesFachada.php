@@ -160,6 +160,9 @@ class SolicitudesFachada extends CI_Model {
                 
                 $data["V_INI"]="";
                 $data["V_FIN"]="";
+                $data["DIAS_DISFRUTE"]="";
+                $data["DIAS_PEND"]="";
+                
                 $data["INTERRUPCION"]="";
                 $data["APLAZAMIENTO"]="";
                 $data["INTERRUPCION"]="";
@@ -180,6 +183,8 @@ class SolicitudesFachada extends CI_Model {
                 
                 $data["V_INI"]="";
                 $data["V_INI"]="";
+                $data["DIAS_DISFRUTE"]="";
+                $data["DIAS_PEND"]="";
                 
                 $data["INTERRUPCION"]="";
                 $data["APLAZAMIENTO"]="";
