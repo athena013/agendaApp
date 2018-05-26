@@ -195,6 +195,23 @@ class AdminPermRest extends REST_Controller {
         }
     }
     
+    //ss
+    public function obtenerSolbyFilter_get($buscar) {
+        log_message('info', 'Ingreso - index_get', false);
+        if (!$buscar) { 
+            $this->response(NULL, 210);
+        }
+        $resultado = $this->AdminPermFachada->getSolicitudesbyFilter($buscar);
+        
+        log_message('info', 'Salida Solicitud - index_get', false);
+        if (!is_null($resultado)) {
+            $this->response(array("response" => $resultado), 200);
+        } else {
+            log_message('info', $resultado);
+            $this->response(array("error" => "No se encontraron registros"), 401);
+        }
+    }
+    
 //    public function findValor_get($cat) {
 ////        $cat = $this->input->get('categoria');
 //        log_message('info', 'Ingreso buscar operadores - find_get', false);

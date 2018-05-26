@@ -46,8 +46,10 @@ class SolicitudesRest extends REST_Controller {
         }
     }
     
+    
+    
     //elimina el formulario diligenciado
-   public function eliminarFormulario_post() {
+    public function eliminarFormulario_post() {
         log_message('info', 'Ingreso - eliminarFormulario_post', false);
    
         $data=$this->post("data");

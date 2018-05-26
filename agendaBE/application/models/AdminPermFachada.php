@@ -53,6 +53,27 @@ class AdminPermFachada extends CI_Model {
         return $resultado;
     }
     
+    //ss
+    public function getSolicitudesbyFilter($buscar) {
+        log_message('info', 'getSolicitudesbyUsuario', false);
+        $resultado = NULL;
+        $mensaje = NULL;
+        try {
+            $this->db->trans_off();
+            
+            $resultado = $this->PermisoTblModel->getSolicitudesbyFilter($buscar);
+           
+        } catch (Exception $e) {
+            $error = $this->db->error();
+            log_message('error', 'error getSolicitudesbyUsuario' . $error[message], false);
+            throw new Exception($error[message]);
+        }
+        log_message('info', 'getSolicitudesbyUsuario list', false);
+        return $resultado;
+    }
+    
+    
+    
     //llamado al modelo para obtener los motivo de permiso
     public function getMotivos($cat) {
         log_message('info', 'consultarCargoCiom', false);

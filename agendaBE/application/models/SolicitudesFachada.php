@@ -33,6 +33,8 @@ class SolicitudesFachada extends CI_Model {
         return $resultado;
     }
     
+    
+    
     //obtener el detalle de las solicitudes por tipo de usuario y tipo de solicitud
     public function getDetalleFormulario($idForm,$idTipoForm) {
         log_message('info', 'getDetalleFormulario', false);

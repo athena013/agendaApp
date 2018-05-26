@@ -26,6 +26,9 @@ $route['formulario/validarFechas/(:any)/(:any)/(:any)']['get'] = "formularioPerm
 $route['uploadFilePermisos']['post'] = "formularioPermisos/PermisosRest/cargar";
 
 //SOLICITUDES POR USUARIO CIOM
+$route['obtenerSolbyFilter']['post'] = "formularioPermisos/AdminPermRest/obtenerSolbyFilter";
+
+//SOLICITUDES POR USUARIO CIOM
 $route['obtenerSolicitudes/idUsuario/(:num)']['get'] = "formularioPermisos/SolicitudesRest/index/$1";
 $route['obtenerDetalle/formulario/(:any)/tipoSol/(:any)']['get'] = "formularioPermisos/SolicitudesRest/obtenerSolicitudDetalle/$1/$2";
 $route['eliminar/formulario']['post'] = "formularioPermisos/SolicitudesRest/eliminarFormulario";
