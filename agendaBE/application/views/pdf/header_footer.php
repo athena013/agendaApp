@@ -1,12 +1,9 @@
 <html>
 <style type="text/css">
 .fuente {
-	font-size: 10pt;
+	font-size: 7pt;
 }
-.datos {
-	text-align: left;
-        font-size: 10pt;
-}
+
 </style>
 <!--  <head>
       <link rel="stylesheet" type="text/css" href="./assets/css/dompdf.css">
@@ -17,8 +14,8 @@
     <link rel="stylesheet" type="text/css" href="./css/dompdf.css">
       <table border="1" WIDTH="100%">
           <tr>
-			<td width="20%">
-				<img id="logo" src="./application/views/escudo.png"> 
+			<td width="15%" align="center">
+                            <img id="logo" src="./application/views/escudo.png" > 
 			</td>
 			<td width="55%">
 				<table border="0" cellpadding="0" cellspacing="0" bordercolor="#000000" align="center" >
@@ -35,25 +32,25 @@
 					</tr>
 				</table>
 			</td>
-			<td width="25%">
-			<table border="1"swidth="100%" cellpadding="0" cellspacing="0" bordercolor="#000000" >
+			<td width="20%">
+			<table border="1" class="fuente" >
 				<tr>
-                                    <th class="fuente">
+                                    <th>
 					Código: GTH-F0-38
-					</th>
+                                    </th>
 				</tr>
 				<tr>
-					<th class="fuente">
+					<th >
 					Versión:03
 					</th>
 				</tr>
 				<tr>
-					<th class="fuente">
+					<th >
 					Fecha de Emisión:17 Marzo de 2017
 					</th>
 				</tr>
 				<tr>
-					<th class="fuente"> Página: 1 de 1 </th>
+					<th> Página: 1 de 1 </th>
 				</tr>
 			</table>
 			</td>	
@@ -232,12 +229,12 @@ En caso de ausencia de la Servidora Pública de Libre Nombramiento y Remoción s
 
 <table border="1" WIDTH="50%">
     <tr>
-        <td width="50%">Nombre:</td>
-        <td width="50%">&nbsp;</td>
+        <td width="13%">Nombre:</td>
+        <td width="37%">&nbsp;</td>
     </tr>
     <tr>
         <td>Cargo:</td>
-        <td width="50%">&nbsp;</td>
+        <td>&nbsp;</td>
         
     </tr>
 </table>
