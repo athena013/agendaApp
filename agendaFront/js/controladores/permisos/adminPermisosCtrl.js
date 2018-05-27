@@ -26,7 +26,8 @@ angular.module('AgendaApp.AdminPermisos')
                         
                         $scope.datosUsuario = {};
                         $scope.datosUsuario.numDoc="";
-                                               
+                        
+                        $scope.buscar = {};
                         $scope.tipo1=false;
                         $scope.tipo2=false;
                         $scope.criterio1=false;
@@ -47,13 +48,13 @@ angular.module('AgendaApp.AdminPermisos')
                                                     {id : "3", ds : "3. Por fecha de permiso"}
                                                 ]; 
                                                  
-                        $scope.tipoSolList=[ {id : "1", ds : "1. Solicitud de permiso servidoras(es) públicos"}, 
-                                           {id : "2", ds : "2. Vacaciones"},
-                                           {id : "3", ds : "3. Licencia no remunerada o por luto"}
+                        $scope.tipoSolList=[ {id : "1", ds : "Solicitud de permiso servidoras(es) públicos"}, 
+                                           {id : "3", ds : "Vacaciones"},
+                                           {id : "5", ds : "Licencia no remunerada o por luto"}
                                        ]; 
                                                  
-                        $scope.estadoAprobList=[ {id : "A", ds : "A. Solicitudes aprobadas"}, 
-                                                    {id : "B", ds : "B. Solicitudes no aprobadas"} 
+                        $scope.estadoAprobList=[ {id : "A", ds : "Solicitudes aprobadas"}, 
+                                                    {id : "B", ds : "Solicitudes no aprobadas"} 
                                                ];     
                                                  
                         $scope.cargarCiom = function (){
