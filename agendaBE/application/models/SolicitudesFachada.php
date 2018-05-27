@@ -337,7 +337,7 @@ class SolicitudesFachada extends CI_Model {
         $this->mydompdf->load_html($html);
         $this->mydompdf->render();
               $this->mydompdf->set_base_path('./assets/css/dompdf.css'); //agregar de nuevo el css
-        $this->mydompdf->stream("welcome.pdf", array("Attachment" => false));
+        $this->mydompdf->stream("formulario.pdf", array("Attachment" => false));
     }
    
 }
