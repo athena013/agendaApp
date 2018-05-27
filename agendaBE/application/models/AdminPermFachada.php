@@ -60,9 +60,10 @@ class AdminPermFachada extends CI_Model {
         $mensaje = NULL;
         try {
             $this->db->trans_off();
-            
+            var_dump("llegoa fachada");
+            var_dump($buscar);
             $resultado = $this->PermisoTblModel->getSolicitudesbyFilter($buscar);
-           
+            var_dump($resultado);
         } catch (Exception $e) {
             $error = $this->db->error();
             log_message('error', 'error getSolicitudesbyUsuario' . $error[message], false);

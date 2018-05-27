@@ -196,14 +196,17 @@ class AdminPermRest extends REST_Controller {
     }
     
     //ss
-    public function obtenerSolbyFilter_get($buscar) {
-        log_message('info', 'Ingreso - index_get', false);
-        if (!$buscar) { 
-            $this->response(NULL, 210);
-        }
-        $resultado = $this->AdminPermFachada->getSolicitudesbyFilter($buscar);
+    public function obtenerSolbyFilter_post() {
+        log_message('info', 'Ingreso - obtenerSolbyFilter_post', false);
         
-        log_message('info', 'Salida Solicitud - index_get', false);
+        if (!$this->post("buscar")) {
+    		$this->response(NULL, 401);
+    	}
+        var_dump($this->post("buscar"));
+        $resultado = $this->AdminPermFachada->getSolicitudesbyFilter($this->post("buscar"));
+        
+        
+        log_message('info', 'Salida Solicitud - obtenerSolbyFilter_post', false);
         if (!is_null($resultado)) {
             $this->response(array("response" => $resultado), 200);
         } else {

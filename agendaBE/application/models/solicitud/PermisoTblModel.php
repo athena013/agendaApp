@@ -226,7 +226,7 @@ class PermisoTblModel extends CI_Model {
         }
     }
     
-    /*obtener detalle formulario permisos*/
+    /*obtener detalle Prima tecnica*/
     function getDetallePrimaTecnica($idForm) {
         $this->db->select("PT.*,F.*,FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO");
         $this->db->from('TERR_SOL_PRITEC PT');
@@ -272,7 +272,7 @@ class PermisoTblModel extends CI_Model {
     
     /*sss*/
     function getSolicitudesbyFilter($filtros) {
-        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO");
+        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO, TS.DESC_TIPO_SOLPER");
         $this->db->from('TERR_SOL_PERMISO P');
         $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = P.ID_FRM_PERFK');
         $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
@@ -280,10 +280,15 @@ class PermisoTblModel extends CI_Model {
         $this->db->join('TERR_CIOM CIOM','CIOM.ID_CIOM = FUN.ID_CIOMFK');
         $this->db->join('TERR_MOTIVO MOT','MOT.ID_MOTIVO = P.ID_MOTIVOFK','left');
         $this->db->join('TERR_FUNC_CARGO CAR','CAR.ID_CARGO = FUN.ID_CARGOFK');
+        $this->db->join('TERR_TIPO_SOLPER TS','F.ID_TIPO_SOLPERFK = TS.ID_TIPO_SOLPER');
         if ($filtros) {
             $this->_filterSolicitudes($filtros);
         }
         $query = $this->db->get();
+        //var_dump("consulta ");
+        var_dump($query);
+        echo "estoy aqui";
+         var_dump($query->result_array());
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -292,19 +297,25 @@ class PermisoTblModel extends CI_Model {
     }
     
     private function _filterSolicitudes($filtros) {
-        if (isset($filtros->ID_CIOM) && !empty($filtros->ID_CIOM)) {
-            $this->db->where('FUN.ID_CIOMFK', $filtros->ID_CIOM);
+        var_dump("funcion filtro mici ");
+            var_dump($filtros);
+        if (isset($filtros["ID_CIOM"]) && !empty($filtros["ID_CIOM"])) {
+            $this->db->where('FUN.ID_CIOMFK', $filtros["ID_CIOM"]);
         }
-        if (isset($filtros->fInicio) && !empty($filtros->fInicio)) {
-            $date= date("d/F/Y", strtotime($filtros->fInicio));
-            $this->db->where('P.FEC_INI_PERM', $date);
+        if (isset($filtros["fInicio"]) && !empty($filtros["fInicio"])) {
+            $date= date("d/F/Y", strtotime($filtros["fInicio"]));
+            var_dump($date);
+             $this->db->where("P.FEC_INI_PERM >= TO_DATE('".$date."','dd/mm/yyyy')");
+//            $this->db->where('P.FEC_INI_PERM', $filtros["fInicio"]);
         }
-        if (isset($filtros->fFin) && !empty($filtros->fFin)) {
-            $date= date("d/F/Y", strtotime($filtros->fFin));
-            $this->db->where('P.FEC_FIN_PERM', $date);
+        if (isset($filtros["fFin"]) && !empty($filtros["fFin"])) {
+           
+            $dateFin= date("d/F/Y", strtotime($filtros["fFin"]));
+             var_dump($dateFin);
+           $this->db->where("P.FEC_FIN_PERM <= TO_DATE('".$dateFin."','dd/mm/yyyy')");
         }
-        if (isset($filtros->tipoSol) && !empty($filtros->tipoSol)) {
-            $this->db->where('P.ID_TIPO_SOLPERFK', $filtros->tipoSol);
+        if (isset($filtros["tipoSol"]) && !empty($filtros["tipoSol"])) {
+            $this->db->where('F.ID_TIPO_SOLPERFK', $filtros["tipoSol"]);
         }
     }
     /*obtener lista de dias*/
