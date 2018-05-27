@@ -259,8 +259,8 @@ class PermisoTblModel extends CI_Model {
     /*obtener solicitudes realizadas por el usuario*/
     function getSolicitudesbyUsuario($numDoc) {
         $this->db->select("P.*, TS.DESC_TIPO_SOLPER");
-        $this->db->from('TERR_FRM_PER P');
-        $this->db->join('TERR_TIPO_SOLPER TS','P.ID_TIPO_SOLPERFK = TS.ID_TIPO_SOLPER');
+        $this->db->from('TERR_FRM_PER F');
+        $this->db->join('TERR_TIPO_SOLPER TS','F.ID_TIPO_SOLPERFK = TS.ID_TIPO_SOLPER');
         $this->db->where("ID_USUARIOS",$numDoc);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
