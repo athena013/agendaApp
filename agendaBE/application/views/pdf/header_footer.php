@@ -1,12 +1,9 @@
 <html>
 <style type="text/css">
 .fuente {
-	font-size: 10pt;
+	font-size: 7pt;
 }
-.datos {
-	text-align: left;
-        font-size: 10pt;
-}
+
 </style>
 <!--  <head>
       <link rel="stylesheet" type="text/css" href="./assets/css/dompdf.css">
@@ -17,8 +14,8 @@
     <link rel="stylesheet" type="text/css" href="./css/dompdf.css">
       <table border="1" WIDTH="100%">
           <tr>
-			<td width="20%">
-				<img id="logo" src="./application/views/escudo.png"> 
+			<td width="15%" align="center">
+                            <img id="logo" src="./application/views/escudo.png" > 
 			</td>
 			<td width="55%">
 				<table border="0" cellpadding="0" cellspacing="0" bordercolor="#000000" align="center" >
@@ -35,25 +32,25 @@
 					</tr>
 				</table>
 			</td>
-			<td width="25%">
-			<table border="1"swidth="100%" cellpadding="0" cellspacing="0" bordercolor="#000000" >
+			<td width="20%">
+			<table border="1" class="fuente" >
 				<tr>
-                                    <th class="fuente">
+                                    <th>
 					Código: GTH-F0-38
-					</th>
+                                    </th>
 				</tr>
 				<tr>
-					<th class="fuente">
+					<th >
 					Versión:03
 					</th>
 				</tr>
 				<tr>
-					<th class="fuente">
+					<th >
 					Fecha de Emisión:17 Marzo de 2017
 					</th>
 				</tr>
 				<tr>
-					<th class="fuente"> Página: 1 de 1 </th>
+					<th> Página: 1 de 1 </th>
 				</tr>
 			</table>
 			</td>	
@@ -64,18 +61,22 @@
     <br>
 <table WIDTH="100%" border="1">
   <tr>
-        <th width="10%"  class="datos">FECHA</th>
-        <td width="20%">20/01/2018</td>
-        <th width="10%">SOLICITANTE</th>
-        <td width="30%"><?php echo $PRIMER_NOMBRE ." ". $PRIMER_APELLIDO?></td>
+        <th width="10%">FECHA</th>
+        <td width="30%">&nbsp;<?php echo $FEC_FORM?></td>
+        <th width="10%">CÉDULA</th>
+        <td width="30%">&nbsp;<?php echo $ID_USUARIOS ?></td>  
   </tr>
-  <tr>
-        <th >CÉDULA</th>
-        <td><?php echo $ID_USUARIOS ?></td>  <th>CARGO</th> <td><?php echo $CARGO." ".$CARGO_ESPEC ?></td>
+  <tr>  <th >SOLICITANTE</th>
+        <td >&nbsp;<?php echo $PRIMER_NOMBRE ." ". $PRIMER_APELLIDO?></td>
+        <th>CARGO</th> 
+        <td>&nbsp;<?php echo $CARGO." ".$CARGO_ESPEC ?></td>
+        
   </tr>
   <tr>
         <th>DEPENDENCIA</th>
-        <td><?php echo $DEPENDENCIA ?></td>  <th>TELÉFONO</th> <td><?php echo $TELEFONO?></td>
+        <td>&nbsp;<?php echo $DEPENDENCIA ?></td>  
+        <th>TELÉFONO</th> 
+        <td>&nbsp;<?php echo $TELEFONO?></td>
   </tr>
   <tr>
         <th>FIRMA</th>
@@ -88,24 +89,24 @@
   <table border="1" WIDTH="100%">
    <tr>
 		<th width="20%">HORAS</th> 
-		<td width="10%"><?php echo $HORAS?></td> 
+		<td width="10%">&nbsp;<?php echo $HORAS?></td> 
 		<th>HORA DE INICIO</th> 
-                <td align="center"><?php echo $HORAS_VALOR ?></td>
+                <td align="center">&nbsp;<?php echo $HORAS_VALOR ?></td>
   </tr>
     <tr>
 		<th>DIAS</th>
-		<td><?php echo $DIAS?></td>
+		<td>&nbsp;<?php echo $DIAS?></td>
 		<th>FECHA DESDE</th> 
-		<td><?php echo $INI?></td> 
+		<td>&nbsp;<?php echo $INI?></td> 
 		<th>FECHA HASTA</th> 
-		<td><?php echo $FIN?></td>
+		<td>&nbsp;<?php echo $FIN?></td>
      </tr>
      <tr>
          <th colspan="2">MOTIVOS DEL PERMISO O AUSENCIA</th>
 		
      </tr>
      <tr>
-        <td colspan="6"><?php echo $MOTIVO."   ".$OTRO_MOTIVO?></td>
+        <td colspan="6">&nbsp;<?php echo $MOTIVO."   ".$OTRO_MOTIVO?></td>
 		
      </tr>
      <br>
@@ -119,22 +120,22 @@
 		<th width="22%">FECHA DE AFILIACIÓN</th>
    </tr>
     <tr>
-		<th >FONDOS DE PENSIONES</th>
-                <td ><?php echo $PEN_ORIGEN?></td>
-		<td><?php echo $PEN_ORIGEN?></td>
-		<td><?php echo $FEC_AFL_PEN?></td>
+		<th>FONDOS DE PENSIONES</th>
+                <td>&nbsp;<?php echo $PEN_ORIGEN ?></td>
+		<td>&nbsp;<?php echo $PEN_DESTINO ?></td>
+		<td>&nbsp;<?php echo $FEC_AFL_PEN ?></td>
    </tr>
    <tr>
 		<th>EPS</th>
-                <td><?php echo $EPS_ORIGEN?></td>
-		<td><?php echo $EPS_DESTINO?></td>
-		<td><?php echo $FEC_AFL_EPS?></td>
+                <td>&nbsp;<?php echo $EPS_ORIGEN ?></td>
+		<td>&nbsp;<?php echo $EPS_DESTINO ?></td>
+		<td>&nbsp;<?php echo $FEC_AFL_EPS ?></td>
    </tr>
    <tr>
 		<th>FONDO DE CESANTIAS</th>
-		<td><?php echo $CES_ORIGEN?></td>
-		<td><?php echo $CES_DESTINO?></td>
-		<td><?php echo $FEC_AFL_CES?></td>
+		<td>&nbsp;<?php echo $CES_ORIGEN ?></td>
+		<td>&nbsp;<?php echo $CES_DESTINO ?></td>
+		<td>&nbsp;<?php echo $FEC_AFL_CES ?></td>
    </tr>
 </table>
     <br>
@@ -142,11 +143,11 @@
     <table border="1" WIDTH="100%">
 	<tr>
             <th width="16%">Reprogramación</th> 
-            <th width="16%"><?php echo $FEC_AFL_CES?> </th>
+            <th width="16%">&nbsp;<?php echo $REPROGRAMACION?> </th>
             <th width="16%">Aplazamiento</th> 
-            <th width="16%"><?php echo $APLAZAMIENTO?> </th>
+            <th width="16%">&nbsp;<?php echo $APLAZAMIENTO?> </th>
             <th width="16%">Interrupción</th> 
-            <th width="16%"><?php echo $INTERRUPCION?> </th>
+            <th width="16%">&nbsp;<?php echo $INTERRUPCION?> </th>
 	</tr>
     </table>
     <br>
@@ -159,12 +160,12 @@
             <th COLSPAN="2" width="50%">Fecha de Disfrute</th>
 	</tr>
 	<tr>
-            <td><?php echo $NUM_RESOLUCION?></td>
-            <td><?php echo $FEC_RESOLUCION?></td>
-            <td><?php echo $DIAS_DISFRUTE?></td>
-            <td><?php echo $DIAS_PEND?></td>
-            <td>Desde: <?php echo $V_INI?></td>
-            <td>Hasta: <?php echo $V_FIN?></td>
+            <td>&nbsp;<?php echo $NUM_RESOLUCION?></td>
+            <td>&nbsp;<?php echo $FEC_RESOLUCION?></td>
+            <td>&nbsp;<?php echo $DIAS_DISFRUTE?></td>
+            <td>&nbsp;<?php echo $DIAS_PEND?></td>
+            <td>Desde: &nbsp;<?php echo $V_INI?></td>
+            <td>Hasta: &nbsp;<?php echo $V_FIN?></td>
 	</tr>
 </table>
 <br>
@@ -176,13 +177,13 @@
     </tr>
 <tr>
     <th width="23%" >RECONOCIMIENTO</th>
-    <th width="6%"> <?php echo $RECONOCIMIENTO?> </th>
+    <th width="6%"> &nbsp;<?php echo $RECONOCIMIENTO?> </th>
     <th width="20%" >REAJUASTE</th>
-    <th width="6%"><?php echo $REAJUSTE?> </th>
+    <th width="6%">&nbsp;<?php echo $REAJUSTE?> </th>
     <th width="14%" >ESTUDIOS</th> 
-    <th width="8%"><?php echo $ESTUDIOS?> </th>
+    <th width="8%">&nbsp;<?php echo $ESTUDIOS?> </th>
     <th width="17%" >EXPERIENICA</th> 
-    <th width="6%"><?php echo $EXPERIENCIA?> </th>
+    <th width="6%">&nbsp;<?php echo $EXPERIENCIA?> </th>
 </tr>
 </table>
 <br>
@@ -193,12 +194,12 @@
         <th COLSPAN="2" >Motivo de Licencia</th> 
     </tr>
     <tr>
-        <td>Desde: <?php echo $L_INI?></td>
-        <td>Hasta: <?php echo $L_FIN?></td>
-        <td COLSPAN="2" ><?php echo $L_MOTIVO?></td> 
+        <td>Desde: &nbsp;<?php echo $L_INI?></td>
+        <td>Hasta: &nbsp;<?php echo $L_FIN?></td>
+        <td COLSPAN="2" >&nbsp;<?php echo $L_MOTIVO?></td> 
     </tr>
 </table>
-
+<br>
 <table border="1" WIDTH="100%">
     <tr>
             <th COLSPAN="2">VoBo JEFA (E) INMEDIATA</th>
@@ -206,20 +207,20 @@
     </tr>
     <tr>
         <th width="13%">Firma</th>
-        <th width="38%"></th>
+        <th width="38%">&nbsp;</th>
         <th width="12%">Firma</th>
-        <th width="37%"></th>
+        <th width="37%">&nbsp;</th>
     </tr>
     <tr> 
-        <th>Nombre</th>
+        <th>Nombre&nbsp;</th>
         <th></th>
-        <th>Nombre</th>
+        <th>Nombre&nbsp;</th>
         <th></th>
     </tr>
     <tr>
-        <th>Fecha</th>
+        <th>Fecha&nbsp;</th>
         <th></th>
-        <th>Fecha</th>
+        <th>Fecha&nbsp;</th>
         <th></th>
     </tr>
 </table>
@@ -228,12 +229,12 @@ En caso de ausencia de la Servidora Pública de Libre Nombramiento y Remoción s
 
 <table border="1" WIDTH="50%">
     <tr>
-        <td width="50%">Nombre:</td>
-        <td width="50%"></td>
+        <td width="13%">Nombre:</td>
+        <td width="37%">&nbsp;</td>
     </tr>
     <tr>
         <td>Cargo:</td>
-        <td width="50%"></td>
+        <td>&nbsp;</td>
         
     </tr>
 </table>
@@ -241,7 +242,7 @@ En caso de ausencia de la Servidora Pública de Libre Nombramiento y Remoción s
 ANEXOS QUE SE APORTAN (ORIGINAL O FOTOCOPIA)
 <table border="1" WIDTH="100%">
     <tr>
-        <td width="50%"><?php echo $NOMB_DOC?></td>
+        <td width="50%">&nbsp;<?php echo $NOMB_DOC?></td>
     </tr>
 </table>
 </body>
