@@ -258,10 +258,10 @@ class PermisoTblModel extends CI_Model {
     
     /*obtener solicitudes realizadas por el usuario*/
     function getSolicitudesbyUsuario($numDoc) {
-        $this->db->select("P.*, TS.DESC_TIPO_SOLPER");
+        $this->db->select("F.*, TS.DESC_TIPO_SOLPER");
         $this->db->from('TERR_FRM_PER F');
         $this->db->join('TERR_TIPO_SOLPER TS','F.ID_TIPO_SOLPERFK = TS.ID_TIPO_SOLPER');
-        $this->db->where("ID_USUARIOS",$numDoc);
+        $this->db->where("F.ID_USUARIOS",$numDoc);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -272,7 +272,7 @@ class PermisoTblModel extends CI_Model {
     
     /*sss*/
     function getSolicitudesbyFilter($filtros) {
-        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO, TS.DESC_TIPO_SOLPER");
+        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO, TS.DESC_TIPO_SOLPER");
         $this->db->from('TERR_SOL_PERMISO P');
         $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = P.ID_FRM_PERFK');
         $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
@@ -286,9 +286,8 @@ class PermisoTblModel extends CI_Model {
         }
         $query = $this->db->get();
         //var_dump("consulta ");
-        var_dump($query);
-        echo "estoy aqui";
-         var_dump($query->result_array());
+//        var_dump($query);
+//         var_dump($query->result_array());
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -297,26 +296,46 @@ class PermisoTblModel extends CI_Model {
     }
     
     private function _filterSolicitudes($filtros) {
-        var_dump("funcion filtro mici ");
-            var_dump($filtros);
         if (isset($filtros["ID_CIOM"]) && !empty($filtros["ID_CIOM"])) {
             $this->db->where('FUN.ID_CIOMFK', $filtros["ID_CIOM"]);
-        }
-        if (isset($filtros["fInicio"]) && !empty($filtros["fInicio"])) {
-            $date= date("d/F/Y", strtotime($filtros["fInicio"]));
-            var_dump($date);
-             $this->db->where("P.FEC_INI_PERM >= TO_DATE('".$date."','dd/mm/yyyy')");
-//            $this->db->where('P.FEC_INI_PERM', $filtros["fInicio"]);
-        }
-        if (isset($filtros["fFin"]) && !empty($filtros["fFin"])) {
-           
-            $dateFin= date("d/F/Y", strtotime($filtros["fFin"]));
-             var_dump($dateFin);
-           $this->db->where("P.FEC_FIN_PERM <= TO_DATE('".$dateFin."','dd/mm/yyyy')");
         }
         if (isset($filtros["tipoSol"]) && !empty($filtros["tipoSol"])) {
             $this->db->where('F.ID_TIPO_SOLPERFK', $filtros["tipoSol"]);
         }
+        
+        if (isset($filtros["estadoAprob"])&& !empty($filtros["tipoSol"])){
+                $this->db->where('F.AUT0', $filtros["estadoAprob"]);
+        }
+        
+        if (isset($filtros["AUT0"])& intval($filtros["AUT0"])== 0) {
+            if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3"){
+                $this->db->where('F.AUT0', $filtros["estadoAprob"]);
+            }
+        }            
+            
+        if (isset($filtros["AUT1"]) && intval($filtros["AUT1"])== 1) {
+            if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3" ){
+                $this->db->where('F.AUT1', $filtros["estadoAprob"]);
+            }
+        }  
+        
+        if (isset($filtros["AUT2"]) && intval($filtros["AUT2"])== 2) {
+            if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3"){
+                $this->db->where('F.AUT2', $filtros["estadoAprob"]);
+            }
+        }
+        
+        if (isset($filtros["fInicio"]) && !empty($filtros["fInicio"])) {
+            $date= date("d/F/Y", strtotime($filtros["fInicio"]));
+//            var_dump($date);
+             $this->db->where("P.FEC_INI_PERM >= TO_DATE('".$date."','dd/mm/yyyy')");
+        }
+        if (isset($filtros["fFin"]) && !empty($filtros["fFin"])) {
+            $dateFin= date("d/F/Y", strtotime($filtros["fFin"]));
+//             var_dump($dateFin);
+           $this->db->where("P.FEC_FIN_PERM <= TO_DATE('".$dateFin."','dd/mm/yyyy')");
+        }
+        
     }
     /*obtener lista de dias*/
     function getDiasReposicion($id) {
@@ -332,6 +351,32 @@ class PermisoTblModel extends CI_Model {
     }
     
     
+     /*contar el tiempo solicitado en permisos*/
+    function countTiempo($idUsuario, $fechaInicio, $fechaFin, $tipoTiempo) {
+        $this->db->select("SUM(CANTIDAD) AS CANTIDAD");
+        $this->db->from('TERR_SOL_PERMISO P');
+        $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = P.ID_FRM_PERFK');
+        $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
+        $this->db->where('FUN.ID_USUARIOS', $idUsuario);
+        $this->db->where("P.FEC_INI_PERM >= TO_DATE('".$fechaInicio."','dd/mm/yyyy')");
+        $this->db->where("P.FEC_INI_PERM <= TO_DATE('".$fechaFin."','dd/mm/yyyy')");
+        $this->db->where("F.AUT0 = 1");
+        
+        if(strcmp ($tipoTiempo, "dias") == 0 ){
+            $this->db->where('P.HOR_INI_PERM IS NULL');
+        }
+        if(strcmp ($tipoTiempo, "horas") == 0){
+            $this->db->where('P.HOR_INI_PERM IS NOT NULL');
+        }
+        
+        $query = $this->db->get();
+        
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return NULL;
+        }
+    }
      /*cuenta la cantidad de permisos que no tienen documento adjunto*/
     function obtenerDocsPendientes($usu) {
         $this->db->select("*");
@@ -349,24 +394,24 @@ class PermisoTblModel extends CI_Model {
 //        }
     }
     
-    /*devuelve la cantidad de permisos autorizados dentro de un rango de fechas por ciom*/
-    public function validarFechas($tipo,$fec1,$fec2,$hora1,$hora2,$idCiom){
-        $consulta = " count(PER.ID_FRM_PERFK) as conteo from TERR_SOL_PERMISO PER
+    /*llama a la funcion que valida si para esas fechas ya hay dos permisos aprobado*/
+    public function validarFechas($fec1,$fec2,$idCiom){
+        $consulta = "VALIDAR_FECHAS (TO_DATE ('".$fec1."', 'dd/mm/yyyy'), TO_DATE ('".$fec2."', 'dd/mm/yyyy'), 0,0,'DIAS', '.$idCiom.')FROM DUAL";
+     /*   $consulta = " count(PER.ID_FRM_PERFK) as conteo from TERR_SOL_PERMISO PER
     INNER JOIN TERR_FRM_PER FR ON FR.ID_FRM_PER = PER.ID_FRM_PERFK
     INNER JOIN TERR_CIOM_FUNCIONARIAS FUN ON FR.ID_USUARIOS = FUN.ID_USUARIOS
     WHERE FUN.ID_CIOMFK ='".$idCiom."'
     AND FR.AUT0 IS NULL    
     AND PER.FEC_INI_PERM BETWEEN TO_DATE ('".$fec1."', 'yyyy/mm/dd') AND TO_DATE ('".$fec2."', 'yyyy/mm/dd')
-    AND PER.FEC_FIN_PERM BETWEEN TO_DATE ('".$fec1."', 'yyyy/mm/dd') AND TO_DATE ('".$fec2."', 'yyyy/mm/dd')";
+    AND PER.FEC_FIN_PERM BETWEEN TO_DATE ('".$fec1."', 'yyyy/mm/dd') AND TO_DATE ('".$fec2."', 'yyyy/mm/dd')";*/
              
 //        if($tipo == "horas"){
 //            $consulta = $consulta." AND (PER.HOR_INI_PERM BETWEEN ".$hora1." AND ".$hora2 .") OR (HOR_INI_PERM BETWEEN ".$hora1." AND " .$hora2 .")";
 //        }
-//        
+
         $this->db->select($consulta);
         $query = $this->db->get(); 
-        
-       
+               
         if ($query->num_rows() == 1) {
             return $query->row_array();
         } else {
@@ -374,20 +419,6 @@ class PermisoTblModel extends CI_Model {
         }
     }
     
-   
-    public function update($id, $formulario) {
-        $query = $this->db->set(
-                        $this->_set_formulario($formulario))//NOMBRE VARIABLE
-                ->where("id_solicitud", $id)//CAMPO
-                ->update("solicitud"); //TABLA
-        $this->_validateDB($query);
-        if ($this->db->affected_rows() == 1) {
-            return TRUE;
-        } else {
-            return NULL;
-        }
-    }
-
     public function deleteReposicion($idSol) {
         $query = $this->db->where("ID_SOL_PERMFK", $idSol)
                 ->delete("TERR_PERM_REPO");
@@ -474,6 +505,34 @@ class PermisoTblModel extends CI_Model {
         if (isset($formulario["ruta_doc"])) {
             $datos['RUTA_DOC'] = $formulario["ruta_doc"];
         }
+        if (isset($formulario["ruta_doc"])) {
+            $datos['AUT2'] = $formulario["AUT2"];
+        }
+        if (isset($formulario["AUT0"])) {
+            $datos['AUT0'] = $formulario["AUT0"];
+        }
+        if (isset($formulario["AUT1"])) {
+            $datos['AUT1'] = $formulario["AUT1"];
+        }
+        if (isset($formulario["ID_AUT_0"])) {
+            $datos['ID_AUT_0'] = $formulario["ID_AUT_0"];
+        }
+        if (isset($formulario["ID_AUT_1"])) {
+            $datos['ID_AUT_1'] = $formulario["ID_AUT_1"];
+        }
+        if (isset($formulario["ID_AUT_2"])) {
+            $datos['ID_AUT_2'] = $formulario["ID_AUT_2"];
+        }
+        if (isset($formulario["FEC_AUT_0"])) {
+            $datos["FEC_AUT_0"]=$formulario["FEC_AUT_0"];
+        }
+        if (isset($formulario["FEC_AUT_1"])) {
+            $datos["FEC_AUT_1"]=$formulario["FEC_AUT_1"];
+        }
+        if (isset($formulario["FEC_AUT_2"])) {
+            $datos["FEC_AUT_2"]=$formulario["FEC_AUT_2"];
+        }
+        
         return $datos;
     }
     

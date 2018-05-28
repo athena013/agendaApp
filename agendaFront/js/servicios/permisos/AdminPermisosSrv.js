@@ -56,6 +56,16 @@ angular.module('AgendaApp.AdminPermisos')
                                     url : urlParametrosModule + 'obtenerSolbyFilter',
                                     method : 'POST',
                                     isArray : false
+                            },
+                            aprobar : {
+                                    url : urlParametrosModule + 'aprobarSolicitud',
+                                    method : 'POST',
+                                    isArray : false
+                            },
+                            desaprobar : {
+                                    url : urlParametrosModule + 'desaprobarSolicitud',
+                                    method : 'POST',
+                                    isArray : false
                             }
                           
                     });

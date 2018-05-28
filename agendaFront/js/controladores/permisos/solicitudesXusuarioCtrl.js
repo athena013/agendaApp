@@ -67,7 +67,7 @@ angular.module('AgendaApp.formularioPermisos')
                             if (serveData.data.datosUsuario.idUser) {
                                 $scope.datosUsuario = serveData.data.datosUsuario;
                                 console.log("datos consulta server: " + $scope.datosUsuario.idUser);
-                            }
+                            }$scope.obtenerDatosUsuario();
                         }else{
                             $scope.obtenerDatosUsuario();
                         }

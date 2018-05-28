@@ -8,10 +8,10 @@ angular.module('AgendaApp.AdminPermisos')
                     '$route',
                     'messageCenterService',
                     '$location',
-                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv','ciomSrv','solicitudPerSrv',
+                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv','ciomSrv','solicitudPerSrv','$confirm',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv, ciomSrv,solicitudPerSrv)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv, ciomSrv,solicitudPerSrv,$confirm)
                     {
                         $scope.datosFunCiom = {};
                         $scope.datosFunCiom.numDoc = "";
@@ -53,8 +53,9 @@ angular.module('AgendaApp.AdminPermisos')
                                            {id : "5", ds : "Licencia no remunerada o por luto"}
                                        ]; 
                                                  
-                        $scope.estadoAprobList=[ {id : "A", ds : "Solicitudes aprobadas"}, 
-                                                    {id : "B", ds : "Solicitudes no aprobadas"} 
+                        $scope.estadoAprobList=[ {id : "1", ds : "Solicitudes aprobadas"}, 
+                                                    {id : "2", ds : "Solicitudes no aprobadas"},
+                                                    {id : "3", ds : "Todos"}
                                                ];     
                                                  
                         $scope.cargarCiom = function (){
@@ -91,10 +92,11 @@ angular.module('AgendaApp.AdminPermisos')
                                       console.log(data.response);
                                       $scope.result=data.response;
                                       serveData.data.datosUsuario=$scope.result;
+                                      serveData.data.usuarioAprueba = $scope.datosUsuario.numDoc;
                                       $scope.datosUsuario.idUser=$scope.result.ID_USUARIOS;
                                       $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE +" "+ $scope.result.PRIMER_APELLIDO;
                                       console.log($scope.result.ID_USUARIOS);
-                                      messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                      messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                     }, function(reason){
                                             
                                     });
@@ -110,7 +112,7 @@ angular.module('AgendaApp.AdminPermisos')
                             if (serveData.data.datosUsuario.idUser) {
                                 $scope.datosUsuario = serveData.data.datosUsuario;
                                 console.log("datos consulta server: " + $scope.datosUsuario.idUser);
-                            }
+                            }$scope.obtenerDatosUsuario();
                         }else{
                             $scope.obtenerDatosUsuario();
                         }
@@ -218,15 +220,29 @@ angular.module('AgendaApp.AdminPermisos')
                         
                         $scope.obtenerSolPer = function (){
                             //solicitudSrv.obtenerDetalle({idForm: $scope.data.objeto.ID_FRM_PER ,idTipoForm:$scope.data.objeto.ID_TIPO_SOLPERFK}).$promise.then(function(data){
+                             console.log(serveData.data.datosUsuario);
+                            $scope.buscar.idAutorizador=$scope.datosUsuario.numDoc;
                             solicitudPerSrv.buscar({buscar: $scope.buscar}).$promise.then(function(data){
-                                $scope.solPerList = data.response;
                                 messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Solicitudes encontradas",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+                                $scope.solPerList = data.response;
+                                
                               }, function(reason){
-                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No hay solicitudes Diligenciadas",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                $scope.solPerList={};
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No hay solicitudes Diligenciadas para los filtros dados",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                               });
                         };
-                        $scope.obtenerSolPer();
+//                        $scope.obtenerSolPer();
                         
+                        $scope.verDetalle = function (objeto){
+                            objeto.usuarioAprueba = $scope.datosUsuario.numDoc;
+                            $confirm({objeto: objeto}, {templateUrl: 'pages/formPermisos/detalleAdmFormulario.html'})
+                                .then(function (mensaje) {
+                                    console.log(mensaje);
+                                    messageCenterService.add(CONSTANTS.TYPE_SUCCESS,mensaje,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+                                    $scope.obtenerSolPer();  
+                            });
+                           
+                        };
                       
                        
                     }]);

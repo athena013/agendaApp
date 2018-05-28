@@ -43,6 +43,8 @@ class SolicitudesFachada extends CI_Model {
         try {
             $this->db->trans_off();
             
+            
+            
             if(intval($idTipoForm) == 1 || intval($idTipoForm) == 3 || intval($idTipoForm) == 5){
                 //solicitud de permiso
                 $resultado=$this->PermisoTblModel->getDetallePermiso($idForm);
@@ -52,6 +54,51 @@ class SolicitudesFachada extends CI_Model {
                     $resultado["reposicion"]=$this->PermisoTblModel->getDetalleDiasReposicion($resultado["ID_SOL_PERM"]);
                 }
                 
+                $fecha = new DateTime();
+                $fecha->modify('last day of this month');
+    //            echo $fecha->format('d');
+                $fechaFin=$fecha->format('d/m/Y');
+
+                $fecha->modify('first day of this month');
+                $fechaInicio=$fecha->format('d/m/Y');
+
+                $tiempoDias=$this->PermisoTblModel->countTiempo($resultado["ID_USUARIOS"],$fechaInicio, $fechaFin, "dias");
+                $tiempoHoras=$this->PermisoTblModel->countTiempo($resultado["ID_USUARIOS"],$fechaInicio, $fechaFin , "horas");
+                
+                if($tiempoDias["CANTIDAD"]){
+                    if($tiempoHoras["CANTIDAD"]){
+                        if($tiempoHoras["CANTIDAD"] >= 8){
+                            $total= (integer)$tiempoHoras["CANTIDAD"]/8;
+                            $dias=(integer)$tiempoDias["CANTIDAD"]+(integer)$total;
+                            $horas=(integer)$tiempoHoras["CANTIDAD"]-((integer)$total*8);
+                        }else{
+                            $dias=$tiempoDias["CANTIDAD"];
+                            $horas=(integer)$tiempoHoras["CANTIDAD"];
+                        }
+                    }else{
+                        $horas=0;
+                        $dias=$tiempoDias["CANTIDAD"];
+                    }
+                }else{
+                    $tiempoDias["CANTIDAD"]=0;
+                    if($tiempoHoras["CANTIDAD"]){
+                        if($tiempoHoras["CANTIDAD"] >= 8){
+                            $total= (integer)$tiempoHoras["CANTIDAD"]/8;
+                            $dias=(integer)$tiempoDias["CANTIDAD"]+(integer)$total;
+                            $horas=(integer)$tiempoHoras["CANTIDAD"]-((integer)$total*8);
+                        }else{
+                            $dias=$tiempoDias["CANTIDAD"];
+                            $horas=$tiempoHoras["CANTIDAD"];
+                        }
+                    }else{
+                        $horas=0;
+                        $dias=$tiempoDias["CANTIDAD"];
+                    }
+                }
+                
+                $resultado["totalDias"]=$dias;
+                $resultado["totalHoras"]=$horas;
+                
             }else if(intval($idTipoForm) == 2){
                 //traslado seguridad social    
                 $resultado=$this->PermisoTblModel->getDetalleSSG($idForm);
@@ -60,6 +107,8 @@ class SolicitudesFachada extends CI_Model {
                 //prima tecnica
                 $resultado=$this->PermisoTblModel->getDetallePrimaTecnica($idForm);
             }
+//            $date = getdate();
+//            $fechaInicio =  "01"."/".$date["month"]."/".$date["year"];
             
            
         } catch (Exception $e) {

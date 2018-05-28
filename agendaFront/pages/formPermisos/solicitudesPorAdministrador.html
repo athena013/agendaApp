@@ -14,7 +14,7 @@
                          <label class="control-label" >Seleccione CIOM</label> 
                              <div class="input-group" >
                                      <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                     <select name="ciom" placeholder="Seleccione casa de igualdad de oportunidades" class="form-control" ng-model="buscar.ID_CIOM" required="" >
+                                     <select name="ciom" placeholder="Seleccione casa de igualdad de oportunidades" class="form-control" ng-model="buscar.ID_CIOM" >
                                      <option value="">Seleccione casa de igualdad de oportunidades</option>
                                      <option ng-selected="{{buscar.ID_CIOM==ciom.ID_CIOM}}" ng-repeat="ciom in ciomList" value="{{ciom.ID_CIOM}}">{{ciom.ID_CIOM}} {{ciom.NOM_CIOM}}</option>
                                      </select>
@@ -29,7 +29,7 @@
                                         <div class="input-group-addon">
                                             <span class="glyphicon glyphicon-th"></span>
                                         </div>
-                                        <input type="text" class="form-control" ng-model="buscar.fInicio" ng-required="tipo2">
+                                        <input type="text" class="form-control" ng-model="buscar.fInicio" >
                                     </div>
                                 </div>
                      </div>
@@ -40,7 +40,7 @@
                                         <div class="input-group-addon">
                                             <span class="glyphicon glyphicon-th"></span>
                                         </div>
-                                        <input type="text" class="form-control" ng-model="buscar.fFin" ng-required="tipo2">
+                                        <input type="text" class="form-control" ng-model="buscar.fFin" >
                                     </div>
                             </div>
                      </div>
@@ -48,7 +48,7 @@
                              <label class="control-label" >Estado de aprobación</label> 
                                  <div class="input-group" >
                                      <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                     <select name="estadoAprob" placeholder="seleccione opciones de administración" class="form-control" ng-model="buscar.estadoAprob" required="" >
+                                     <select name="estadoAprob" placeholder="seleccione opciones de administración" class="form-control" ng-model="buscar.estadoAprob" >
                                      <option value="">Seleccione estabo de aprobación de permiso</option>
                                      <option ng-selected="{{estadoAprob.id == buscar.estadoAprob}}" ng-repeat="estadoAprob in estadoAprobList" value="{{estadoAprob.id}}">{{estadoAprob.ds}}</option>
                                      </select>
@@ -63,7 +63,7 @@
                              <label class="control-label" >Tipo de solicitud de permiso</label> 
                                  <div class="input-group" >
                                      <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                     <select name="tipoSol" placeholder="seleccione tipo de solicitud de permiso" class="form-control" ng-model="buscar.tipoSol" required="" >
+                                     <select name="tipoSol" placeholder="seleccione tipo de solicitud de permiso" class="form-control" ng-model="buscar.tipoSol" >
                                      <option value="">Seleccione tipo de solicitud de permiso</option>
                                      <option ng-selected="{{tipoSol.id == buscar.tipoSol}}" ng-repeat="tipoSol in tipoSolList" value="{{tipoSol.id}}">{{tipoSol.ds}}</option>
                                      </select>
@@ -77,7 +77,7 @@
                          <div class="form" >
                              <div align="right">
                                  <div class="input-group" >
-                                     <button type="button" class="btn btn-info" ng-disabled="btnBuscarForm" ng-click="obtenerSolPer()" >Buscar formularios<span class="glyphicon glyphicon-search"></span></button>
+                                     <button type="button" class="btn btn-info" ng-disabled="btnBuscarForm" ng-click="obtenerSolPer()" >Buscar formularios &nbsp;&nbsp;<span class="glyphicon glyphicon-search"></span></button>
                                  </div>
                              </div>
                          </div>
@@ -99,51 +99,61 @@
                                         <th>Desde (Fecha)</th>
                                         <th>Hasta (Fecha)</th>
 					<th>CIOM</th>
-					<th>Estado de Aprobación</th>
-					<th>Tipo de solicitud</th>
+                                        <th>Tipo de solicitud</th>
+					<th>Vo Bueno.</th>
+					<th>Aprob. DTDyP</th>
+					<th>Aprob. DTH</th>
 					<th>Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="solicitud in solPerList">
-                                        <td>{{solicitud.FEC_FORM    }}</td>
+                                        <td>{{solicitud.FEC_FORM}}</td>
 					<td>{{solicitud.FEC_INI_PERM}}</td>
 					<td>{{solicitud.FEC_FIN_PERM}}</td>
                                         <td>{{solicitud.NOM_CIOM}}</td>
-					<td>{{solicitud.AUT0}}
+                                        <td>{{solicitud.DESC_TIPO_SOLPER}}</td>
+					<td>
                                             <div ng-switch="solicitud.AUT0" style="text-align: center">
                                                 <div ng-switch-when="1">
                                                     Si
                                                 </div>
-                                                <div ng-switch-default>
+                                                <div ng-switch-when="2">
                                                     No
+                                                </div>
+                                                <div ng-switch-default>
+                                                    Espera
                                                 </div>
                                             </div>
                                         </td>
-					<td>{{solicitud.AUT1}}
+					<td>
                                             <div ng-switch="solicitud.AUT1" style="text-align: center">
                                                 <div ng-switch-when="1">
                                                     Si
                                                 </div>
-                                                <div ng-switch-default>
+                                                <div ng-switch-when="2">
                                                     No
+                                                </div>
+                                                <div ng-switch-default>
+                                                    Espera
                                                 </div>
                                             </div>
                                         </td>
-					<td>{{solicitud.AUT2}}
+					<td>
                                             <div ng-switch="solicitud.AUT2" style="text-align: center">
                                                 <div ng-switch-when="1">
                                                     Si
                                                 </div>
-                                                <div ng-switch-default>
+                                                <div ng-switch-when="2">
                                                     No
+                                                </div>
+                                                <div ng-switch-default>
+                                                    Espera
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{solicitud.DESC_TIPO_SOLPER}}</td>
 					<td>
-                                            <a class="table-options" ng-click="verDetalle(solicitud)" alt="detalle"
-                                                 >
+                                            <a class="table-options" ng-click="verDetalle(solicitud)" alt="detalle">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
                                             </a>
 <!--                                            <a class="table-options" ng-click="eliminar(solicitud)" alt="eliminar" confirm="Esta seguro de eliminar el registro?" confirm-title="Por favor confirme" confirm-ok="Si" confirm-cancel="No">
@@ -153,11 +163,5 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
-	<div class="box-header with-border">
-		<button type="button" ng-click="realizarSolicitud()"
-			class="btn btn-primary pull-right">
-			<i class="fa  fa-chevron-circle-left"></i>&nbsp;&nbsp;Realizar Solicitud
-		</button>
 	</div>
 </div>

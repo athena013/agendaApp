@@ -1,0 +1,368 @@
+<div ng-controller="detalleAdmFormularioCtrl">
+    <div class="panel-heading">
+        <h2 class="titlePanel" >
+            <!--M&#243;dulo: {{data.registro._f}}-->
+        </h2>
+    </div>
+    
+    <div>
+        <mc-messages></mc-messages>
+    </div>
+    
+    <div class="panel-body">
+         <div class="row paddinModal">
+             <div class="col-xs-12 col-sm-12">      
+                 <div class="row" >
+                    <form class="well form-horizontal" name="formDetalle" ng-submit="form.$valid" ng-show="!form.submitted">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <label>Tiempo Aprobado en el mes actual:&nbsp; &nbsp;&nbsp;  {{detalle.totalDias}}  &nbsp; Dias y &nbsp;{{detalle.totalHoras}} &nbsp; Horas </label>
+                            </div>
+                            <hr>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <label>Funcionaria(o):&nbsp; &nbsp;&nbsp;    {{detalle.PRIMER_NOMBRE}}&nbsp; {{detalle.PRIMER_APELLIDO}}</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <label>Teléfono:&nbsp; &nbsp;&nbsp; {{detalle.TELEFONO}}    </label> 
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <label>Cargo:&nbsp; &nbsp; &nbsp;{{detalle.CARGO}} &nbsp; {{detalle.CARGO_ESPEC}}   </label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <label>CIOM:&nbsp; &nbsp; &nbsp;{{detalle.NOM_CIOM}}  </label> 
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <label>{{dsTipoSolicitud}}</label>
+                            </div>
+                        </div>
+                        <br>
+                            
+                        <div ng-show="tipo1">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label >{{detalle.dsTiempo}} -  Cantidad: &nbsp; &nbsp; {{detalle.CANTIDAD}}</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Fecha Inicial:  &nbsp; &nbsp; &nbsp; </label>{{detalle.FEC_INI_PERM}}
+                                </div>
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Fecha Final: &nbsp; &nbsp; &nbsp;</label>{{detalle.FEC_FIN_PERM}}
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="horas">
+
+                                <div class="col-xs-12 col-md-6" ng-switch="detalle.MIN_FIN_PERM" style="text-align: center">
+                                    <div ng-switch-when="0">
+                                        <label>Hora Inicial: &nbsp; &nbsp; &nbsp;</label>{{detalle.HOR_INI_PERM}}:00
+                                    </div>
+                                    <div ng-switch-default>
+                                        <label>Hora Inicial: &nbsp; &nbsp; &nbsp;</label>{{detalle.HOR_INI_PERM}}:30
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6" ng-switch="detalle.HOR_FIN_PERM" style="text-align: center">
+                                    <div ng-switch-when="0">
+                                        <label>Hora Final: &nbsp; &nbsp; &nbsp;</label>{{detalle.HOR_FIN_PERM}}:00
+                                    </div>
+                                    <div ng-switch-default>
+                                        <label>Hora Final: &nbsp; &nbsp; &nbsp;</label>{{detalle.HOR_FIN_PERM}}:30
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Motivo:  &nbsp; &nbsp; &nbsp; </label>{{detalle.DESC_MOTIVO}}
+                                </div>
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Otro: &nbsp; &nbsp; &nbsp;</label>{{detalle.OTRO_MOTIVO}}
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="adjunto">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Documento Adjunto:  &nbsp; &nbsp; &nbsp; </label>
+                                    <a href="../soportesAdjuntoTerritorializacion/{{detalle.NOMB_DOC}}" download="{{detalle.NOMB_DOC}}">
+                                        Ver Archivo 
+                                    </a>
+
+                                </div>
+                            </div>
+                            
+                            <br>
+                            <div ng-show="detalle.ID_MOTIVOFK == '3'">
+                                <div class="col-xs-12 col-md-12" >
+                                    <label>Dias de Reposición</label>
+                                </div>
+                                <div class="col-xs-12 col-md-12" >
+                                    <table class="table table-striped table-bordered dataTable no-footer"
+                                        datatable="ng">
+                                        <thead>
+                                                <tr>
+                                                        <th>Dia</th>
+                                                        <th>Fecha Inicial</th>
+                                                        <!--<th>Fecha Final</th>-->
+                                                        <th>Hora Inicio</th>
+                                                        <th>Hora Final</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr ng-repeat="dias in diasList">
+                                                        <td>{{dias.NOMBRE_DIA_REPO}}</td>
+                                                        <td>{{dias.FEC_INI_REPO}}</td>
+                                                        <!--<td>{{dias.FEC_FIN_REPO}}</td>-->
+                                                        <td>
+                                                            <div ng-switch="dias.MIN_INI_REPO" style="text-align: center">
+                                                                <div ng-switch-when="0" >
+                                                                    {{dias.HOR_INI_REPO}}:00
+                                                                </div>
+                                                                <div ng-switch-when="30">
+                                                                    {{dias.HOR_INI_REPO}}:{{dias.MIN_INI_REPO}}
+                                                                </div>
+                                                                <div ng-switch-default>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-switch="dias.MIN_FIN_REPO" style="text-align: center">
+                                                                <div ng-switch-when="0" >
+                                                                    {{dias.HOR_FIN_REPO}}:00
+                                                                </div>
+                                                                <div ng-switch-when="30">
+                                                                    {{dias.HOR_FIN_REPO}}:{{dias.MIN_FIN_REPO}}
+                                                                </div>
+                                                                <div ng-switch-default>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                </tr>
+                                        </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                         <div ng-show="tipo2">
+                             <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Eps De: </label>{{detalle.EPS_ORIGEN}}
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Eps A:  </label> {{detalle.EPS_DESTINO}}
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Fecha:  </label> {{detalle.FEC_AFL_EPS}}
+                                </div>
+                             </div>
+                             
+                             <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Pensión De: </label>{{detalle.PEN_ORIGEN}}
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Pensión A:  </label> {{detalle.PEN_DESTINO}}
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Fecha:  </label> {{detalle.FEC_AFL_PEN}}
+                                </div>
+                             </div>
+                             
+                             <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Cesantías De: </label>{{detalle.CES_ORIGEN}}
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Cesantías A:  </label> {{detalle.PEN_DESTINO}}
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Fecha:  </label> {{detalle.FEC_AFL_CES}}
+                                </div>
+                             </div>
+
+                        </div>
+                        
+                         <div ng-show="tipo3">
+                             
+                             <div class="row">
+                                <div class="col-xs-12 col-md-6" ng-switch="detalle.TIPO_VACACIONES" style="text-align: center">
+                                    <div ng-switch-when="1">
+                                        <label>Reprogramación</label>
+                                    </div>
+                                    <div ng-switch-when="2">
+                                        <label>Aplazamiento</label>
+                                    </div>
+                                    <div ng-switch-when="3">
+                                        <label>Interrupción</label>
+                                    </div>
+                                    <div ng-switch-default>
+                                    </div>
+                                </div>
+                                 
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                        <label>Numero de Resolución: </label>{{detalle.NUM_RESOLUCION}}
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <label>Fecha Resolución  </label> {{detalle.FEC_RESOLUCION}}
+                                    </div>
+                            </div>
+                        
+                             <div class="row">
+                                 <div class="col-xs-12 col-md-6">
+                                    <label>Dias disfrute:  </label> {{detalle.DIAS_DISFRUTE}}
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <label>Dias Pendientes: </label>{{detalle.DIAS_PEND}}
+                                </div>
+                             </div>
+                             
+                             <div class="row">
+                                 <div class="col-xs-12 col-md-6">
+                                    <label>Fecha Inicial Disfrute:  </label> {{detalle.FEC_INI_PERM}}
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <label>Fecha Final Disfrute:</label>{{detalle.FEC_FIN_PERM}}
+                                </div>
+                             </div>
+                             
+                             <div class="row" ng-show="adjunto">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Documento Adjunto:  &nbsp; &nbsp; &nbsp; </label>
+                                    <a href="../soportesAdjuntoTerritorializacion/{{detalle.NOMB_DOC}}" download="{{detalle.NOMB_DOC}}">
+                                        Ver Archivo 
+                                    </a>
+
+                                </div>
+                            </div>
+                             
+                         </div>
+                        
+                         <div ng-show="tipo4">
+                             <div class="row">
+                                <div class="col-xs-12 col-md-6" ng-switch="detalle.RECONOCIMIENTO" style="text-align: center">
+                                    <div ng-switch-when="1">
+                                        <label>Reconocimiento: &nbsp;&nbsp;&nbsp;</label> X
+                                    </div>
+                                    <div ng-switch-when="0">
+                                        <label>Reconocimiento: &nbsp;&nbsp;&nbsp;</label> 
+                                    </div>
+                                    
+                                </div>
+                                 <div class="col-xs-12 col-md-6" ng-switch="detalle.REAJUSTE" style="text-align: center">
+                                    <div ng-switch-when="1">
+                                        <label>Reajuste &nbsp;&nbsp;&nbsp;</label> X
+                                    </div>
+                                    <div ng-switch-when="0">
+                                        <label>Reajuste &nbsp;&nbsp;&nbsp;</label> 
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row">
+                                <div class="col-xs-12 col-md-6" ng-switch="detalle.ESTUDIOS" style="text-align: center">
+                                    <div ng-switch-when="1">
+                                        <label>Estudios: &nbsp;&nbsp;&nbsp;</label> X
+                                    </div>
+                                    <div ng-switch-when="0">
+                                        <label>Estudios: &nbsp;&nbsp;&nbsp;</label> 
+                                    </div>
+                                    
+                                </div>
+                                 <div class="col-xs-12 col-md-6" ng-switch="detalle.EXPERIENCIA" style="text-align: center">
+                                    <div ng-switch-when="1">
+                                        <label>Experiencia: &nbsp;&nbsp;&nbsp;</label> X
+                                    </div>
+                                    <div ng-switch-when="0">
+                                        <label>Experiencia: &nbsp;&nbsp;&nbsp;</label> 
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                        
+                         <div ng-show="tipo5">
+                             <div class="row">
+                                 <div class="col-xs-12 col-md-6">
+                                    <label>Fecha Inicial Licencia:  </label> {{detalle.FEC_INI_PERM}}
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <label>Fecha Final Licencia:</label>{{detalle.FEC_FIN_PERM}}
+                                </div>
+                             </div>
+                             <div class="row">
+                                 <div class="col-xs-12 col-md-6">
+                                    <label>Tipo Licencia:  </label> {{detalle.DESC_MOTIVO}}
+                                </div>
+                             </div>
+                             
+                             <div class="row" ng-show="adjunto">
+                                <div class="col-xs-12 col-md-6" >
+                                    <label>Documento Adjunto:  &nbsp; &nbsp; &nbsp; </label>
+                                    <a href="../soportesAdjuntoTerritorializacion/{{detalle.NOMB_DOC}}" download="{{detalle.NOMB_DOC}}">
+                                        Ver Archivo 
+                                    </a>
+
+                                </div>
+                            </div>
+                         </div>
+                    
+                        
+                        <div class="row">
+                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="text-center" ng-show="btnDesaprobar">
+                                    <button type="button" class="btn btn-danger" ng-click="desaprobar(detalle)">Desaprobar</button>
+                                </div>
+                                <div class="text-center" ng-show="btnAprobar">
+                                    <button type="button" class="btn btn-success" ng-click="aprobar(detalle)">Aprobar</button>
+                                </div>
+                            </div>
+<!--                             <div class="col-sm-3" ng-show="btnAprobar">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success" ng-click="aprobar(detalle)">Aprobar</button>
+                                </div>
+                            </div>-->
+        <!--                 <div class="col-sm-6">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-warning" ng-click="print(detalle)">Imprimir</button>
+                                </div>
+                            </div>-->
+                            <div class="col-sm-3">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-info" ng-click="cancel()">Regresar</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+
+                        </div>
+                    
+                    </form>
+                     
+                 </div>
+                 
+                 
+                 
+                 
+             </div>
+         </div>
+    </div>
+</div>

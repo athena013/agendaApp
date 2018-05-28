@@ -29,6 +29,20 @@ class UsuarioModel extends CI_Model {
         }
     }
     
+    function getAutorizadorById($id) {
+        $this->db->select("*");
+        $this->db->from('TERR_ADMIN_PERMISOS ADM');
+        $this->db->where("ADM.ID_USUARIOS",$id);
+        $query = $this->db->get();
+         
+        $this->_validateDB($query);
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return NULL;
+        }
+    }
+    
     /*consultar usuario CIOM 
      */
     public function consultarFuncionariaId($id) {
