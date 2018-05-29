@@ -506,7 +506,8 @@ class PermisoTblModel extends CI_Model {
         if (isset($formulario["ruta_doc"])) {
             $datos['RUTA_DOC'] = $formulario["ruta_doc"];
         }
-        if (isset($formulario["ruta_doc"])) {
+        
+        if (isset($formulario["AUT2"])) {
             $datos['AUT2'] = $formulario["AUT2"];
         }
         if (isset($formulario["AUT0"])) {

@@ -324,7 +324,8 @@ angular.module('AgendaApp.formularioPermisos')
                         };
                        
                         $scope.guardar = function (){
-                            
+                            console.log("llega a guardar");
+                            console.log($scope.validado);
                             console.log($scope.datosUsuario);
                             var target = document.getElementById('divLoadingGeneral');
                             var spinner = new Spinner().spin(target);
@@ -353,7 +354,7 @@ angular.module('AgendaApp.formularioPermisos')
                                 }
                             }   
                             console.log($scope.validado);
-                            if(guardar == true && $scope.validado){
+                            if(guardar == true){
                                   formData.append("data",JSON.stringify($scope.datosUsuario));
 //                                usuarioAgendaSrv.guardarFormulario({data: $scope.datosUsuario,file:formData}).$promise.then(function(data){
                                    usuarioAgendaSrv.guardarFormulario(formData).$promise.then(function(data){
@@ -376,15 +377,15 @@ angular.module('AgendaApp.formularioPermisos')
                                     }
                                     
                                     messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.response,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                    $scope.datosUsuario.tipoSolicitud="";                         
+                                    $scope.datosUsuario.dsTipoSolicitud="";  
                                 });
-                            }else{
-                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"Debe validar las fechas",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                
                             }
                             if (spinner) {
                                 spinner.stop();
                             }
-                            $scope.datosUsuario.tipoSolicitud="";                         
-                            $scope.datosUsuario.dsTipoSolicitud="";                  
+                                           
                         };
                         
                         function validarArchivo(file) {                            
@@ -502,7 +503,10 @@ angular.module('AgendaApp.formularioPermisos')
                             $scope.data.idUsu =$scope.datosUsuario.numDoc;
                             
                             if($scope.datosUsuario.BND1 == "1"){
-                                $scope.validado=true;//usuario autorizado no importa las restricciones
+                                $scope.validado = true;//usuario autorizado no importa las restricciones
+                                $scope.btnEnviar = false;
+                                messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Fechas sin validacion autorizadas por el administrador",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                alert("Fechas sin validacion autorizadas por el administrador");
                             }else{
                                 usuarioAgendaSrv.validarFechas({data : $scope.data}).$promise.then(function(data){
                                     if(data.response){
@@ -513,7 +517,7 @@ angular.module('AgendaApp.formularioPermisos')
                                     }
                                 }, function(reason){
                                     $scope.btnEnviar=true;//deshabilito guardar
-                                    $scope.validado=false;//permito guardar
+                                    $scope.validado=false;//no permito guardar
                                     alert("Las fechas no se encuentras disponibles.");
                                     messageCenterService.add(CONSTANTS.TYPE_DANGER,"Las fechas no se encuentran disponibles",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
 //                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
