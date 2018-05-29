@@ -251,7 +251,8 @@ class PermisoFachada extends CI_Model {
             $this->db->trans_off();
             
             $fecha1=$fechas["fecha1"];
-            $fecha2= date("Y/m/d", strtotime($fechas["fecha2"]));
+            $fecha1=date("d/m/Y", strtotime($fechas["fecha1"]));
+            $fecha2= date("d/m/Y", strtotime($fechas["fecha2"]));
             
            
             if(isset($fechas["hora1"])){
@@ -271,31 +272,17 @@ class PermisoFachada extends CI_Model {
             $idCiom = $ciom["ID_CIOMFK"];
              
             
-            $count = $this->PermisoTblModel->validarFechas($tipo,$fecha1,$fecha2,$hora1,$hora2,$idCiom);
+            $count = $this->PermisoTblModel->validarFechas($fecha1,$fecha2,$idCiom);
             
             
-            $conteo=$count["CONTEO"];
+            $conteo=$count["COUNT"];
             
-            
-            if($tipo="horas"){//valido la hora si es fecha disponible}
+            if($conteo >=2){
+                $resultado=null;
+            }else{
+                $resultado="Fechas disponibles";
+            }
                 
-                $countHoras = $this->PermisoTblModel->validarFechas($tipo,$fecha1,$fecha2,$hora1,$hora2,$idCiom);
-                
-                $conteoHoras=$countHoras["CONTEO"];
-                
-                if(intval($conteoHoras)>2){//<=?
-                    $resultado["error"] = "Las horas solicitadas no estan disponiles";
-                }else{
-                     $resultado["mensaje"] = "Horas disponibles";
-                }
-            }else if(intval($conteo)>2){
-                    $resultado["count"] = $count;
-                    $resultado["error"] = "Las fechas solicitadas no estan disponiles";
-                }else{
-                    $resultado["count"] = $count;
-                    $resultado["mensaje"] = "Fechas disponibles";
-                }
-                       
         } catch (Exception $e) {
             $error = $this->db->error();
             log_message('error', 'error validarFechas' . $error[message], false);

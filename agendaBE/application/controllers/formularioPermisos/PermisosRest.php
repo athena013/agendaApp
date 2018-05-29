@@ -147,7 +147,13 @@ class PermisosRest extends REST_Controller {
         $data = $this->post("data");
             
         $fechas = $data["fecha"];
-        $tipo = $data["tipoPermiso"];
+        
+        if(isset($data["tipoPermiso"])){
+            $tipo = $data["tipoPermiso"];
+        }else{
+            $tipo="";
+        }
+        
         $idUsu = $data["idUsu"];
                 
         if (!$data) { 
@@ -155,6 +161,7 @@ class PermisosRest extends REST_Controller {
         }
         
         $resultado = $this->PermisoFachada->validarFechas($fechas,$tipo,$idUsu);
+        
     	log_message('info', 'Salida validarFechas_get - index_post', false);
     	if (!is_null($resultado)) {
     	    $this->response(array("response" => $resultado), 200);

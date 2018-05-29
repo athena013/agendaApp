@@ -116,12 +116,12 @@ angular.module('AgendaApp.formularioPermisos')
                             console.log(objeto);
                             $scope.data.idForm = objeto.ID_FRM_PER;
                             solicitudSrv.eliminar({data: $scope.data}).$promise.then(function(data){
-                                $scope.cancel();
+                                $scope.ok();
                                 messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                              }, function(reason){
                                 messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                             });
-                            $scope.reload();
+//                            $scope.reload();
                         };
                             
                          $scope.print = function (objeto){

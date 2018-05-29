@@ -1,7 +1,7 @@
 <!--traslado de seguridad social y cesantias-->
 <div>
     <div>
-        <div>
+        <div class="row">
             <div class="col-sm-12">
                 <div class="form" ng-class="{ 'has-error' : form.labelLicencia.$invalid && !form.labelLicencia.$pristine}">
                     <div>
@@ -12,7 +12,8 @@
                 </div> 
             </div>
         </div>
-        <div>
+        
+        <div class="row">
             <div class="col-sm-3">
                 <div class="form" ng-class="{ 'has-error' : form.fInicioLicencia.$invalid && !form.fInicioLicencia.$pristine}">
                     <label class="control-label" >Desde</label> 
@@ -35,8 +36,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div>
+            
             <div class="col-sm-4">
                 <label class="control-label">Motivo de permiso</label>
                 <div>
@@ -51,6 +51,18 @@
                     <span class="text-danger pull-right" ng-show="form.motPermisoLicencia.cedula && form.motPermisoLicencia.$error.required">Campo requerido</span>
                 </div>
             </div>
+            
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12" align="right">
+                    <div class="input-group" >
+                        <button type="button" class="btn btn-warning" ng-disabled="validado" ng-click="validarFechas()">ValidarFechas</button>
+                    </div>
+            </div>
+        </div>  
+        
+        <div class="row">
             <div class="col-sm-8">
                 <br>
                    <div class="custom-file">
@@ -59,6 +71,7 @@
                        <input type="file" name="fileLicencia" uploader-model="datosUsuario.fileLicencia" ng-model="datosUsuario.fileLicencia" ng-required="tipo5"/>
                    </div>
             </div>
-        </div>        
+        </div>
     </div>
+    
 </div>

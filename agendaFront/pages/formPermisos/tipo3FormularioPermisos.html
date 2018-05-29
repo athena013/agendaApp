@@ -101,11 +101,11 @@
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
-                        <input type="text" class="form-control" ng-model="datosUsuario.fInicio" ng-required="mostrarFechaVacaciones">
+                        <input type="text" class="form-control" ng-model="datosUsuario.fInicio" ng-change="fechaVacaciones()" ng-required="mostrarFechaVacaciones" >
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
+<!--            <div class="col-sm-3">
                 <div class="form" ng-class="{ 'has-error' : form.fHasta.$invalid && !form.fHasta.$pristine}">
                     <label class="control-label" >Fecha de Disfrute Final</label> 
                     <div class="input-group date" data-provide="datepicker" data-date-format="yyyy/mm/dd">
@@ -115,8 +115,27 @@
                         <input type="text" class="form-control" ng-model="datosUsuario.fHasta" ng-required="mostrarFechaVacaciones">
                     </div>
                 </div>
+            </div>-->
+            <div class="col-sm-3">
+                <div class="form" ng-class="{ 'has-error' : form.fHasta.$invalid && !form.fHasta.$pristine}">
+                    <label class="control-label" >Fecha de Disfrute Final</label> 
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th" ></span>
+                        </div>
+                        <input type="text" class="form-control" ng-model="datosUsuario.strfHasta" disabled="">
+                    </div>
+                </div>
             </div>
         </div>
+        
+        <div class="row"><br>
+                <div class="col-sm-12" align="right">
+                        <div class="input-group" >
+                            <button type="button" class="btn btn-warning" ng-disabled="validado" ng-click="validarFechas()">ValidarFechas</button>
+                        </div>
+                </div>
+            </div>
         
         <div class="row">
             <div class="col-sm-8">

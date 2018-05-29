@@ -42,6 +42,10 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.tipo4=false;
                         $scope.tipo5=false;
                         $scope.adjuntar=true;
+                        
+                        $scope.validado=false;
+                        $scope.btnEnviar = true;
+                        
                         $scope.datosUsuario.id = "";
                         $scope.datosUsuario.fecha_solicitud = "";
                         $scope.cargoList={};
@@ -159,6 +163,8 @@ angular.module('AgendaApp.formularioPermisos')
                         }
                         
                         $scope.validarDiasHoras = function (){
+                            $scope.btnEnviar=true;//deshabilito guardar
+                            $scope.validado=false;
                             
                             if($scope.datosUsuario.fInicio){
                                 var fechaSolPer = new Date($scope.datosUsuario.fInicio);
@@ -272,6 +278,8 @@ angular.module('AgendaApp.formularioPermisos')
                                     $scope.tipo5=false;
                                     $scope.categoria=1;
                                     $scope.getMotivo();
+                                    $scope.validado = false;
+                                    $scope.btnEnviar = true;
                                     $scope.datosUsuario.dsTipoSolicitud="1. Solicitud de permiso o ausencia de servidoras(es) públicos";
                                     break;
                                 case "2":
@@ -288,6 +296,8 @@ angular.module('AgendaApp.formularioPermisos')
                                     $scope.tipo3=true;
                                     $scope.tipo4=false;
                                     $scope.tipo5=false;
+                                    $scope.validado=false;
+                                    $scope.btnEnviar = true;
                                     $scope.datosUsuario.dsTipoSolicitud="3. Vacaciones";
                                     break;
                                 case "4":
@@ -306,12 +316,15 @@ angular.module('AgendaApp.formularioPermisos')
                                     $scope.tipo5=true;
                                     $scope.categoria=5;
                                     $scope.getMotivo();
+                                    $scope.validado=false;
+                                    $scope.btnEnviar = true;
                                     $scope.datosUsuario.dsTipoSolicitud="5. Licencia no remunerada o licencia por luto";
                                     break;
                             }
                         };
                        
                         $scope.guardar = function (){
+                            
                             console.log($scope.datosUsuario);
                             var target = document.getElementById('divLoadingGeneral');
                             var spinner = new Spinner().spin(target);
@@ -338,8 +351,9 @@ angular.module('AgendaApp.formularioPermisos')
                                     formData.append("file", file);                                    
                                     guardar=validarArchivo(file);
                                 }
-                            }                                                  
-                            if(guardar == true){
+                            }   
+                            console.log($scope.validado);
+                            if(guardar == true && $scope.validado){
                                   formData.append("data",JSON.stringify($scope.datosUsuario));
 //                                usuarioAgendaSrv.guardarFormulario({data: $scope.datosUsuario,file:formData}).$promise.then(function(data){
                                    usuarioAgendaSrv.guardarFormulario(formData).$promise.then(function(data){
@@ -370,10 +384,11 @@ angular.module('AgendaApp.formularioPermisos')
                                 spinner.stop();
                             }
                             $scope.datosUsuario.tipoSolicitud="";                         
+                            $scope.datosUsuario.dsTipoSolicitud="";                  
                         };
                         
                         function validarArchivo(file) {                            
-                            if($scope.adjuntar==true){
+                            if($scope.adjuntar == true){
                                 console.log( file);
                                 if(file.type=="application/pdf" || file.type=="image/jpeg"){
                                     if(file.size<3000000){
@@ -425,9 +440,39 @@ angular.module('AgendaApp.formularioPermisos')
                             return true;
                         }
                         
+                        $scope.fechaVacaciones = function (){console.log("fehca vacaciones");
+                            
+                            /*validar tres dias de anterioridad debo validar que tenga bandera activa para permiso normal*/
+                            console.log(fechaHabil<fechaSolPer);
+                            if($scope.datosUsuario.fInicio){
+                                var fechaSolPer = new Date($scope.datosUsuario.fInicio);
+                                fechaSolPer.setHours(0, 0, 0, 0);
+                                var fechaHabil = new Date();
+                                fechaHabil.setHours(0, 0, 0, 0);    
+                                fechaHabil.setDate(fechaHabil.getDate()+2);
+
+                                if(fechaHabil<fechaSolPer || $scope.datosUsuario.BND1 == "1"){
+                                    var cant = $scope.datosUsuario.diasDisfrutar-1;
+                                    fechaSolPer.setDate(fechaSolPer.getDate()+cant);
+                                    $scope.datosUsuario.strfHasta = fechaSolPer.getFullYear()+"/"+(fechaSolPer.getMonth()+1)+"/"+fechaSolPer.getDate();
+                                    $scope.datosUsuario.fHasta=fechaSolPer;
+                                }else{
+                                    var con = confirm("Debe solicitar un permiso con tres dias de anterioridad, por favor contactarse con la administradora");
+                                      if (con == true) {
+                                            $scope.datosUsuario.fInicio="";
+                                            $scope.datosUsuario.fHasta="";
+                                        } else {
+                                            $scope.datosUsuario.fInicio="";
+                                            $scope.datosUsuario.fHasta="";
+                                        }
+                                        $scope.btnEnviar=true;//deshabilito guardar
+                                        $scope.validado=false;
+                                }
+                            }
+                        };
+                        
                         $scope.validarVacaciones= function(){
-                            console.log("validar vacaciones"+$scope.datosUsuario.tipoVacaciones);
-                            if($scope.datosUsuario.tipoVacaciones==0){
+                            if($scope.datosUsuario.tipoVacaciones == 0){
                                 $scope.mostrarFechaVacaciones=true;
                                 $scope.mostrarResolucion=false;
                             }else{
@@ -459,19 +504,19 @@ angular.module('AgendaApp.formularioPermisos')
                             if($scope.datosUsuario.BND1 == "1"){
                                 $scope.validado=true;//usuario autorizado no importa las restricciones
                             }else{
-                                usuarioAgendaSrv.validarFechas({data : $scope.data }).$promise.then(function(data){
+                                usuarioAgendaSrv.validarFechas({data : $scope.data}).$promise.then(function(data){
                                     if(data.response){
-                                          messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
-                                            $scope.btnEnviar=false;//habilito guardar
+                                        messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                        alert(data.response);
+                                        $scope.btnEnviar=false;//habilito guardar
                                             $scope.validado=true;//permito guardar
-                                     }
-                                     if(data.error){
-                                         messageCenterService.add(CONSTANTS.TYPE_DANGER,data.mensaje,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
-                                            $scope.btnEnviar=true;//deshabilito guardar
-                                            $scope.validado=false;//no permito guardar
-                                     }
-                                 }, function(reason){
-                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                    }
+                                }, function(reason){
+                                    $scope.btnEnviar=true;//deshabilito guardar
+                                    $scope.validado=false;//permito guardar
+                                    alert("Las fechas no se encuentras disponibles.");
+                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,"Las fechas no se encuentran disponibles",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+//                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                 });
                             }
                             

@@ -396,7 +396,8 @@ class PermisoTblModel extends CI_Model {
     
     /*llama a la funcion que valida si para esas fechas ya hay dos permisos aprobado*/
     public function validarFechas($fec1,$fec2,$idCiom){
-        $consulta = "VALIDAR_FECHAS (TO_DATE ('".$fec1."', 'dd/mm/yyyy'), TO_DATE ('".$fec2."', 'dd/mm/yyyy'), 0,0,'DIAS', '.$idCiom.')FROM DUAL";
+        
+        $consulta = "VALIDAR_FECHAS (TO_DATE ('".$fec1."', 'dd/mm/yyyy'), TO_DATE ('".$fec2."', 'dd/mm/yyyy'), 0,0,'DIAS', '".$idCiom."') AS COUNT FROM DUAL";
      /*   $consulta = " count(PER.ID_FRM_PERFK) as conteo from TERR_SOL_PERMISO PER
     INNER JOIN TERR_FRM_PER FR ON FR.ID_FRM_PER = PER.ID_FRM_PERFK
     INNER JOIN TERR_CIOM_FUNCIONARIAS FUN ON FR.ID_USUARIOS = FUN.ID_USUARIOS

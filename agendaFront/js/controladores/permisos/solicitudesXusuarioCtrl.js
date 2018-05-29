@@ -99,8 +99,9 @@ angular.module('AgendaApp.formularioPermisos')
                         
                         $scope.verDetalle = function (objeto){
                             $confirm({objeto: objeto}, {templateUrl: 'pages/formPermisos/detalleFormulario.html'})
-                                        .then(function () {
-                                        });
+                                .then(function () {
+                                $route.reload();    
+                            });
                         };
                         
                         
