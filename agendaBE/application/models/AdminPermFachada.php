@@ -75,8 +75,11 @@ class AdminPermFachada extends CI_Model {
                     $buscar["AUT2"] = $autorizador["ID_AUT"];
                 }
             }
+            
             $resultado = $this->PermisoTblModel->getSolicitudesbyFilter($buscar);
-
+            
+            $resultado["autorizador"]=$autorizador["ID_AUT"];
+            
 //            var_dump($resultado);
         } catch (Exception $e) {
             $error = $this->db->error();
@@ -111,8 +114,9 @@ class AdminPermFachada extends CI_Model {
                 if ($autorizador["ID_AUT"] == "1") {
                     $formulario["AUT1"] = 1;
                     $formulario["ID_AUT_1"] = $formulario["usuarioAprueba"];
-                    $formulario["FEC_AUT_1"] = $formulario["fecha"];
+                    $formulario["FEC_AUT_1"] = $fecha;
                 }
+                
                 if ($autorizador["ID_AUT"] == "2") {
                     $formulario["AUT2"] = 1;
                     $formulario["ID_AUT_2"] = $formulario["usuarioAprueba"];
@@ -238,6 +242,25 @@ class AdminPermFachada extends CI_Model {
         }
         log_message('info', 'consultarFuncionariaId list', false);
         return $funcionaria;
+    }
+    
+    public function obtenerIdAministracion($id) {
+
+        log_message('info', 'consultarFuncionariaId', false);
+        $autorizador = NULL;
+        $mensaje = NULL;
+        try {
+            $this->db->trans_off();
+            
+            $autorizador = $this->UsuarioModel->getAutorizadorById($id);
+            
+        } catch (Exception $e) {
+            $error = $this->db->error();
+            log_message('error', 'error consultarFuncionariaId' . $error[message], false);
+            throw new Exception($error[message]);
+        }
+        log_message('info', 'consultarFuncionariaId list', false);
+        return $autorizador;
     }
 
 }

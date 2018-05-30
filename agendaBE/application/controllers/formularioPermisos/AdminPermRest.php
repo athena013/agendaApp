@@ -26,6 +26,21 @@ class AdminPermRest extends REST_Controller {
         }
     }
     
+    //obtiener administrador
+    public function administracion_get($idUsuario) {
+        log_message('info', 'Ingreso - find_ciom_get', false);
+      
+        $resultado = $this->AdminPermFachada->obtenerIdAministracion($idUsuario);
+        
+        log_message('info', 'Salida find_ciom_get', false);
+        if (!is_null($resultado)) {
+            $this->response(array("response" => $resultado), 200);
+        } else {
+            log_message('info', $resultado);
+            $this->response(array("error" => "No se encontraron registros"), 401);
+        }
+    }
+    
      //obtiener los motivos de permiso o licencia para las ciom
     public function find_motivo_get() {
         log_message('info', 'Ingreso - find_cargo_get', false);

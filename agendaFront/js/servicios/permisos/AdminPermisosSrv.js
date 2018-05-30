@@ -66,6 +66,11 @@ angular.module('AgendaApp.AdminPermisos')
                                     url : urlParametrosModule + 'desaprobarSolicitud',
                                     method : 'POST',
                                     isArray : false
+                            },
+                            administracion : {
+                                    url : urlParametrosModule + 'obtenerAdministracion',
+                                    method : 'POST',
+                                    isArray : false
                             }
                           
                     });

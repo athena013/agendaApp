@@ -27,6 +27,7 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.horas=false;
                         $scope.btnAprobar=false;
                         $scope.btnDesaprobar=false;
+                        $scope.administrador="";
 //                        $scope.adjunto=false;
                         
                         $scope.datosUsuario = {};
@@ -66,7 +67,7 @@ angular.module('AgendaApp.formularioPermisos')
                          };
                          
                         $scope.obtenerFormularioCompleto = function (){
-//                           $scope.data.objeto;
+                            $scope.administrador=$scope.data.objeto.autorizador;;
                            solicitudSrv.obtenerDetalle({idForm: $scope.data.objeto.ID_FRM_PER ,idTipoForm:$scope.data.objeto.ID_TIPO_SOLPERFK}).$promise.then(function(data){
                                 $scope.detalle = data.response;
                                 switch ($scope.detalle.ID_TIPO_SOLPERFK){
@@ -135,17 +136,39 @@ angular.module('AgendaApp.formularioPermisos')
                                 }else{
                                     $scope.adjunto=false;
                                 }
+                                console.log("administrador"+ $scope.administrador);
+                                if($scope.administrador == "0"){
+                                    if($scope.detalle.AUT0 == '1'){
+                                        $scope.btnAprobar=false;
+                                        $scope.btnDesaprobar=true;
+                                    }
+                                    if($scope.detalle.AUT0 != '1'){
+                                        $scope.btnAprobar=true;
+                                        $scope.btnDesaprobar=false;
+                                    }
+                                }
+                                if($scope.administrador == "1"){
+                                    if($scope.detalle.AUT1 == '1'){
+                                        $scope.btnAprobar=false;
+                                        $scope.btnDesaprobar=true;
+                                    }
+                                    if($scope.detalle.AUT1 != '1'){
+                                        $scope.btnAprobar=true;
+                                        $scope.btnDesaprobar=false;
+                                    }
+                                }
+                                if($scope.administrador == "2"){
+                                    if($scope.detalle.AUT2 == '1'){
+                                        $scope.btnAprobar=false;
+                                        $scope.btnDesaprobar=true;
+                                    }
+                                    if($scope.detalle.AUT2 != '1'){
+                                        $scope.btnAprobar=true;
+                                        $scope.btnDesaprobar=false;
+                                    }
+                                }
                                 
-                                if($scope.detalle.AUT0 == '1' || $scope.detalle.AUT0 == '1' || $scope.detalle.AUT0 == '1'){
-                                    $scope.btnAprobar=false;
-                                    $scope.btnDesaprobar=true;
-                                }
-                                if($scope.detalle.AUT0 != '1' || $scope.detalle.AUT0 != '1' || $scope.detalle.AUT0 != '1'){
-                                    $scope.btnAprobar=true;
-                                    $scope.btnDesaprobar=false;
-                                }
-                               
-                               $scope.detalle.usuarioAprueba = $scope.data.objeto.usuarioAprueba;
+                                $scope.detalle.usuarioAprueba = $scope.data.objeto.usuarioAprueba;
                                 
                                 messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Detalle formulario",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                

@@ -99,6 +99,7 @@ class SolicitudesFachada extends CI_Model {
                 $resultado["totalDias"]=$dias;
                 $resultado["totalHoras"]=$horas;
                 
+                        
             }else if(intval($idTipoForm) == 2){
                 //traslado seguridad social    
                 $resultado=$this->PermisoTblModel->getDetalleSSG($idForm);

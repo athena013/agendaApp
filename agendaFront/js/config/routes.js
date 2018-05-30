@@ -5,6 +5,10 @@ angular.module('AgendaApp').config(['$routeProvider', function ($routeProvider) 
                 controller: 'formPermisosCtrl',
                 templateUrl: 'pages/formPermisos/formularioPermisos.html'
             })
+            .when('/formularioPermisos', {
+                controller: 'formPermisosCtrl',
+                templateUrl: 'pages/formPermisos/formularioPermisos.html'
+            })
             .when('/AdminPermisos', {
                 controller: 'adminPermisosCtrl',
                 templateUrl: 'pages/formPermisos/formularioAdminPermisos.html'

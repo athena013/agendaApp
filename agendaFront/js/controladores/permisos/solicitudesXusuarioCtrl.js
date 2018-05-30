@@ -37,8 +37,8 @@ angular.module('AgendaApp.formularioPermisos')
                             console.log("llega obtenerDatosUsuario");
                             var fecha= new Date();
                             $scope.result={};
-                            $scope.datosUsuario.numDoc ="10297434" ;
-                            $scope.datosUsuario.nomUsu ="cllanten" ;
+//                            $scope.datosUsuario.numDoc ="10297434" ;
+//                            $scope.datosUsuario.nomUsu ="cllanten" ;
                             if($scope.datosUsuario.numDoc != ""){
                                     usuarioAgendaSrv.consultarDatos({numDoc: $scope.datosUsuario.numDoc,usuario: $scope.datosUsuario.nomUsu}).$promise.then(function(data){
                                       console.log(data.response);

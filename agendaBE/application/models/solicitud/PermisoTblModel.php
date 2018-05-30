@@ -303,17 +303,17 @@ class PermisoTblModel extends CI_Model {
             $this->db->where('F.ID_TIPO_SOLPERFK', $filtros["tipoSol"]);
         }
         
-        if (isset($filtros["estadoAprob"])&& !empty($filtros["tipoSol"])){
-                $this->db->where('F.AUT0', $filtros["estadoAprob"]);
-        }
+//        if (isset($filtros["estadoAprob"])&& !empty($filtros["tipoSol"])){
+//                $this->db->where('F.AUT0', $filtros["estadoAprob"]);
+//        }
         
-        if (isset($filtros["AUT0"])& intval($filtros["AUT0"])== 0) {
+        if (isset($filtros["AUT0"]) && intval($filtros["AUT0"]) == 0) {
             if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3"){
                 $this->db->where('F.AUT0', $filtros["estadoAprob"]);
             }
         }            
             
-        if (isset($filtros["AUT1"]) && intval($filtros["AUT1"])== 1) {
+        if (isset($filtros["AUT1"]) && intval($filtros["AUT1"]) == 1) {
             if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3" ){
                 $this->db->where('F.AUT1', $filtros["estadoAprob"]);
             }

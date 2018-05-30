@@ -26,6 +26,7 @@ angular.module('AgendaApp.AdminPermisos')
                         
                         $scope.datosUsuario = {};
                         $scope.datosUsuario.numDoc="";
+                        $scope.autorizador="";
                         
                         $scope.buscar = {};
                         $scope.tipo1=false;
@@ -85,8 +86,8 @@ angular.module('AgendaApp.AdminPermisos')
                         $scope.obtenerDatosUsuario = function (){
                             console.log("llega obtenerDatosUsuario");
                             $scope.result={};
-                            $scope.datosUsuario.numDoc ="10297434" ;
-                            $scope.datosUsuario.nomUsu ="cllanten" ;
+//                            $scope.datosUsuario.numDoc ="10297434" ;
+//                            $scope.datosUsuario.nomUsu ="cllanten" ;
                             if($scope.datosUsuario.numDoc != ""){
                                     usuarioAgendaSrv.consultarDatos({numDoc: $scope.datosUsuario.numDoc,usuario: $scope.datosUsuario.nomUsu}).$promise.then(function(data){
                                       console.log(data.response);
@@ -97,6 +98,7 @@ angular.module('AgendaApp.AdminPermisos')
                                       $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE +" "+ $scope.result.PRIMER_APELLIDO;
                                       console.log($scope.result.ID_USUARIOS);
                                       messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+                                     
                                     }, function(reason){
                                             
                                     });
@@ -130,6 +132,7 @@ angular.module('AgendaApp.AdminPermisos')
                             }
                             return vars;
                         }
+                        
                         
                         /*buscar funcionario(a) CIOM*/
                         $scope.buscarFuncionarioCiom = function (){
@@ -222,10 +225,12 @@ angular.module('AgendaApp.AdminPermisos')
                             //solicitudSrv.obtenerDetalle({idForm: $scope.data.objeto.ID_FRM_PER ,idTipoForm:$scope.data.objeto.ID_TIPO_SOLPERFK}).$promise.then(function(data){
                              console.log(serveData.data.datosUsuario);
                             $scope.buscar.idAutorizador=$scope.datosUsuario.numDoc;
+                            
                             solicitudPerSrv.buscar({buscar: $scope.buscar}).$promise.then(function(data){
                                 messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Solicitudes encontradas",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                 $scope.solPerList = data.response;
-                                
+                                $scope.autorizador = data.response.autorizador;
+                                console.log($scope.autorizador);
                               }, function(reason){
                                 $scope.solPerList={};
                                 messageCenterService.add(CONSTANTS.TYPE_DANGER,"No hay solicitudes Diligenciadas para los filtros dados",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
@@ -235,6 +240,8 @@ angular.module('AgendaApp.AdminPermisos')
                         
                         $scope.verDetalle = function (objeto){
                             objeto.usuarioAprueba = $scope.datosUsuario.numDoc;
+                            console.log($scope.autorizador);
+                            objeto.autorizador = $scope.autorizador;
                             $confirm({objeto: objeto}, {templateUrl: 'pages/formPermisos/detalleAdmFormulario.html'})
                                 .then(function (mensaje) {
                                     console.log(mensaje);
