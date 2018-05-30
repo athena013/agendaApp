@@ -78,7 +78,7 @@ class AdminPermFachada extends CI_Model {
             
             $resultado = $this->PermisoTblModel->getSolicitudesbyFilter($buscar);
             
-            $resultado["autorizador"]=$autorizador["ID_AUT"];
+//            $resultado["autorizador"]=$autorizador["ID_AUT"];
             
 //            var_dump($resultado);
         } catch (Exception $e) {
@@ -248,11 +248,13 @@ class AdminPermFachada extends CI_Model {
 
         log_message('info', 'consultarFuncionariaId', false);
         $autorizador = NULL;
-        $mensaje = NULL;
+        $respuesta = NULL;
         try {
             $this->db->trans_off();
             
             $autorizador = $this->UsuarioModel->getAutorizadorById($id);
+            
+            $respuesta=$autorizador["ID_AUT"];
             
         } catch (Exception $e) {
             $error = $this->db->error();
@@ -260,7 +262,7 @@ class AdminPermFachada extends CI_Model {
             throw new Exception($error[message]);
         }
         log_message('info', 'consultarFuncionariaId list', false);
-        return $autorizador;
+        return $respuesta;
     }
 
 }

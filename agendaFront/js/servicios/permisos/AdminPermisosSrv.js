@@ -68,8 +68,8 @@ angular.module('AgendaApp.AdminPermisos')
                                     isArray : false
                             },
                             administracion : {
-                                    url : urlParametrosModule + 'obtenerAdministracion',
-                                    method : 'POST',
+                                    url : urlParametrosModule + 'obtenerAutorizador/:idUsuario',
+                                    method : 'GET',
                                     isArray : false
                             }
                           

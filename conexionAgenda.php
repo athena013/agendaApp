@@ -37,7 +37,7 @@ else
                     <input type=hidden name="identificacion" value="<?php echo $id; ?>"/>
                         <h2 class="Estilo1"></h2>
 			<div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src='<?php echo $url ?>' ></iframe>
+                            <iframe class="embed-responsive-item" scrolling="auto" src='<?php echo $url ?>' ></iframe>
                         </div>
                 </div>			
 <?php
@@ -55,3 +55,4 @@ else
 }
 	
 ?>
+

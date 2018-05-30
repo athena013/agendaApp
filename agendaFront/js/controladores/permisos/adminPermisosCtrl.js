@@ -98,7 +98,7 @@ angular.module('AgendaApp.AdminPermisos')
                                       $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE +" "+ $scope.result.PRIMER_APELLIDO;
                                       console.log($scope.result.ID_USUARIOS);
                                       messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
-                                     
+                                      $scope.obtenerAutorizador();
                                     }, function(reason){
                                             
                                     });
@@ -170,6 +170,21 @@ angular.module('AgendaApp.AdminPermisos')
                                 $scope.btnBuscarFunc=false; 
                                 messageCenterService.add(CONSTANTS.TYPE_DANGER,"Campo requerido",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                             }   
+                            
+                        };
+                        
+                        $scope.obtenerAutorizador = function (){
+                            //solicitudSrv.obtenerDetalle({idForm: $scope.data.objeto.ID_FRM_PER ,idTipoForm:$scope.data.objeto.ID_TIPO_SOLPERFK}).$promise.then(function(data){
+                            
+                            $scope.buscar.idAutorizador=$scope.datosUsuario.numDoc;
+                            
+                            solicitudPerSrv.administracion({idUsuario: $scope.datosUsuario.numDoc}).$promise.then(function(data){
+                                
+                                $scope.autorizador = data.response;
+                                console.log($scope.autorizador);
+                              }, function(reason){
+                                  
+                              });
                         };
                         
                          /*habilitar permiso prioritario (extemporaneo) funcionario(a) CIOM*/
@@ -229,8 +244,6 @@ angular.module('AgendaApp.AdminPermisos')
                             solicitudPerSrv.buscar({buscar: $scope.buscar}).$promise.then(function(data){
                                 messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Solicitudes encontradas",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                 $scope.solPerList = data.response;
-                                $scope.autorizador = data.response.autorizador;
-                                console.log($scope.autorizador);
                               }, function(reason){
                                 $scope.solPerList={};
                                 messageCenterService.add(CONSTANTS.TYPE_DANGER,"No hay solicitudes Diligenciadas para los filtros dados",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
