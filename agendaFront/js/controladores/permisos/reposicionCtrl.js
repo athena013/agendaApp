@@ -120,6 +120,7 @@ angular.module('AgendaApp.AdminPermisos')
                         };
                         
                         $scope.cargarDias = function (){
+                            
                              usuarioAgendaSrv.cargarDias({idSol: $scope.dia.idSol}).$promise.then(function(data){
                                  
                                  $scope.datosList=data.response;
