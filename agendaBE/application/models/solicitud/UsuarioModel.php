@@ -14,7 +14,7 @@ class UsuarioModel extends CI_Model {
     /*obtener datos de ususario por numero de identificacion de la tabla SEGU_USUARIOS 
      */
     function getUsuarioById($id,$nomUsu) {
-        $this->db->select("USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO,FUN.ID_USUARIOS AS numDoc,USU.NOMBRE_USUARIO as nomUsu,USU.ID_USUARIOS, FUN.ID_CARGOFK, FUN.DEPENDENCIA, FUN.TELEFONO, FUN.BND1");
+        $this->db->select("USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO,FUN.ID_USUARIOS AS numDoc,USU.NOMBRE_USUARIO as nomUsu,USU.ID_USUARIOS, FUN.ID_CARGOFK, FUN.DEPENDENCIA, FUN.TELEFONO,FUN.ID_CIOMFK, FUN.BND1");
         $this->db->from('TERR_CIOM_FUNCIONARIAS FUN');
         $this->db->join('SEGU_USUARIOS USU', 'FUN.ID_USUARIOS = USU.NUMERO_IDENTIFICACION', 'left');
         $this->db->where("NUMERO_IDENTIFICACION",$id);
@@ -176,8 +176,8 @@ class UsuarioModel extends CI_Model {
         if (isset($funcionaria["BND2"])) {
             $datos['BND2'] = $funcionaria["BND2"];
         }
-        if (isset($funcionaria["ID_CIOMfK"])) {
-            $datos['ID_CIOMfK'] = $funcionaria["ID_CIOMfK"];
+        if (isset($funcionaria["ID_CIOMFK"])) {
+            $datos['ID_CIOMFK'] = $funcionaria["ID_CIOMFK"];
         }
         return $datos;
     }

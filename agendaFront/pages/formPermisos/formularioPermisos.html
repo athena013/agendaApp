@@ -99,7 +99,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-sm-4">
+                            <div class="form" ng-class="{ 'has-error' : form.ciom.$invalid && !form.ciom.$pristine}">
+                                <label class="control-label" >CIOM:</label> 
+                                <div>
+                                    <div class="input-group" >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                        <select name="ciom" placeholder="ciom" class="form-control" ng-model="datosUsuario.ID_CIOMFK" required="">
+                                        <option value="">Seleccione</option>
+                                        <option ng-selected="{{ciom.ID_CIOM == datosUsuario.ID_CIOMFK}}" ng-repeat="ciom in ciomList" value="{{ciom.ID_CIOM}}">{{ciom.NOM_CIOM}}</option>
+                                    </select>
+                                    </div>
+                                    <span class="text-danger pull-right" ng-show="form.ciom.$error.pattern" >C&#225;racter no permitido</span>
+                                    <span class="text-danger pull-right" ng-show="form.ciom.$dirty && form.ciom.$error.required">Campo requerido</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
                             <div class="form" ng-class="{ 'has-error' : form.tipoSolicitud.$invalid && !form.tipoSolicitud.$pristine}">
                                 <label class="control-label" >Tipo de solicitud:</label> 
                                 <div>
@@ -116,6 +132,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <hr>
                        
                         <label class="control-label"> {{datosUsuario.dsTipoSolicitud}}</label> 

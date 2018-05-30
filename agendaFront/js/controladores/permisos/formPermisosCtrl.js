@@ -8,10 +8,10 @@ angular.module('AgendaApp.formularioPermisos')
                     '$location',
                     'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','cargoSrv',
                     'MotivoSrv',
-                    '$q',
+                    '$q','ciomSrv',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,cargoSrv,MotivoSrv,$q)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,cargoSrv,MotivoSrv,$q,ciomSrv)
                     {
                         $scope.emailModel = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                         $scope.letrasModel = /^[óáéíú_a-zA-Z0-9ñÑ_,.-\s]*$/;
@@ -49,6 +49,7 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.datosUsuario.id = "";
                         $scope.datosUsuario.fecha_solicitud = "";
                         $scope.cargoList={};
+                        $scope.ciomList={};
                         //tipo3
                         $scope.mostrarFechaVacaciones=false;
                         $scope.mostrarResolucion=false;
@@ -94,14 +95,26 @@ angular.module('AgendaApp.formularioPermisos')
                             });
                         };
                         
+                        $scope.cargarCiom = function (){
+                            ciomSrv.query().$promise.then(function(data){
+                                      console.log(data.response);
+                                      $scope.ciomList=data.response;
+                                    }, function(reason){
+                                            
+                            });
+                            
+                        };
+                        
                         $scope.cargarCargo = function (){
                             cargoSrv.query().$promise.then(function(data){
                                       console.log(data.response);
                                       $scope.cargoList=data.response;
+                                      $scope.cargarCiom();
                                     }, function(reason){
                                             
                             });
                         };
+                       
                         
                         /*obtener datos de usuario para el formulario*/
                         $scope.obtenerDatosUsuario = function (){
