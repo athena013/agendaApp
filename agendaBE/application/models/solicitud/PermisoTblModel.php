@@ -178,7 +178,7 @@ class PermisoTblModel extends CI_Model {
     
     /*obtener detalle formulario permisos*/
     function getDetallePermiso($idForm) {
-        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK,FUN.DEPENDENCIA,CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO");
+        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK,FUN.DEPENDENCIA,CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE,USU.SEGUNDO_NOMBRE, USU.PRIMER_APELLIDO, USU.SEGUNDO_APELLIDO");
         $this->db->from('TERR_SOL_PERMISO P');
         $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = P.ID_FRM_PERFK');
         $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
@@ -210,7 +210,7 @@ class PermisoTblModel extends CI_Model {
     
     /*obtener detalle formulario TRASLADO SEGURIDAD SOCIAL*/
     function getDetalleSSG($idForm) {
-        $this->db->select("SS.*,F.*,FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO");
+        $this->db->select("SS.*,F.*,FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO,USU.SEGUNDO_NOMBRE, USU.PRIMER_APELLIDO, USU.SEGUNDO_APELLIDO");
         $this->db->from('TERR_SOL_TRASEGSOC SS');
         $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = SS.ID_FRM_PERFK');
         $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
@@ -228,7 +228,7 @@ class PermisoTblModel extends CI_Model {
     
     /*obtener detalle Prima tecnica*/
     function getDetallePrimaTecnica($idForm) {
-        $this->db->select("PT.*,F.*,FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO");
+        $this->db->select("PT.*,F.*,FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, USU.PRIMER_NOMBRE, USU.SEGUNDO_NOMBRE, USU.PRIMER_APELLIDO, USU.SEGUNDO_APELLIDO,");
         $this->db->from('TERR_SOL_PRITEC PT');
         $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = PT.ID_FRM_PERFK');
         $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');

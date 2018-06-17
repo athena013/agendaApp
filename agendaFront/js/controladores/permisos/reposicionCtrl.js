@@ -51,7 +51,7 @@ angular.module('AgendaApp.AdminPermisos')
                                       $scope.result=data.response;
                                       serveData.data.datosUsuario=$scope.result;
                                       $scope.datosUsuario.idUser=$scope.result.ID_USUARIOS;
-                                      $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE +" "+ $scope.result.PRIMER_APELLIDO;
+                                      $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE + " "+$scope.result.SEGUNDO_NOMBRE+" "+ $scope.result.PRIMER_APELLIDO+" "+$scope.result.SEGUNDO_NOMBRE;
                                       console.log($scope.result.ID_USUARIOS);
                                       messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                     }, function(reason){

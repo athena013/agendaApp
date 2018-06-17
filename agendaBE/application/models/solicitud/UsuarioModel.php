@@ -14,13 +14,12 @@ class UsuarioModel extends CI_Model {
     /*obtener datos de ususario por numero de identificacion de la tabla SEGU_USUARIOS 
      */
     function getUsuarioById($id,$nomUsu) {
-        $this->db->select("USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO,FUN.ID_USUARIOS AS numDoc,USU.NOMBRE_USUARIO as nomUsu,USU.ID_USUARIOS, FUN.ID_CARGOFK, FUN.DEPENDENCIA, FUN.TELEFONO,FUN.ID_CIOMFK, FUN.BND1");
+        $this->db->select("USU.PRIMER_NOMBRE, USU.SEGUNDO_NOMBRE, USU.PRIMER_APELLIDO,USU.SEGUNDO_APELLIDO,FUN.ID_USUARIOS AS numDoc,USU.NOMBRE_USUARIO as nomUsu,USU.ID_USUARIOS, FUN.ID_CARGOFK, FUN.DEPENDENCIA, FUN.TELEFONO,FUN.ID_CIOMFK, FUN.BND1");
         $this->db->from('TERR_CIOM_FUNCIONARIAS FUN');
         $this->db->join('SEGU_USUARIOS USU', 'FUN.ID_USUARIOS = USU.NUMERO_IDENTIFICACION', 'left');
         $this->db->where("NUMERO_IDENTIFICACION",$id);
         $this->db->where("NOMBRE_USUARIO",$nomUsu);
         $query = $this->db->get();
-         
         $this->_validateDB($query);
         if ($query->num_rows() == 1) {
             return $query->row_array();
@@ -46,7 +45,7 @@ class UsuarioModel extends CI_Model {
     /*consultar usuario CIOM 
      */
     public function consultarFuncionariaId($id) {
-        $this->db->select("USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO, USU.ID_USUARIOS, FUN.ID_USUARIOS, FUN.ID_CARGOFK, FUN.DEPENDENCIA, FUN.TELEFONO, FUN.BND1, CAR.CARGO, CAR.CARGO_ESPEC");
+        $this->db->select("USU.PRIMER_NOMBRE, USU.SEGUNDO_NOMBRE,USU.PRIMER_APELLIDO,USU.SEGUNDO_APELLIDO, USU.ID_USUARIOS, FUN.ID_USUARIOS AS numDoc,USU.NOMBRE_USUARIO as nomUsu, FUN.ID_CARGOFK, FUN.ID_CIOMFK, FUN.DEPENDENCIA, FUN.TELEFONO, FUN.BND1, CAR.CARGO, CAR.CARGO_ESPEC");
         $this->db->from('TERR_CIOM_FUNCIONARIAS FUN');
         $this->db->join('SEGU_USUARIOS USU', 'USU.NUMERO_IDENTIFICACION = FUN.ID_USUARIOS', 'left');
         $this->db->join('TERR_FUNC_CARGO CAR', 'CAR.ID_CARGO = FUN.ID_CARGOFK', 'left');

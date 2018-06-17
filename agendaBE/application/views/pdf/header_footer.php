@@ -67,7 +67,7 @@
         <td width="30%">&nbsp;<?php echo $ID_USUARIOS ?></td>  
   </tr>
   <tr>  <th >SOLICITANTE</th>
-        <td >&nbsp;<?php echo $PRIMER_NOMBRE ." ". $PRIMER_APELLIDO?></td>
+        <td >&nbsp;<?php echo $PRIMER_NOMBRE." ".$SEGUNDO_NOMBRE." ". $PRIMER_APELLIDO." ".$SEGUNDO_APELLIDO?></td>
         <th>CARGO</th> 
         <td>&nbsp;<?php echo $CARGO." ".$CARGO_ESPEC ?></td>
         

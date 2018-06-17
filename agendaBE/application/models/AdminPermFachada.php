@@ -235,6 +235,14 @@ class AdminPermFachada extends CI_Model {
         try {
             $this->db->trans_off();
             $funcionaria = $this->UsuarioModel->consultarFuncionariaId($id);
+            if($funcionaria["SEGUNDO_NOMBRE"]== null){
+                $funcionaria["SEGUNDO_NOMBRE"]=" ";
+            }
+            if($funcionaria["SEGUNDO_APELLIDO"]== null){
+                $funcionaria["SEGUNDO_APELLIDO"]=" ";
+            }
+                
+            
         } catch (Exception $e) {
             $error = $this->db->error();
             log_message('error', 'error consultarFuncionariaId' . $error[message], false);

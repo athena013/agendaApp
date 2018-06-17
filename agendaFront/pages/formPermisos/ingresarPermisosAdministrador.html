@@ -26,7 +26,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        
+                        <div class="col-sm-3">
+                            <div class="form" ng-class="{ 'has-error' : form.numDoc.$invalid && !form.numDoc.$pristine}">
+                                <label class="control-label" >Cédula </label> 
+                                <div>
+                                    <div class="input-group" >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                        <input name="cedula" placeholder="cedula" class="form-control" ng-model="datosUsuario.numDoc">
+                                    </div>
+                                    <span class="text-danger pull-right" ng-show="form.numDoc.cedula.pattern" >C&#225;racter no permitido</span>
+                                    <span class="text-danger pull-right" ng-show="form.numDoc.cedula && form.numDoc.$error.required">Campo requerido</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form">
+                               <label class="control-label" > </label> 
+                                <div>
+                                    <div class="input-group" >
+                                       <button type="button" class="btn btn-info" ng-click="buscarFuncionarioCiom()" alt="Buscar Funcionaria"><span class="glyphicon glyphicon-search"></span></button>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-5">
                             <div class="form" ng-class="{ 'has-error' : form.nombre.$invalid && !form.nombre.$pristine}">
                                 <label class="control-label" >Solicitante </label> 
                                 <div>
@@ -39,19 +65,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form" ng-class="{ 'has-error' : form.numDoc.$invalid && !form.numDoc.$pristine}">
-                                <label class="control-label" >Cédula </label> 
-                                <div>
-                                    <div class="input-group" >
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                        <input name="cedula" placeholder="cedula" class="form-control" ng-model="datosUsuario.numDoc" disabled="">
-                                    </div>
-                                    <span class="text-danger pull-right" ng-show="form.numDoc.cedula.pattern" >C&#225;racter no permitido</span>
-                                    <span class="text-danger pull-right" ng-show="form.numDoc.cedula && form.numDoc.$error.required">Campo requerido</span>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        
                     </div>
                     
                     <div class="row">
@@ -301,7 +316,7 @@
                             <div class="col-sm-8">
                                 <br>
                                    <div class="custom-file">
-                                       <label class="control-label" for="customFileLang">Seleccionar Archivo</label>
+                                       <label class="control-label" for="customFileLang">Seleccionar Archivo {{adjuntar}}</label>
                                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
                                        <!--<input type="file"  class="custom-file-input" id="customFileLang" lang="es">-->
                                        <input type="file" name="file" uploader-model="file" ng-required="tipo1 && adjuntar"/>

@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('AgendaApp.formularioPermisos')
-        .controller('formPermisosCtrl',
+        .controller('ingresarPermisoAdministradorCtrl',
                 ['$scope',
                     '$route',
                     'messageCenterService',
                     '$location',
                     'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','cargoSrv',
                     'MotivoSrv',
-                    '$q','ciomSrv',
+                    '$q','ciomSrv','funcionariaSrv',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,cargoSrv,MotivoSrv,$q,ciomSrv)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,cargoSrv,MotivoSrv,$q,ciomSrv,funcionariaSrv)
                     {
                         $scope.emailModel = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                         $scope.letrasModel = /^[óáéíú_a-zA-Z0-9ñÑ_,.-\s]*$/;
@@ -48,6 +48,7 @@ angular.module('AgendaApp.formularioPermisos')
                         
                         $scope.datosUsuario.id = "";
                         $scope.datosUsuario.fecha_solicitud = "";
+                        $scope.datosUsuarioAdmin = {};
                         $scope.cargoList={};
                         $scope.ciomList={};
                         //tipo3
@@ -59,9 +60,9 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.checkboxModel={};
                         $scope.diaSemana = new Array('domingo','lunes','martes','miercoles','jueves','viernes','sabado');
                         $scope.tipoSolicitudList=[ {id : "1", ds : "1. Solicitud de permiso o ausencia de servidoras(es) públicos"}, 
-                                                    {id : "2", ds : "2. Traslado en seguridad social y cesantías"}, 
-                                                    {id : "3", ds : "3. Vacaciones"},
-                                                    {id : "4", ds : "4. Prima técnica"},
+//                                                    {id : "2", ds : "2. Traslado en seguridad social y cesantías"}, 
+//                                                    {id : "3", ds : "3. Vacaciones"},
+//                                                    {id : "4", ds : "4. Prima técnica"},
                                                     {id : "5", ds : "5. Licencia no remunerada o licencia por luto"}];
                         $scope.tipoLicenciaList=[ {id : "1", ds : "1. Licencia no remunerada"}, 
                                                     {id : "2", ds : "2. Licencia por luto"}];
@@ -75,10 +76,10 @@ angular.module('AgendaApp.formularioPermisos')
                                                 
                                                     
                         $scope.obtenerIdUrl = function (){
-                            $scope.datosUsuario.numDoc = getUrlVars()["id"];
-                            $scope.datosUsuario.nomUsu = getUrlVars()["usu"];
-                            console.log($scope.datosUsuario.numDoc);
-                            console.log($scope.datosUsuario.nomUsu);
+                            $scope.datosUsuarioAdmin.numDoc = getUrlVars()["id"];
+                            $scope.datosUsuarioAdmin.nomUsu = getUrlVars()["usu"];
+                            console.log($scope.datosUsuarioAdmin.numDoc);
+                            console.log($scope.datosUsuarioAdmin.nomUsu);
 //                            $scope.obtenerDatosUsuario();
                             $scope.tipo1=false;
 //                          console.log($scope.fecha_solicitud);
@@ -88,10 +89,16 @@ angular.module('AgendaApp.formularioPermisos')
 //                        traer motivos licencia o permiso
                         $scope.getMotivo = function (){
                             MotivoSrv.query({cat: $scope.categoria}).$promise.then(function(data){
-                                      console.log("MOTIVO"+data.response);
-                                      $scope.motPermisoList=data.response;
-                                      var index = $scope.motPermisoList.indexOf("Permiso Sindical");
-                                      $scope.motPermisoList.splice(index, 1);//oculto permiso sindical
+                                        console.log("MOTIVO"+data.response);
+                                        if($scope.categoria == "1"){
+                                            $scope.motPermisoList=data.response;
+                                            $scope.motPermisoList.splice(0, 5);//mostrar solo permiso por sindicato
+                                        }
+                                        if($scope.categoria == "5"){
+                                             $scope.motPermisoList=data.response;
+                                                $scope.motPermisoList.splice(0, 1);//mostrar solo licencia por luto
+                                        }
+                                        
                                     }, function(reason){
                                             
                             });
@@ -103,8 +110,7 @@ angular.module('AgendaApp.formularioPermisos')
                                       $scope.ciomList=data.response;
                                     }, function(reason){
                                             
-                            });
-                            
+                            });                            
                         };
                         
                         $scope.cargarCargo = function (){
@@ -123,26 +129,19 @@ angular.module('AgendaApp.formularioPermisos')
                              var target = document.getElementById('divLoadingGeneral');
                             var spinner = new Spinner().spin(target);
                             
-                            console.log("llega obtenerDatosUsuario");
+                            console.log("llega obtenerDatosUsuarioAdmin");
                             var fecha= new Date();
                             $scope.result={};
 //                            $scope.datosUsuario.numDoc ="10297434" ;
 //                            $scope.datosUsuario.nomUsu ="cllanten" ;
-                            if($scope.datosUsuario.numDoc != ""){
-                                    usuarioAgendaSrv.consultarDatos({numDoc: $scope.datosUsuario.numDoc,usuario: $scope.datosUsuario.nomUsu}).$promise.then(function(data){
+                            if($scope.datosUsuarioAdmin.numDoc != ""){
+                                    usuarioAgendaSrv.consultarDatos({numDoc: $scope.datosUsuarioAdmin.numDoc,usuario: $scope.datosUsuarioAdmin.nomUsu}).$promise.then(function(data){
                                       console.log(data.response);
                                       $scope.result=data.response;
-                                      serveData.data.datosUsuario=$scope.result;
-                                      $scope.datosUsuario=data.response;
-                                      $scope.datosUsuario.idUser=$scope.result.ID_USUARIOS;
-                                      $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE;
-                                       if($scope.result.SEGUNDO_NOMBRE != null){
-                                           $scope.datosUsuario.nombre= $scope.datosUsuario.nombre + " " + $scope.result.SEGUNDO_NOMBRE;
-                                       }
-                                       $scope.datosUsuario.nombre= $scope.datosUsuario.nombre+" " +$scope.result.PRIMER_APELLIDO;
-                                       if($scope.result.SEGUNDO_APELLIDO != null){
-                                           $scope.datosUsuario.nombre= $scope.datosUsuario.nombre + " " + $scope.result.SEGUNDO_APELLIDO;
-                                       }
+                                      serveData.data.datosUsuarioAdmin=$scope.result;
+                                      $scope.datosUsuarioAdmin=data.response;
+                                      $scope.datosUsuarioAdmin.idUser=$scope.result.ID_USUARIOS;
+                                      $scope.datosUsuarioAdmin.nombre=$scope.result.PRIMER_NOMBRE + " "+$scope.result.SEGUNDO_NOMBRE+" "+ $scope.result.PRIMER_APELLIDO+" "+$scope.result.SEGUNDO_NOMBRE;
                                       $scope.datosUsuario.fecha_solicitud = fecha.getFullYear()+"/"+(fecha.getMonth()+1)+"/"+fecha.getDate();
                                       messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Datos exitoso",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                     }, function(reason){
@@ -159,10 +158,10 @@ angular.module('AgendaApp.formularioPermisos')
                         };
                              
                        /* coloca los datos de usuario en el serverData*/
-                        console.log("voy a preguntar si existe serverdata" + serveData.data.datosUsuario);
-                        if (serveData.data.datosUsuario) {
-                            if (serveData.data.datosUsuario.idUser) {
-                                $scope.datosUsuario = serveData.data.datosUsuario;
+                        console.log("voy a preguntar si existe serverdata" + serveData.data.datosUsuarioAdmin);
+                        if (serveData.data.datosUsuarioAdmin) {
+                            if (serveData.data.datosUsuarioAdmin.idUser) {
+                                $scope.datosUsuario = serveData.data.datosUsuarioAdmin;
                                 console.log("datos consulta server: " + $scope.datosUsuario.idUser);
                             }
                             $scope.cargarCargo();
@@ -187,7 +186,7 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.validarDiasHoras = function (){
                             $scope.btnEnviar=true;//deshabilito guardar
                             $scope.validado=false;
-                            
+                            console.log("validarDiasHoras");
                             if($scope.datosUsuario.fInicio){
                                 var fechaSolPer = new Date($scope.datosUsuario.fInicio);
                                 fechaSolPer.setHours(0, 0, 0, 0);
@@ -200,7 +199,6 @@ angular.module('AgendaApp.formularioPermisos')
                                     alert("Si su permiso es más de tres días por favor realizar dos solicitudes separadas, ya que el sistema no realiza cálculo de días no hábiles");
                                 }
                                 
-                                if(fechaHabil<fechaSolPer || $scope.datosUsuario.BND1 == "1"){
                                     if($scope.datosUsuario.tipoPermiso == "horas"){
                                         console.log("horas");
                                         $scope.horas = true;
@@ -214,44 +212,11 @@ angular.module('AgendaApp.formularioPermisos')
                                     if($scope.datosUsuario.tipoPermiso == "dias"){
                                        console.log("dias");
                                        fechaSolPer.setHours(0, 0, 0, 0);
-                                       if($scope.datosUsuario.cantidad==1){
-                                        $scope.horas = false;
+                                        var cant = $scope.datosUsuario.cantidad-1;
+                                        fechaSolPer.setDate(fechaSolPer.getDate()+cant);
                                         $scope.datosUsuario.strfHasta = fechaSolPer.getFullYear()+"/"+(fechaSolPer.getMonth()+1)+"/"+fechaSolPer.getDate();
-                                        $scope.datosUsuario.fHasta=$scope.datosUsuario.fInicio;
-                                        }else{
-                                            $scope.horas = false;
-                                            if($scope.datosUsuario.cantidad<=3){
-                                                var cant = $scope.datosUsuario.cantidad-1;
-                                                fechaSolPer.setDate(fechaSolPer.getDate()+cant);
-                                                $scope.datosUsuario.strfHasta = fechaSolPer.getFullYear()+"/"+(fechaSolPer.getMonth()+1)+"/"+fechaSolPer.getDate();
-                                                $scope.datosUsuario.fHasta=fechaSolPer;
-                                            }else{
-                                                $scope.datosUsuario.cantidad="";
-                                                $scope.datosUsuario.strfHasta = "";
-                                                $scope.datosUsuario.fInicio="";
-                                                $scope.datosUsuario.fHasta="";
-                                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"No es permitido solicitar mas de tres días",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
-                                            }
-                                        } 
+                                        $scope.datosUsuario.fHasta=fechaSolPer;
                                     }
-                                }else{
-                                  /* no puede solicitar permiso bandera excencion por fecha consultar de una vez las banderas
-                                   * cuando me selecciones el tipo de permiso debo avisarle que no puede pedir permisos o por 
-                                   * falta de anexar docuemntos BE*/
-                                  var con = confirm("Debe solicitar un permiso con tres dias de anterioridad, por favor contactarse con la administradora");
-                                    
-                                  if (con == true) {
-                                      $scope.datosUsuario.strfHasta = "";
-                                        $scope.datosUsuario.fInicio="";
-                                        $scope.datosUsuario.fHasta="";
-//                                        alert("true");
-                                    } else {
-                                        $scope.datosUsuario.strfHasta = "";
-                                        $scope.datosUsuario.fInicio="";
-                                        $scope.datosUsuario.fHasta="";
-//                                        alert("true");
-                                    }
-                                }
                             }
                         };
                         
@@ -580,6 +545,45 @@ angular.module('AgendaApp.formularioPermisos')
 //                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,reason.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                 });
                             }
+                            
+                        };
+                        
+                         /*buscar funcionario(a) CIOM*/
+                        $scope.buscarFuncionarioCiom = function (){
+                            var fecha= new Date();
+                            if($scope.datosUsuario.numDoc != "" ){
+                                funcionariaSrv.query({numDoc: $scope.datosUsuario.numDoc}).$promise.then(function(data){
+                                console.log(data.response);
+                                    if(data.response){
+                                       $scope.result=data.response;
+                                       $scope.datosUsuario=$scope.result;
+                                       $scope.datosUsuario.fecha_solicitud = fecha.getFullYear()+"/"+(fecha.getMonth()+1)+"/"+fecha.getDate();
+                                       $scope.datosUsuario.nombre=$scope.result.PRIMER_NOMBRE;
+                                       if($scope.result.SEGUNDO_NOMBRE != null){
+                                           $scope.datosUsuario.nombre= $scope.datosUsuario.nombre + " " + $scope.result.SEGUNDO_NOMBRE;
+                                       }
+                                       $scope.datosUsuario.nombre= $scope.datosUsuario.nombre+" " +$scope.result.PRIMER_APELLIDO;
+                                       if($scope.result.SEGUNDO_APELLIDO != null){
+                                           $scope.datosUsuario.nombre= $scope.datosUsuario.nombre + " " + $scope.result.SEGUNDO_APELLIDO;
+                                       }
+                                       
+                                        console.log($scope.nombre + "aca esta el nombre completo");
+                                       messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Funcionario(a) CIOM encontrado(a)",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+                                    }else{
+                                       console.log("entrando");
+                                        $scope.mostrarResultado=false;
+                                       messageCenterService.add(CONSTANTS.TYPE_DANGER,data.error,{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                    }
+                                    $scope.btnBuscarFunc=false;  
+                                      
+                                }, function(reason){
+                                    console.log(reason);
+                                    messageCenterService.add(CONSTANTS.TYPE_DANGER,"Funcionario(a) CIOM no encontrado(a)",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                                              
+                                });
+                            }else{
+                                messageCenterService.add(CONSTANTS.TYPE_DANGER,"Campo requerido",{icon : CONSTANTS.TYPE_DANGER_ICON,messageIcon : CONSTANTS.TYPE_DANGER_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
+                            }   
                             
                         };
                         

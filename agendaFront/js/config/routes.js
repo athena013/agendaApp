@@ -25,6 +25,10 @@ angular.module('AgendaApp').config(['$routeProvider', function ($routeProvider) 
                 controller: 'adminPermisosCtrl',
                 templateUrl: 'pages/formPermisos/solicitudesPorAdministrador.html'
             })
+            .when('/ingresarPermisosAdmin', {
+                controller: 'ingresarPermisoAdministradorCtrl',
+                templateUrl: 'pages/formPermisos/ingresarPermisosAdministrador.html'
+            })
             
             .otherwise({redirectTo: '/'});
      }]);

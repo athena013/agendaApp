@@ -181,7 +181,7 @@ class SolicitudesFachada extends CI_Model {
         $this->mydompdf->stream("welcome.pdf", array("Attachment" => false));
     }
     
-     function header_footer_get($idForm, $tipo){
+    function header_footer_get($idForm, $tipo){
          
         $data=$this->PermisoTblModel->getDetallePermiso($idForm);
         

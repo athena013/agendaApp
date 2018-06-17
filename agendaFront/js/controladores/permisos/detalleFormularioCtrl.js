@@ -25,6 +25,7 @@ angular.module('AgendaApp.formularioPermisos')
                         $scope.tipo4=false;
                         $scope.tipo5=false;
                         $scope.horas=false;
+                        $scope.btnEliminar=false;
 //                        $scope.adjunto=false;
                         
                         $scope.datosUsuario = {};
@@ -100,6 +101,12 @@ angular.module('AgendaApp.formularioPermisos')
 //                                    $scope.ruta= $scope.detalle.RUTA_DOC.toString()+$scope.detalle.NOMB_DO.toString();
                                 }else{
                                     $scope.adjunto=false;
+                                }
+                                
+                                if($scope.detalle.AUT2 == '1'){
+                                        $scope.btnEliminar=false;                                        
+                                }else{
+                                     $scope.btnEliminar=true;    
                                 }
                                 
                                 messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Detalle formulario",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});

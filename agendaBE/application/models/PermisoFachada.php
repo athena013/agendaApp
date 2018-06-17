@@ -22,6 +22,12 @@ class PermisoFachada extends CI_Model {
             $this->db->trans_off();
             $resultado = $this->UsuarioModel->getUsuarioById($numDoc,$nomUsu);
             
+            if(isset($resultado["SEGUNDO_NOMBRE"]) && $resultado["SEGUNDO_NOMBRE"] == null){
+                $resultado["SEGUNDO_NOMBRE"]=" ";
+            }
+            if(isset($resultado["SEGUNDO_APELLIDO"]) && $resultado["SEGUNDO_APELLIDO"] == null){
+                $resultado["SEGUNDO_APELLIDO"]=" ";
+            }
           
 //            $objDocsPendiente= $ $this->UsuarioModel->obtenerDocsPendientes($numDoc);
            
