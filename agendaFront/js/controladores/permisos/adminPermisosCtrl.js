@@ -8,10 +8,10 @@ angular.module('AgendaApp.AdminPermisos')
                     '$route',
                     'messageCenterService',
                     '$location',
-                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv','ciomSrv','solicitudPerSrv','$confirm',
+                    'constantsFront', '$http', 'serveData', 'usuarioAgendaSrv','funcionariaSrv','ciomSrv','solicitudPerSrv','$confirm','$window',
                     function ($scope,
                             $route, messageCenterService,
-                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv, ciomSrv,solicitudPerSrv,$confirm)
+                            $location, CONSTANTS, $http, serveData,usuarioAgendaSrv,funcionariaSrv, ciomSrv,solicitudPerSrv,$confirm,$window)
                     {
                         $scope.datosFunCiom = {};
                         $scope.datosFunCiom.numDoc = "";
@@ -263,7 +263,19 @@ angular.module('AgendaApp.AdminPermisos')
                             });
                            
                         };
-                      
-                       
+                        
+                        $scope.reporte = function () {
+                            
+                            var url = CONSTANTS.RUTA_BACK_END + 'obtenerReporteByFilter?buscar=' + JSON.stringify($scope.buscar);
+//                            $window.location = url;
+                             $window.open(url, '_blank');
+
+//                                    solicitudPerSrv.reporte({buscar: $scope.buscar}, function (data) {
+//                                                //                                
+//                                    }, function (reason) { // promise rejected
+//                                        messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"reporte....",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
+//                                    });
+                        };
+                            
                     }]);
 

@@ -71,6 +71,12 @@ angular.module('AgendaApp.AdminPermisos')
                                     url : urlParametrosModule + 'obtenerAutorizador/:idUsuario',
                                     method : 'GET',
                                     isArray : false
+                            },
+                            reporte : {
+                                    url : urlParametrosModule + 'obtenerReporteByFilter',
+//                                    headers: {  "Content-type": 'application/json' },
+                                    method : 'GET',
+                                    isArray : false
                             }
                           
                     });

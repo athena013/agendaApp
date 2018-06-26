@@ -270,9 +270,10 @@ class PermisoTblModel extends CI_Model {
         }
     }
     
-    /*sss*/
+    /*obtener solicitudes diligenciadas por filtros modulo administracion*/
     function getSolicitudesbyFilter($filtros) {
-        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM, MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.PRIMER_APELLIDO, TS.DESC_TIPO_SOLPER");
+        $this->db->select("P.*, F.*, FUN.TELEFONO, FUN.ID_CIOMFK, FUN.ID_CARGOFK, FUN.DEPENDENCIA, CAR.CARGO, CAR.CARGO_ESPEC, CIOM.NOM_CIOM,"
+                . " MOT.DESC_MOTIVO, USU.PRIMER_NOMBRE, USU.SEGUNDO_NOMBRE, USU.PRIMER_APELLIDO, USU.SEGUNDO_APELLIDO, TS.DESC_TIPO_SOLPER");
         $this->db->from('TERR_SOL_PERMISO P');
         $this->db->join('TERR_FRM_PER F','F.ID_FRM_PER = P.ID_FRM_PERFK');
         $this->db->join('TERR_CIOM_FUNCIONARIAS FUN','FUN.ID_USUARIOS=F.ID_USUARIOS');
@@ -284,10 +285,10 @@ class PermisoTblModel extends CI_Model {
         if ($filtros) {
             $this->_filterSolicitudes($filtros);
         }
+        
         $query = $this->db->get();
-        //var_dump("consulta ");
-//        var_dump($query);
-//         var_dump($query->result_array());
+            
+//        echo $this->db->last_query();
         if ($query->num_rows() > 0) {
             return $query->result_array();
         } else {
@@ -302,38 +303,41 @@ class PermisoTblModel extends CI_Model {
         if (isset($filtros["tipoSol"]) && !empty($filtros["tipoSol"])) {
             $this->db->where('F.ID_TIPO_SOLPERFK', $filtros["tipoSol"]);
         }
+        if (isset($filtros["numDoc"]) && !empty($filtros["numDoc"])) {
+            $this->db->where('FUN.ID_USUARIOS', $filtros["numDoc"]);
+        }
         
 //        if (isset($filtros["estadoAprob"])&& !empty($filtros["tipoSol"])){
 //                $this->db->where('F.AUT0', $filtros["estadoAprob"]);
 //        }
         
         if (isset($filtros["AUT0"]) && intval($filtros["AUT0"]) == 0) {
-            if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3"){
+            if (isset($filtros["estadoAprob"]) && !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3"){
                 $this->db->where('F.AUT0', $filtros["estadoAprob"]);
             }
         }            
             
         if (isset($filtros["AUT1"]) && intval($filtros["AUT1"]) == 1) {
-            if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3" ){
+            if (isset($filtros["estadoAprob"]) && !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3" ){
                 $this->db->where('F.AUT1', $filtros["estadoAprob"]);
             }
         }  
         
-        if (isset($filtros["AUT2"]) && intval($filtros["AUT2"])== 2) {
-            if (isset($filtros["estadoAprob"])&& !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3"){
+        if (isset($filtros["AUT2"]) && intval($filtros["AUT2"]) == 2) {
+            if (isset($filtros["estadoAprob"]) && !empty($filtros["estadoAprob"]) && $filtros["estadoAprob"] != "3"){
                 $this->db->where('F.AUT2', $filtros["estadoAprob"]);
             }
         }
         
         if (isset($filtros["fInicio"]) && !empty($filtros["fInicio"])) {
-            $date= date("d/F/Y", strtotime($filtros["fInicio"]));
+            $date= date("d/m/Y", strtotime($filtros["fInicio"]));
 //            var_dump($date);
              $this->db->where("P.FEC_INI_PERM >= TO_DATE('".$date."','dd/mm/yyyy')");
         }
         if (isset($filtros["fFin"]) && !empty($filtros["fFin"])) {
-            $dateFin= date("d/F/Y", strtotime($filtros["fFin"]));
+            $dateFin= date("d/m/Y", strtotime($filtros["fFin"]));
 //             var_dump($dateFin);
-           $this->db->where("P.FEC_FIN_PERM <= TO_DATE('".$dateFin."','dd/mm/yyyy')");
+           $this->db->where("P.FEC_INI_PERM <= TO_DATE('".$dateFin."','dd/mm/yyyy')");
         }
         
     }

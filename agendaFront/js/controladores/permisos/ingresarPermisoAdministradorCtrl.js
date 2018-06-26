@@ -196,7 +196,7 @@ angular.module('AgendaApp.formularioPermisos')
                                 /*validar tres dias de anterioridad debo validar que tenga bandera activa para permiso normal*/
                                 
                                 if($scope.diaSemana[fechaSolPer.getDay()]== 'jueves' || $scope.diaSemana[fechaSolPer.getDay()]== 'viernes' || $scope.diaSemana[fechaSolPer.getDay()]== 'sabado'){
-                                    alert("Si su permiso es más de tres días por favor realizar dos solicitudes separadas, ya que el sistema no realiza cálculo de días no hábiles");
+                                    alert("Recuerde que su permiso se solicita por días hábiles. En el caso en que concurra con días de fin de semana o festivos, se solicita amablemente diligenciar dos formatos");
                                 }
                                 
                                     if($scope.datosUsuario.tipoPermiso == "horas"){
@@ -272,7 +272,7 @@ angular.module('AgendaApp.formularioPermisos')
                                 fechaFinDigitada = new Date($scope.datosUsuario.fHasta);
                                 
                             if($scope.diaSemana[fechaSolPer.getDay()]== 'jueves' || $scope.diaSemana[fechaSolPer.getDay()]== 'viernes' || $scope.diaSemana[fechaSolPer.getDay()]== 'sabado'){
-                                alert("Si su permiso es más de tres días por favor realizar dos solicitudes separadas, ya que el sistema no realiza cálculo de días no hábiles");
+                                alert("Recuerde que su permiso se solicita por días hábiles. En el caso en que concurra con días de fin de semana o festivos, se solicita amablemente diligenciar dos formatos");
                             }
                         }
                                 
@@ -471,7 +471,7 @@ angular.module('AgendaApp.formularioPermisos')
                                 fechaHabil.setDate(fechaHabil.getDate()+2);
                                 
                                 if($scope.diaSemana[fechaSolPer.getDay()]== 'jueves' || $scope.diaSemana[fechaSolPer.getDay()]== 'viernes' || $scope.diaSemana[fechaSolPer.getDay()]== 'sabado'){
-                                    alert("Si su permiso es más de tres días por favor realizar dos solicitudes separadas, ya que el sistema no realiza cálculo de días no hábiles");
+                                    alert("Recuerde que su permiso se solicita por días hábiles. En el caso en que concurra con días de fin de semana o festivos, se solicita amablemente diligenciar dos formatos");
                                 }
                                   
                                 if(fechaHabil<fechaSolPer || $scope.datosUsuario.BND1 == "1"){

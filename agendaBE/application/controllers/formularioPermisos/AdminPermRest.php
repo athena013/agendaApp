@@ -114,4 +114,29 @@ class AdminPermRest extends REST_Controller {
         }
     }
     
+     //obtener solicitudes por los filtros de administracion
+    public function obtenerReporteByFilter_get() {
+        log_message('info', 'Ingreso - obtenerSolbyFilter_post', false);
+        
+//        $segment=$this->uri->segment(2);
+//        $filtros = json_decode((string) $segment);
+        
+        $array = json_decode((string) $this->input->get('buscar'));
+        $buscar = json_decode(json_encode($array), True);
+        
+        if (!$buscar) {
+    		$this->response(NULL, 401);
+    	}
+        $resultado = $this->AdminPermFachada->generarReporteSolicitudes($buscar);
+        
+        
+        log_message('info', 'Salida Solicitud - obtenerSolbyFilter_post', false);
+        if (!is_null($resultado)) {
+            $this->response(array("response" => $resultado), 200);
+        } else {
+            log_message('info', $resultado);
+            $this->response(array("error" => "No se encontraron registros"), 401);
+        }
+    }
+    
 }

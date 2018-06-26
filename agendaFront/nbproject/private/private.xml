@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/agenda/agendaFront/pages/formPermisos/detalleAdmFormulario.html</file>
             <file>file:/C:/xampp/htdocs/agenda/agendaFront/js/controladores/permisos/adminPermisosCtrl.js</file>
+            <file>file:/C:/xampp/htdocs/agenda/agendaFront/js/controladores/permisos/formPermisosCtrl.js</file>
             <file>file:/C:/xampp/htdocs/agenda/agendaFront/pages/formPermisos/detalleFormulario.html</file>
-            <file>file:/C:/xampp/htdocs/agenda/agendaFront/js/controladores/permisos/detalleFormularioCtrl.js</file>
+            <file>file:/C:/xampp/htdocs/agenda/agendaFront/js/controladores/permisos/ingresarPermisoAdministradorCtrl.js</file>
             <file>file:/C:/xampp/htdocs/agenda/agendaFront/pages/formPermisos/solicitudesPorAdministrador.html</file>
-            <file>file:/C:/xampp/htdocs/agenda/agendaFront/js/controladores/permisos/solicitudesXusuarioCtrl.js</file>
-            <file>file:/C:/xampp/htdocs/agenda/agendaFront/js/controladores/permisos/detalleAdmFormularioCtrl.js</file>
-            <file>file:/C:/xampp/htdocs/agenda/agendaFront/pages/formPermisos/formularioAdminPermisos.html</file>
+            <file>file:/C:/xampp/htdocs/agenda/agendaFront/js/servicios/permisos/AdminPermisosSrv.js</file>
         </group>
     </open-files>
 </project-private>
