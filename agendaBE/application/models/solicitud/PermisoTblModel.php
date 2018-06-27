@@ -674,6 +674,19 @@ class PermisoTblModel extends CI_Model {
         }
         return $datos;
     }
+    
+     /*obtener id Solicitud Permisos generado TERR_SOL_PERMISO*/
+    function obtenerRuta($id) {
+        $this->db->select("RUTA_DOC, NOMB_DOC");
+        $this->db->where("FOR.ID_FRM_PER", $id);
+        $query = $this->db->get("TERR_FRM_PER FOR");
+        $this->_validateDB($query);
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return NULL;
+        }
+    }
 }
 
 ?>

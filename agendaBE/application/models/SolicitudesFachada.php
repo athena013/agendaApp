@@ -126,8 +126,17 @@ class SolicitudesFachada extends CI_Model {
         log_message('info', 'deleteFormulario', false);
         $resultado = NULL;
         $mensaje = NULL;
+        $ruta = NULL;
+            
         try {
             $this->db->trans_start();
+            
+            $ruta = $this->PermisoTblModel->obtenerRuta($idForm);
+            
+            if($ruta){
+//                var_dump($ruta["RUTA_DOC"].$ruta["NOMB_DOC"]);
+                unlink( $ruta["RUTA_DOC"].$ruta["NOMB_DOC"] );
+            }
             
             $resultado = $this->PermisoTblModel->deleteFormulario($idForm);
              
