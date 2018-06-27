@@ -675,7 +675,7 @@ class PermisoTblModel extends CI_Model {
         return $datos;
     }
     
-     /*obtener id Solicitud Permisos generado TERR_SOL_PERMISO*/
+     /*obtener ruta documento adjunto por id__formulario*/
     function obtenerRuta($id) {
         $this->db->select("RUTA_DOC, NOMB_DOC");
         $this->db->where("FOR.ID_FRM_PER", $id);
