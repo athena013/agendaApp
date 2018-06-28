@@ -17,6 +17,7 @@ class PermisoTblModel extends CI_Model {
         $query = $this->db->set(
                         $this->_setFormulario($formulario)
                 )
+                ->set('ID_FRM_PER','SEQ_TERR_FRM_PER.NEXTVAL',false)
                 ->insert("TERR_FRM_PER");
         
 //        $consulta = $this->_setFormulario($formulario);
@@ -99,6 +100,7 @@ class PermisoTblModel extends CI_Model {
         $query = $this->db->set(
                         $this->_setSolicitud($formulario)
                 )
+                ->set('ID_SOL_PERM','SEQ_TERR_SOL_PERMISO.NEXTVAL',false)
                 ->insert("TERR_SOL_PERMISO");
         $this->_validateDB($query);
         if ($this->db->affected_rows() == 1) {
@@ -546,6 +548,7 @@ class PermisoTblModel extends CI_Model {
         $query = $this->db->set(
                         $this->_setTraSegSoc($formulario)
                 )
+                ->set('ID_SOL_TRASSEGSOC','SEQ_TERR_SOL_TRASEGSOC.NEXTVAL',false)
                 ->insert("TERR_SOL_TRASEGSOC");
         $this->_validateDB($query);
         if ($this->db->affected_rows() == 1) {
@@ -597,6 +600,7 @@ class PermisoTblModel extends CI_Model {
         $query = $this->db->set(
                         $this->_setPriTec($formulario)
                 )
+                ->set('ID_SOL_PRITEC','SEQ_TERR_SOL_PRITEC.NEXTVAL',false)
                 ->insert("TERR_SOL_PRITEC");
         $this->_validateDB($query);
         if ($this->db->affected_rows() == 1) {
@@ -632,6 +636,7 @@ class PermisoTblModel extends CI_Model {
         $query = $this->db->set(
                         $this->_setPerRep($datos)
                 )
+                ->set('ID_PERM_REPO','SEQ_TERR_PERM_REPO.NEXTVAL',false)
                 ->insert("TERR_PERM_REPO");
         $this->_validateDB($query);
         if ($this->db->affected_rows() == 1) {
@@ -675,7 +680,7 @@ class PermisoTblModel extends CI_Model {
         return $datos;
     }
     
-     /*obtener ruta documento adjunto por id__formulario*/
+     /*obtener ruta documento adjunto por id_formulario*/
     function obtenerRuta($id) {
         $this->db->select("RUTA_DOC, NOMB_DOC");
         $this->db->where("FOR.ID_FRM_PER", $id);

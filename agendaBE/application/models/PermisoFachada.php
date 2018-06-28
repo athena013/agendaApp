@@ -163,6 +163,7 @@ class PermisoFachada extends CI_Model {
         $resTransaccion = array();
         try {
             $this->db->trans_off();
+//            var_dump($form);
             $tipoForm=$form["tipoSolicitud"];
             $form["ID_TIPO_SOLPERFK"]=$tipoForm;
             $form["BND1"]=0;//no solicite permiso en fecha extemporanea
@@ -242,9 +243,9 @@ class PermisoFachada extends CI_Model {
     private function saveFile($file,$idSol){
         $retorno = array();
         $nNombre = $idSol."_".$file["name"];
-        move_uploaded_file( $file['tmp_name'], RUTA_ARHCIVOS.$nNombre);
+        move_uploaded_file( $file['tmp_name'], RUTA_ARCHIVOS.$nNombre);
         $retorno["nomb_doc"]=$nNombre;
-        $retorno["ruta_doc"] = RUTA_ARHCIVOS;
+        $retorno["ruta_doc"] = RUTA_ARCHIVOS;
         return $retorno;
     }
     

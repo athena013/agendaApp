@@ -341,6 +341,8 @@ angular.module('AgendaApp.formularioPermisos')
                                     $scope.tipo3=false;
                                     $scope.tipo4=false;
                                     $scope.tipo5=false;
+                                    $scope.validado = true;//usuario autorizado por Seguridad social
+                                    $scope.btnEnviar = false;
                                     $scope.datosUsuario.dsTipoSolicitud="2. Traslado en seguridad social y cesantías";
                                   break;
                                 case "3":
@@ -359,6 +361,8 @@ angular.module('AgendaApp.formularioPermisos')
                                     $scope.tipo3=false;
                                     $scope.tipo4=true;
                                     $scope.tipo5=false;
+                                    $scope.validado = true;//usuario autorizado por Prima técnica
+                                    $scope.btnEnviar = false;
                                     $scope.datosUsuario.dsTipoSolicitud="4. Prima técnica";
                                       break;
                                 case "5":
@@ -570,7 +574,7 @@ angular.module('AgendaApp.formularioPermisos')
                                         messageCenterService.add(CONSTANTS.TYPE_SUCCESS,data.response,{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_DANGER_TIME});
                                         alert(data.response);
                                         $scope.btnEnviar=false;//habilito guardar
-                                            $scope.validado=true;//permito guardar
+                                        $scope.validado=true;//permito guardar
                                     }
                                 }, function(reason){
                                     $scope.btnEnviar=true;//deshabilito guardar

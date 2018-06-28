@@ -87,12 +87,18 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 #Constantes de negocio
 define('REGITROS_MAX_CONSULTA', 150);
 define('MENSAJE_MAX_REGISTROS', 'La consulta excede el numero máximo de registros: ');
-define('RUTA_BACKEND','http://localhost:80/agenda/agendaBE');
-define('RUTA_ADJUNTO','http://localhost:80/agenda/soportesAdjuntoTerritorializacion');
-define('USUARIO_CORREO','fundaamor2007@gmail.com');
-define('CLAVE_CORREO','jesucristo');
 define('SMTP','ssl://smtp.gmail.com');
 define('PUERTO_SMTP',465);
-define('REMITENTE','fundaamor2007@gmail.com');
 define('DESTINATARIO','athena013@gmail.com');
-define('RUTA_ARHCIVOS','C:\\xampp\\htdocs\\agenda\\soportesAdjuntoTerritorializacion\\');
+//define('RUTA_ARCHIVOS','C:\\xampp\\htdocs\\agenda\\soportesAdjuntoTerritorializacion\\');
+
+/*LOCAL HOST*/
+define('RUTA_BACKEND','http://localhost:80/agenda/agendaBE');
+//define('RUTA_ADJUNTO','http://localhost:80/agenda/soportesAdjuntoTerritorializacion');
+define('RUTA_ARCHIVOS','..\\soportesAdjuntoTerritorializacion\\');
+define('HOST_NAME', 'localhost');
+define('PASSWORD_DB','DESARROLLO');
+define('USUARIO_DB','DESARROLLO');
+define('DATABASE', 'DESARROLLO');
+
+/*DESARROLLO*/

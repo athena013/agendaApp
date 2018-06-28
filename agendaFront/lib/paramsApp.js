@@ -1,7 +1,7 @@
 var ambiente = 'local';
 var urlParametrosModule = getUrlServidor();
 
-var urlFront = 'http://localhost:88/agenda/agendaFront/';
+var urlFront = getUrlFront();
 
 var urlBackEnd = getUrlServidor();
 
@@ -9,7 +9,14 @@ function getUrlServidor() {
     if (ambiente === 'local') {
         return 'http://localhost:88/agenda/agendaBE/';
     }else if (ambiente === 'desarrollo') {
-        return 'http://192.168.1.41:80/agenda/agendaBE/';
+        return 'http://192.168.1.41/agenda/agendaBE/';
+    }
+}
+function getUrlFront() {
+    if (ambiente === 'local') {
+        return 'http://localhost:88/agenda/agendaFront/';
+    }else if (ambiente === 'desarrollo') {
+        return 'http://192.168.1.41/agenda/agendaBE/';
     }
 }
 
