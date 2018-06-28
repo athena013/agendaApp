@@ -1,5 +1,4 @@
 'use strict';
-//var urlParametrosModule = 'http://localhost:80/agenda/agendaBE/';
 var urlParametrosModule = urlBackEnd;
 
 angular.module('AgendaApp.PermisoSrv')

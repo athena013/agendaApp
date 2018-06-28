@@ -3,6 +3,8 @@ var urlParametrosModule = getUrlServidor();
 
 var urlFront = getUrlFront();
 
+//var x = location.host; 
+
 var urlBackEnd = getUrlServidor();
 
 function getUrlServidor() {

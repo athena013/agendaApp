@@ -93,8 +93,9 @@ define('DESTINATARIO','athena013@gmail.com');
 //define('RUTA_ARCHIVOS','C:\\xampp\\htdocs\\agenda\\soportesAdjuntoTerritorializacion\\');
 
 /*LOCAL HOST*/
-define('RUTA_BACKEND','http://localhost:80/agenda/agendaBE');
 //define('RUTA_ADJUNTO','http://localhost:80/agenda/soportesAdjuntoTerritorializacion');
+//define('RUTA_BACKEND','http://localhost:80/agenda../agendaBE');
+define('RUTA_BACKEND','..\\agendaBE');
 define('RUTA_ARCHIVOS','..\\soportesAdjuntoTerritorializacion\\');
 define('HOST_NAME', 'localhost');
 define('PASSWORD_DB','DESARROLLO');

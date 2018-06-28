@@ -266,7 +266,7 @@ angular.module('AgendaApp.AdminPermisos')
                         
                         $scope.reporte = function () {
                             
-                            var url = CONSTANTS.RUTA_BACK_END + 'obtenerReporteByFilter?buscar=' + JSON.stringify($scope.buscar);
+                            var url = urlBackEnd + 'obtenerReporteByFilter?buscar=' + JSON.stringify($scope.buscar);
 //                            $window.location = url;
                              $window.open(url, '_blank');
 

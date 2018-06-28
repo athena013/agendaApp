@@ -133,7 +133,7 @@ angular.module('AgendaApp.formularioPermisos')
                             
                          $scope.print = function (objeto){
                              console.log("printtt");
-                              var url = CONSTANTS.RUTA_BACK_END + 'imprimir/formulario/'+ objeto.ID_FRM_PER+'/tipo/'+objeto.ID_TIPO_SOLPERFK;
+                              var url = urlBackEnd + 'imprimir/formulario/'+ objeto.ID_FRM_PER+'/tipo/'+objeto.ID_TIPO_SOLPERFK;
                               $window.open(url, '_blank');
 //                            $window.location = url;
 //                             solicitudSrv.imprimir().$promise.then(function(data){
