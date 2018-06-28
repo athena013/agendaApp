@@ -23,7 +23,7 @@ else
             $id=$datosPlan[0]['NUMERO_IDENTIFICACION'];
             $usu=$datosPlan[0]['NOMBRE_USUARIO'];
             $url='../agenda/agendaFront/#/'.$_GET['r'].'?id='.$id.'&usu='.$usu;
-//            var_dump( $scr);
+			//var_dump( $url);
 		if($datosPlan[0]['ID_ROLES'] == 288)
 			echo "<script>location.href='../caracterizacion/caracterizacion.php?tipoDoc=".$datosPlan[0]['COD_TIPOIDENTIFICACION']."&id=".$datosPlan[0]['NUMERO_IDENTIFICACION']."&carpeta=caracterizacion&pagina=caracterizacion.php'</script>";
                         

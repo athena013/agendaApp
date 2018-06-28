@@ -23,6 +23,7 @@ angular.module('AgendaApp.formularioPermisos')
                                                     
                         $scope.obtenerIdUrl = function (){
                             $scope.datosUsuario.numDoc = getUrlVars()["id"];
+                            $scope.datosUsuario.nomUsu = getUrlVars()["usu"];
                             console.log($scope.datosUsuario.id);
                             var fecha= new Date();
                             $scope.tipo1=false;
