@@ -74,8 +74,8 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '//localhost/XE',
-//        'port'  => '8080',
+	'dsn'	=>DSN,
+        'port'  => PORT,
 	'hostname' => HOST_NAME,
 	'username' => USUARIO_DB,
 	'password' => PASSWORD_DB,

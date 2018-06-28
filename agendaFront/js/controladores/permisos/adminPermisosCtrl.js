@@ -149,7 +149,7 @@ angular.module('AgendaApp.AdminPermisos')
                                        $scope.datosFunCiom=$scope.result;
                                        $scope.datosFunCiom.nombreCompleto=$scope.datosFunCiom.PRIMER_NOMBRE+" "+$scope.datosFunCiom.PRIMER_APELLIDO;
                                        $scope.datosFunCiom.cargoCompleto=$scope.datosFunCiom.CARGO+" "+$scope.datosFunCiom.CARGO_ESPEC;
-                                       $scope.datosFunCiom.numDoc=$scope.datosFunCiom.ID_USUARIOS;
+                                       $scope.datosFunCiom.numDoc=$scope.datosFunCiom.numDoc;
                                        console.log($scope.nombreCompleto);
                                        messageCenterService.add(CONSTANTS.TYPE_SUCCESS,"Funcionario(a) CIOM encontrado(a)",{icon : CONSTANTS.TYPE_SUCCES_ICON,messageIcon : CONSTANTS.TYPE_SUCCESS_MESSAGE_ICON,timeout : CONSTANTS.TYPE_SUCCESS_TIME});
                                     }else{

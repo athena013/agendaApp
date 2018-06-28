@@ -1,6 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+/*LOCAL HOST*/
+define('RUTA_BACKEND','..\\agendaBE');
+define('RUTA_ARCHIVOS','..\\soportesAdjuntoTerritorializacion\\');
+define('DSN', '//localhost/XE');
+define('HOST_NAME', 'localhost');
+define('PORT', '1521');
+define('PASSWORD_DB','DESARROLLO');
+define('USUARIO_DB','DESARROLLO');
+define('DATABASE', 'DESARROLLO');
+
+/*DESARROLLO
+define('RUTA_BACKEND','..\\agendaBE');
+define('RUTA_ARCHIVOS','..\\soportesAdjuntoTerritorializacion\\');
+define('DSN', '//192.168.1.42/XE');
+define('PORT', '1521');
+define('HOST_NAME', '192.168.1.42');
+define('PASSWORD_DB','DESARROLLO');
+define('USUARIO_DB','DESARROLLO');
+define('DATABASE', 'DESARROLLO');*/
+
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace
@@ -91,15 +112,6 @@ define('SMTP','ssl://smtp.gmail.com');
 define('PUERTO_SMTP',465);
 define('DESTINATARIO','athena013@gmail.com');
 //define('RUTA_ARCHIVOS','C:\\xampp\\htdocs\\agenda\\soportesAdjuntoTerritorializacion\\');
-
-/*LOCAL HOST*/
 //define('RUTA_ADJUNTO','http://localhost:80/agenda/soportesAdjuntoTerritorializacion');
 //define('RUTA_BACKEND','http://localhost:80/agenda../agendaBE');
-define('RUTA_BACKEND','..\\agendaBE');
-define('RUTA_ARCHIVOS','..\\soportesAdjuntoTerritorializacion\\');
-define('HOST_NAME', 'localhost');
-define('PASSWORD_DB','DESARROLLO');
-define('USUARIO_DB','DESARROLLO');
-define('DATABASE', 'DESARROLLO');
 
-/*DESARROLLO*/
